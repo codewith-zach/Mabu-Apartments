@@ -3,10 +3,20 @@
 import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Play, Pause, Badge } from 'lucide-react'
+import { Play, Pause } from 'lucide-react'
 import Image from 'next/image'
 import { Dancing_Script } from 'next/font/google'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 
 const dancingScript = Dancing_Script({ subsets: ['latin'] })
 
@@ -24,6 +34,51 @@ export default function Home() {
       setIsPlaying(!isPlaying)
     }
   }
+
+  const apartments = [
+    {
+      title: "Studio Apartment",
+      description: "Cozy and efficient space for solo travelers or couples",
+      price: "From ₦50,000/night",
+      image: "/placeholder.svg?width=400&height=300",
+      link: "/rooms/studio"
+    },
+    {
+      title: "One Bedroom Apartment",
+      description: "Spacious and comfortable for small families or groups",
+      price: "From ₦75,000/night",
+      image: "/placeholder.svg?width=400&height=300",
+      link: "/rooms/one-bedroom"
+    },
+    {
+      title: "Two Bedroom Apartment",
+      description: "Luxurious space for larger groups or extended stays",
+      price: "From ₦100,000/night",
+      image: "/placeholder.svg?width=400&height=300",
+      link: "/rooms/two-bedroom"
+    }
+  ]
+
+  const rooms = [
+    {
+      title: "Studio Apartment",
+      price: "FROM ₦150/NIGHT",
+      description: "Cozy and efficient space for solo travelers or couples",
+      image: "/images/rooms/room3.jpg"
+    },
+    {
+      title: "One Bedroom Apartment",
+      price: "FROM ₦240/NIGHT",
+      description: "Spacious and comfortable for small families or groups",
+      image: "/images/rooms/room1.jpg"
+    },
+    {
+      title: "Two Bedroom Apartment",
+      price: "FROM ₦300/NIGHT",
+      description: "Luxurious space for larger groups or extended stays",
+      image: "/images/rooms/room2.jpg"
+    }
+  ]
 
   return (
     <div>
@@ -104,55 +159,74 @@ export default function Home() {
       </section>
 
       {/* Featured Rooms */}
-      <section className="bg-gray-100 py-12 md:py-16 lg:py-24">
+      <section className="bg-[#faf9f6] py-12 md:py-16 lg:py-32 overflow-hidden">
         <div className="container px-4 md:px-6">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12 text-center">Our Apartments</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Studio Apartment</CardTitle>
-                <CardDescription>Cozy and efficient space for solo travelers or couples</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Image src="/images/rooms/room3.jpg" alt="Studio Apartment" width={400} height={300} className="rounded-lg mb-4 w-full h-auto" />
-                <Badge>From ₦50,000/night</Badge>
-              </CardContent>
-              <CardFooter>
-                <Button asChild>
-                  <Link href="/rooms/studio">View Details</Link>
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>One Bedroom Apartment</CardTitle>
-                <CardDescription>Spacious and comfortable for small families or groups</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Image src="/images/rooms/room1.jpg" alt="One Bedroom Apartment" width={400} height={300} className="rounded-lg mb-4 w-full h-auto" />
-                <Badge>From ₦75,000/night</Badge>
-              </CardContent>
-              <CardFooter>
-                <Button asChild>
-                  <Link href="/rooms/one-bedroom">View Details</Link>
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Two Bedroom Apartment</CardTitle>
-                <CardDescription>Luxurious space for larger groups or extended stays</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Image src="/images/rooms/room2.jpg" alt="Two Bedroom Apartment" width={400} height={300} className="rounded-lg mb-4 w-full h-auto" />
-                <Badge>From ₦100,000/night</Badge>
-              </CardContent>
-              <CardFooter>
-                <Button asChild>
-                  <Link href="/rooms/two-bedroom">View Details</Link>
-                </Button>
-              </CardFooter>
-            </Card>
+          <div className="text-center mb-12">
+            <p className="text-primary uppercase tracking-wider mb-2">LUXURY EXPERIENCE</p>
+            <h2 className="text-3xl md:text-4xl font-bold">Rooms & Suites</h2>
+          </div>
+          
+          <div className="relative w-full max-w-[90vw] mx-auto">
+            <Carousel
+              opts={{
+                align: 'center',
+                loop: true,
+                skipSnaps: false,
+                startIndex: 1
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 4000,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {[
+                  {
+                    title: "Studio Apartment",
+                    price: "FROM ₦150/NIGHT",
+                    description: "Cozy and efficient space for solo travelers or couples",
+                    image: "/images/rooms/room3.jpg"
+                  },
+                  {
+                    title: "One Bedroom Apartment",
+                    price: "FROM ₦240/NIGHT",
+                    description: "Spacious and comfortable for small families or groups",
+                    image: "/images/rooms/room1.jpg"
+                  },
+                  {
+                    title: "Two Bedroom Apartment",
+                    price: "FROM ₦300/NIGHT",
+                    description: "Luxurious space for larger groups or extended stays",
+                    image: "/images/rooms/room2.jpg"
+                  }
+                ].map((room, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3 first:pl-8 last:pr-8">
+                    <Link href={`/rooms/${room.title.toLowerCase().replace(/ /g, '-')}`} className="block">
+                      <div className="relative transition-all duration-300 group">
+                        <div className="relative aspect-[16/10] rounded-xl overflow-hidden">
+                          <Image
+                            src={room.image}
+                            alt={room.title}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                          <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                            <p className="text-sm font-medium mb-2">{room.price}</p>
+                            <h3 className="text-2xl font-semibold mb-2">{room.title}</h3>
+                            <p className="text-sm text-white/80">{room.description}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute -left-12 top-1/2 transform -translate-y-1/2 h-12 w-12 border-none bg-white/90 hover:bg-white shadow-lg" />
+              <CarouselNext className="absolute -right-12 top-1/2 transform -translate-y-1/2 h-12 w-12 border-none bg-white/90 hover:bg-white shadow-lg" />
+            </Carousel>
           </div>
         </div>
       </section>
@@ -161,23 +235,40 @@ export default function Home() {
       <section className="py-12 md:py-16 lg:py-24">
         <div className="container px-4 md:px-6">
           <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12 text-center">What Our Guests Say</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {[1, 2, 3].map((i) => (
-              <Card key={i}>
-                <CardHeader>
-                  <div className="flex items-center space-x-4">
-                    <Image src="/images/avatar.jpg" alt={`Guest ${i}`} width={50} height={50} className="rounded-full" />
-                    <div>
-                      <CardTitle>John Doe</CardTitle>
-                      <CardDescription>Stayed in One Bedroom Apartment</CardDescription>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm md:text-base">"Amazing stay! The apartment was clean, comfortable, and had everything we needed. The staff was friendly and helpful. Will definitely come back!"</p>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="relative w-full">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 4000,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <CarouselItem key={i} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
+                    <Card>
+                      <CardHeader>
+                        <div className="flex items-center space-x-4">
+                          <Image src="/images/avatar.jpg" alt={`Guest ${i}`} width={50} height={50} className="rounded-full" />
+                          <div>
+                            <CardTitle>John Doe</CardTitle>
+                            <CardDescription>Stayed in One Bedroom Apartment</CardDescription>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm md:text-base">"Amazing stay! The apartment was clean, comfortable, and had everything we needed. The staff was friendly and helpful. Will definitely come back!"</p>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
       </section>

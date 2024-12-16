@@ -2,9 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+
+/* body {
   font-family: Arial, Helvetica, sans-serif;
+} */
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 100; /* Use weight 100 for "Thin" */
 }
+
 
 @layer base {
   :root {
@@ -70,3 +76,4 @@ body {
     @apply bg-background text-foreground;
   }
 }
+

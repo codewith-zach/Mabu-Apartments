@@ -1,18 +1,16 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Play, Pause } from 'lucide-react'
 import Image from 'next/image'
 import { Dancing_Script } from 'next/font/google'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
+import { ChevronLeft, ChevronRight, Phone, Calendar } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,} 
+from "@/components/ui/carousel"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -59,6 +57,8 @@ export default function Home() {
     }
   ]
 
+  
+  
   const rooms = [
     {
       title: "Studio Apartment",
@@ -79,6 +79,32 @@ export default function Home() {
       image: "/images/rooms/room2.jpg"
     }
   ]
+
+  const testimonials = [
+    {
+      id: 1,
+      name: "Roberta",
+      date: "12 Oct",
+      image: "/images/roberta.jpg",
+      quote: "Mea ad postea meliore fuisset. Timeam repudiare id eum, ex paulo dictas elaboraret sed, mel cu unum nostrud."
+    },
+    {
+      id: 2,
+      name: "John",
+      date: "15 Oct",
+      image: "/images/john.jpg",
+      quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    {
+      id: 3,
+      name: "Sarah",
+      date: "18 Oct",
+      image: "/images/sarah.jpg",
+      quote: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    }
+  ]
+
+  
 
   return (
     <div>
@@ -103,9 +129,12 @@ export default function Home() {
             <p className="text-lg md:text-xl text-white mb-8">
               Discover luxury and comfort in the heart of Abuja
             </p>
-            <Button size="lg" asChild>
+            {/* <Button size="lg" asChild>
               <Link href="/rooms">Book Now</Link>
-            </Button>
+            </Button> */}
+            <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
+           Book Now
+         </Button>
           </div>
         </div>
         <Button
@@ -119,162 +148,234 @@ export default function Home() {
       </section>
 
       {/* Welcome Section */}
-      <section className="py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div className="max-w-xl">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
-                Welcome to Mabu Apartments
-              </h2>
-              <p className="text-xl md:text-2xl mb-6 text-muted-foreground">
-                Where comfort and unforgettable experiences come together.
-              </p>
-              <p className="text-base md:text-lg mb-8 leading-relaxed">
-                Our mission is to provide you with a space that feels like home, while offering the little luxuries and conveniences that make your stay truly special. Whether you're here for work, leisure, or a bit of both, we aim to make every moment seamless and enjoyable.
-              </p>
-              <p className={`${dancingScript.className} text-2xl md:text-3xl text-primary`}>
-                Your comfort starts here. We can't wait to host you!
-              </p>
-            </div>
-            <div className="relative h-[400px] md:h-[600px] mt-8 lg:mt-0">
-              <div className="absolute right-0 top-0 w-4/5 h-4/5 rounded-2xl overflow-hidden shadow-2xl">
-                <Image 
-                  src="/images/mabuapartmentsfront.jpg" 
-                  alt="Mabu Apartments Exterior Night View" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="absolute left-0 bottom-0 w-4/5 h-4/5 rounded-2xl overflow-hidden shadow-2xl">
-                <Image 
-                  src="/images/mabuapartmentsfront.jpg" 
-                  alt="Mabu Apartments Building View" 
-                  fill
-                  className="object-cover"
-                />
-              </div>
+      <section className="py-12 md:py-24 lg:py-32 bg-white relative">
+  <div className="container px-4 md:px-6 mx-auto">
+    <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+      <div className="max-w-xl">
+        <p className="text-sm font-semibold uppercase tracking-wider text-primary mb-3">
+          About Us
+        </p>
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight text-gray-900">
+          Welcome to Mabu Apartments
+        </h2>
+        <p className="text-xl md:text-2xl mb-6 text-gray-700">
+          Where comfort and unforgettable experiences come together.
+        </p>
+        <p className="text-base md:text-lg mb-8 leading-relaxed text-gray-600">
+          Our mission is to provide you with a space that feels like home, while offering the little luxuries and conveniences that make your stay truly special. Whether you’re here for work, leisure, or a bit of both, we aim to make every moment seamless and enjoyable.
+        </p>
+        <p className={`${dancingScript.className} text-2xl md:text-3xl text-primary italic`}>
+          Your comfort starts here. We can’t wait to host you!
+        </p>
+      </div>
+
+      <div className="relative mt-8 lg:mt-0">
+        {/* Abstract background design */}
+        <div className="absolute inset-0 bg-[url('/images/abstract-pattern.svg')] bg-no-repeat bg-right-top pointer-events-none" />
+
+        {/* Container for images to manage positioning */}
+        <div className="relative w-full h-auto flex items-center justify-end">
+
+          {/* Large (back) image */}
+          <div className="relative z-0 overflow-hidden shadow-xl rounded-2xl w-full lg:w-[600px] h-auto">
+            <Image
+              src="/images/mabuapartmentsfront.jpg"
+              alt="Mabu Apartments Exterior Night View"
+              width={1200}    // Adjust these based on actual image dimensions
+              height={800}
+              className="object-cover w-full h-auto rounded-2xl"
+            />
+          </div>
+
+          {/* Smaller (front) image, styled as a floating card with white border */}
+          <div 
+            className="absolute z-10 overflow-hidden shadow-2xl bg-white rounded-2xl"
+            style={{
+              width: '350px',   // adjust as needed
+              height: '230px',  // adjust as needed
+              transform: 'translate(-120%, 10%)' // shifts the small card over the larger image
+            }}
+          >
+            {/* Inner wrapper for rounded corners and to ensure image fills area */}
+            <div className="w-full h-full rounded-2xl overflow-hidden">
+              <Image
+                src="/images/mabuapartmentsfront.jpg"
+                alt="Mabu Apartments Building View"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
+
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
       {/* Featured Rooms */}
       <section className="bg-[#faf9f6] py-12 md:py-16 lg:py-32 overflow-hidden">
-        <div className="container px-4 md:px-6">
-          <div className="text-center mb-12">
-            <p className="text-primary uppercase tracking-wider mb-2">LUXURY EXPERIENCE</p>
-            <h2 className="text-3xl md:text-4xl font-bold">Rooms & Suites</h2>
-          </div>
-          
-          <div className="relative w-full max-w-[90vw] mx-auto">
-            <Carousel
-              opts={{
-                align: 'center',
-                loop: true,
-                skipSnaps: false,
-                startIndex: 1
-              }}
-              plugins={[
-                Autoplay({
-                  delay: 4000,
-                }),
-              ]}
-              className="w-full"
+  <div className="container px-4 md:px-6">
+    <div className="text-center mb-12">
+      <p className="text-primary uppercase tracking-wider mb-2">LUXURY EXPERIENCE</p>
+      <h2 className="text-3xl md:text-4xl font-bold">Rooms & Suites</h2>
+    </div>
+
+    <div className="relative w-full max-w-full mx-auto"> {/* Removed max-w-[90vw] */}
+      <Carousel
+        opts={{
+          align: 'center',
+          loop: true,
+          skipSnaps: false,
+          startIndex: 1
+        }}
+        plugins={[
+          Autoplay({
+            delay: 4000,
+          }),
+        ]}
+        className="w-full"
+      >
+        <CarouselContent className="-ml-2 md:-ml-4">
+          {[
+            {
+              title: "Studio Apartment",
+              price: "FROM ₦150/NIGHT",
+              // description: "Cozy and efficient space for solo travelers or couples",
+              image: "/images/rooms/room3.jpg"
+            },
+            {
+              title: "One Bedroom Apartment",
+              price: "FROM ₦240/NIGHT",
+              // description: "Spacious and comfortable for small families or groups",
+              image: "/images/rooms/room1.jpg"
+            },
+            {
+              title: "Two Bedroom Apartment",
+              price: "FROM ₦300/NIGHT",
+              // description: "Luxurious space for larger groups or extended stays",
+              image: "/images/rooms/room2.jpg"
+            }
+          ].map((room, index) => (
+            <CarouselItem 
+              key={index} 
+              className="pl-2 md:pl-4 basis-1/2" // full width on all breakpoints to make images larger
             >
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {[
-                  {
-                    title: "Studio Apartment",
-                    price: "FROM ₦150/NIGHT",
-                    description: "Cozy and efficient space for solo travelers or couples",
-                    image: "/images/rooms/room3.jpg"
-                  },
-                  {
-                    title: "One Bedroom Apartment",
-                    price: "FROM ₦240/NIGHT",
-                    description: "Spacious and comfortable for small families or groups",
-                    image: "/images/rooms/room1.jpg"
-                  },
-                  {
-                    title: "Two Bedroom Apartment",
-                    price: "FROM ₦300/NIGHT",
-                    description: "Luxurious space for larger groups or extended stays",
-                    image: "/images/rooms/room2.jpg"
-                  }
-                ].map((room, index) => (
-                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3 first:pl-8 last:pr-8">
-                    <Link href={`/rooms/${room.title.toLowerCase().replace(/ /g, '-')}`} className="block">
-                      <div className="relative transition-all duration-300 group">
-                        <div className="relative aspect-[16/10] rounded-xl overflow-hidden">
-                          <Image
-                            src={room.image}
-                            alt={room.title}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                          <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                            <p className="text-sm font-medium mb-2">{room.price}</p>
-                            <h3 className="text-2xl font-semibold mb-2">{room.title}</h3>
-                            <p className="text-sm text-white/80">{room.description}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="absolute -left-12 top-1/2 transform -translate-y-1/2 h-12 w-12 border-none bg-white/90 hover:bg-white shadow-lg" />
-              <CarouselNext className="absolute -right-12 top-1/2 transform -translate-y-1/2 h-12 w-12 border-none bg-white/90 hover:bg-white shadow-lg" />
-            </Carousel>
-          </div>
-        </div>
-      </section>
+              <Link href={`/rooms/${room.title.toLowerCase().replace(/ /g, '-')}`} className="block">
+                <div className="relative transition-all duration-300 group">
+                  <div className="relative aspect-[16/9] rounded-xl overflow-hidden"> {/* Changed aspect ratio */}
+                    <Image
+                      src={room.image}
+                      alt={room.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                      <p className="text-sm font-medium mb-2">{room.price}</p>
+                      <h3 className="text-2xl font-semibold mb-2">{room.title}</h3>
+                      <p className="text-sm text-white/80">{room.description}</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="absolute -left-12 top-1/2 transform -translate-y-1/2 h-12 w-12 border-none bg-white/90 hover:bg-white shadow-lg" />
+        <CarouselNext className="absolute -right-12 top-1/2 transform -translate-y-1/2 h-12 w-12 border-none bg-white/90 hover:bg-white shadow-lg" />
+      </Carousel>
+    </div>
+  </div>
+</section>
+
 
       {/* Testimonials */}
-      <section className="py-12 md:py-16 lg:py-24">
-        <div className="container px-4 md:px-6">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12 text-center">What Our Guests Say</h2>
-          <div className="relative w-full">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              plugins={[
-                Autoplay({
-                  delay: 4000,
-                }),
-              ]}
-              className="w-full"
-            >
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <CarouselItem key={i} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
-                    <Card>
-                      <CardHeader>
-                        <div className="flex items-center space-x-4">
-                          <Image src="/images/avatar.jpg" alt={`Guest ${i}`} width={50} height={50} className="rounded-full" />
-                          <div>
-                            <CardTitle>John Doe</CardTitle>
-                            <CardDescription>Stayed in One Bedroom Apartment</CardDescription>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm md:text-base">"Amazing stay! The apartment was clean, comfortable, and had everything we needed. The staff was friendly and helpful. Will definitely come back!"</p>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-          </div>
+      <section
+      className="py-24 md:py-32 lg:py-40 relative min-h-[600px] flex items-center"
+      style={{
+        backgroundImage: "url('/images/mabuapartmentsfront.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
+      <div className="relative container mx-auto px-4 md:px-6 max-w-7xl">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-12 text-center">
+          What Clients Say
+        </h2>
+
+        <div className="relative flex items-center justify-center">
+          <Carousel
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 4000,
+              }),
+            ]}
+            className="w-full max-w-6xl"
+          >
+            <CarouselContent className="relative">
+              {testimonials.map((testimonial) => (
+                <CarouselItem key={testimonial.id} className="basis-full">
+                  {/* Message Container */}
+                  <div className="bg-gray-900 text-white p-6 md:p-8 shadow-lg relative flex items-center rounded-lg">
+                    {/* Circular Image */}
+                    <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 mr-6">
+                      <Image
+                        src={testimonial.image}
+                        alt={`${testimonial.name}'s profile picture`}
+                        width={64}
+                        height={64}
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                    {/* Text Content */}
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-lg font-semibold">{testimonial.name}</h4>
+                        <p className="text-sm text-gray-400">{testimonial.date}</p>
+                      </div>
+                      <hr className="border-gray-700 mb-4" />
+                      <blockquote className="italic text-gray-300 leading-relaxed">
+                        "{testimonial.quote}"
+                      </blockquote>
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+
+            {/* Navigation Dots */}
+            <div className="absolute -bottom-6 flex justify-center w-full mt-4 space-x-2">
+              {testimonials.map((_, index) => (
+                <span
+                  key={index}
+                  className={`w-2 h-2 ${
+                    index === 0 ? 'bg-white' : 'bg-gray-400'
+                  } rounded-full`}
+                ></span>
+              ))}
+            </div>
+          </Carousel>
         </div>
-      </section>
+      </div>
+    </section>
+
+<div>
+  <booking-section />
+  </div>
 
       {/* CTA Section */}
-      <section className="bg-primary text-white py-12 md:py-16 lg:py-24">
+      {/* <section className="bg-primary text-white py-12 md:py-16 lg:py-24">
         <div className="container px-4 md:px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Experience Mabu Apartments?</h2>
           <p className="text-lg md:text-xl mb-8">Book your stay now and enjoy unparalleled comfort and luxury.</p>
@@ -282,7 +383,7 @@ export default function Home() {
             <Link href="/rooms">Book Your Stay</Link>
           </Button>
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }

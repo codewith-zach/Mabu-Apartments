@@ -1,70 +1,198 @@
+'use client'
+
+import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
+import { Dancing_Script } from 'next/font/google'
+import { Star } from 'lucide-react'
+
+const dancingScript = Dancing_Script({ subsets: ['latin'] })
 
 export default function AboutPage() {
-  return (
-    <div className="container mx-auto px-4 py-8 pt-24">
-      <h1 className="text-4xl font-bold mb-8">About Mabu Apartments</h1>
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
-      <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
-        <div>
-          <p className="text-lg mb-4">
-            Mabu Apartments is a premier luxury apartment provider in the heart of Abuja, Nigeria. 
-            Since our establishment in 2010, we have been committed to offering our guests an unparalleled 
-            experience of comfort, style, and convenience.
-          </p>
-          <p className="text-lg mb-4">
-            Our apartments are thoughtfully designed to cater to both short-term and long-term stays, 
-            making us the perfect choice for business travelers, tourists, and those seeking a home away from home.
-          </p>
-        </div>
-        <div className="relative h-[300px] md:h-[400px]">
-          <Image 
-            src="/images/mabuapartmentsfront.jpg" 
-            alt="Mabu Apartments Exterior" 
-            fill
-            className="object-cover rounded-lg"
-          />
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const sectionRect = sectionRef.current.getBoundingClientRect()
+        const viewportHeight = window.innerHeight
+        const sectionHeight = sectionRect.height
+
+        // Calculate scroll progress within the section
+        const sectionTop = sectionRect.top
+        const progress = Math.min(
+          1,
+          Math.max(
+            0,
+            (viewportHeight - sectionTop) / (viewportHeight + sectionHeight)
+          )
+        )
+
+        setScrollProgress(progress)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <div>
+      {/* Hero Section */}
+      <div className="relative h-[60vh] mb-16">
+        <Image 
+          src="/images/mabuapartmentsfront.jpg"
+          alt="Mabu Apartments Exterior"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-center">
+          <p className="text-lg mb-4">MABU APARTMENTS</p>
+          <h1 className="text-5xl md:text-6xl font-bold">ABOUT US</h1>
         </div>
       </div>
 
-      <h2 className="text-3xl font-bold mb-4">Our History</h2>
-      <p className="text-lg mb-8">
-        Founded by a group of hospitality enthusiasts, Mabu Apartments started as a small venture 
-        with just a handful of units. Over the years, we have grown to become one of the most sought-after 
-        accommodation providers in Abuja, known for our attention to detail and exceptional customer service.
-      </p>
+      {/* Get to Know Us Section */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="relative">
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+              <Image 
+                src="/images/mabuapartmentsfront.jpg"
+                alt="Mabu Apartments Main View"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-12 -right-12 w-2/3 aspect-square rounded-lg overflow-hidden border-4 border-white shadow-xl">
+              <Image 
+                src="/images/mabuapartmentsfront.jpg"
+                alt="Mabu Apartments Detail View"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+          
+          <div className="space-y-6 lg:max-w-xl">
+            <p className="text-primary uppercase tracking-wider">MABU APARTMENTS</p>
+            <h2 className="text-4xl font-bold">Get to Know Us</h2>
+            
+            <p className="text-lg">
+              At Mabu Apartments, we believe that every stay should feel like a special getaway. Our property was designed with you in mind—a perfect blend of comfort, style, and convenience that turns a simple trip into an unforgettable experience.
+            </p>
+            
+            <p className="text-lg">
+              What sets us apart is our attention to detail. From the thoughtfully curated decor to the amenities that make life easier, every aspect of Mabu Apartments is designed to ensure your comfort. We're passionate about hospitality and dedicated to making your visit seamless, enjoyable, and memorable.
+            </p>
+            
+            <p className="text-lg">
+              Explore the charm of Abuja, relax in our cozy space, and let us take care of the rest. At Mabu Apartments, you're not just a guest—you're part of our story.
+            </p>
+            
+            <p className={`${dancingScript.className} text-2xl text-primary`}>
+              We can't wait to welcome you!
+            </p>
+          </div>
+        </div>
 
-      <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
-      <p className="text-lg mb-8">
-        At Mabu Apartments, our mission is to provide a home-like environment that exceeds our guests' 
-        expectations. We strive to create spaces that blend comfort, luxury, and functionality, ensuring 
-        that every stay is memorable and satisfying.
-      </p>
+        {/* Location Section */}
+        <div ref={sectionRef} className="mt-32">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* Text Content */}
+            <div className="space-y-8">
+              <div>
+                <p className="text-primary uppercase tracking-wider">MABU APARTMENTS</p>
+                <h2 className="text-4xl font-bold mt-2">Location</h2>
+                <p className="mt-4 text-lg">
+                  Despite its central location, the surrounding area offers a peaceful retreat, making it ideal for both relaxation and exploration. Whether you're here for business or leisure, our location ensures you're always connected to the best Abuja has to offer.
+                </p>
+              </div>
 
-      <h2 className="text-3xl font-bold mb-4">Our Values</h2>
-      <ul className="list-disc list-inside text-lg mb-8">
-        <li>Excellence in service delivery</li>
-        <li>Attention to detail in every aspect of our operations</li>
-        <li>Respect for our guests, employees, and the environment</li>
-        <li>Continuous improvement and innovation</li>
-        <li>Integrity in all our business dealings</li>
-      </ul>
+              <div>
+                <h3 className="text-2xl font-bold mb-6">Landmarks</h3>
 
-      <h2 className="text-3xl font-bold mb-4">Our Team</h2>
-      <p className="text-lg mb-8">
-        Behind Mabu Apartments is a dedicated team of professionals committed to making your stay 
-        as comfortable as possible. From our friendly front desk staff to our meticulous housekeeping 
-        team, everyone at Mabu Apartments works tirelessly to ensure your experience is nothing short of exceptional.
-      </p>
+                <div className="space-y-8">
+                  <div>
+                    <div className="flex items-start gap-2">
+                      <Star className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                      <div>
+                        <h4 className="text-xl font-semibold">Nnamdi Azikiwe International Airport</h4>
+                        <p className="mt-2 text-gray-600">
+                          Conveniently situated just 40 minutes from Nnamdi Azikiwe International Airport, our property offers quick and hassle-free access for travelers.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-      <div className="bg-gray-100 p-8 rounded-lg">
-        <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
-        <p className="text-lg mb-2">We'd love to hear from you! Whether you have questions about our apartments or want to make a reservation, our team is here to help.</p>
-        <p className="text-lg mb-2">Phone: +234 907 512 0963</p>
-        <p className="text-lg mb-2">Email: info@mabuapartments.com</p>
-        <p className="text-lg">Address: 5, Awande Close, Behind LG Show Room, Off Aminu Kano Crescent, Wuse II Abuja, Nigeria</p>
+                  <div>
+                    <div className="flex items-start gap-2">
+                      <Star className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                      <div>
+                        <h4 className="text-xl font-semibold">Shehu Musa Yar'Adua Center</h4>
+                        <p className="mt-2 text-gray-600">
+                          Our property is conveniently located just 8 minutes from the Shehu Musa Yar'Adua Center, making it an ideal choice for visitors attending events or exploring the center's rich history.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex items-start gap-2">
+                      <Star className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                      <div>
+                        <h4 className="text-xl font-semibold">Abuja National Mosque</h4>
+                        <p className="mt-2 text-gray-600">
+                          Located just 7 minutes from the iconic Abuja National Mosque, our property offers easy access to one of the city's most significant landmarks.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Scrolling Images */}
+            <div
+              className="lg:sticky lg:top-32 space-y-8"
+              style={{ height: 'calc(100vh - 8rem)', overflow: 'hidden' }}
+            >
+              <div
+                className="space-y-8 transition-transform duration-300 ease-out"
+                style={{
+                  transform: `translateY(${scrollProgress * -100}%)`,
+                }}
+              >
+                <div className="relative h-[calc(100%/3)]">
+                  <Image
+                    src="/images/rooms/room3.jpg"
+                    alt="Nnamdi Azikiwe International Airport"
+                    fill
+                    className="rounded-lg object-cover"
+                  />
+                </div>
+                <div className="relative h-[calc(100%/3)]">
+                  <Image
+                    src="/images/rooms/room3.jpg"
+                    alt="Shehu Musa Yar'Adua Center"
+                    fill
+                    className="rounded-lg object-cover"
+                  />
+                </div>
+                <div className="relative h-[calc(100%/3)]">
+                  <Image
+                    src="/images/rooms/room3.jpg"
+                    alt="Abuja National Mosque"
+                    fill
+                    className="rounded-lg object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
-

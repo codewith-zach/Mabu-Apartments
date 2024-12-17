@@ -5,17 +5,19 @@ import { Amenities } from '@/components/amenities'
 import { Reviews } from '@/components/reviews'
 import { BookingForm } from '@/components/booking-form'
 
+const prisma = new PrismaClient()
+
 interface PageProps {
   params: {
-    id: string;
+    slug: string;
   };
 }
 
-const prisma = new PrismaClient()
-
 export default async function RoomPage({ params }: PageProps) {
+  const { slug } = params
+  
   const roomType = await prisma.roomType.findUnique({
-    where: { id: params.id },
+    where: { slug },
   })
 
   if (!roomType) {

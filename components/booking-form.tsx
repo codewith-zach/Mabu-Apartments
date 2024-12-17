@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
+import { useToast } from '@/hooks/use-toast'
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -38,11 +39,15 @@ const formSchema = z.object({
   }),
 })
 
-export function BookingForm({ roomId, price, title }: { roomId: string; price: number; title: string }) {
+export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; price: number; title: string }) {
   const [dateRange, setDateRange] = useState<{ from: Date; to: Date | undefined }>({
     from: new Date(),
     to: undefined,
   })
+  const [isLoading, setIsLoading] = useState(false)
+  const { toast } = useToast()
+  const [isExtending, setIsExtending] = useState(false)
+  const [currentBookingId, setCurrentBookingId] = useState<string | null>(null)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,11 +69,87 @@ export function BookingForm({ roomId, price, title }: { roomId: string; price: n
     return 0
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Here you would typically send the form data to your backend
-    console.log(values)
-    // Redirect to Paystack payment gateway
-    window.location.href = 'https://paystack.com/pay/your-unique-payment-id'
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true)
+    const totalPrice = calculateTotalPrice()
+
+    try {
+      const response = await fetch('/api/create-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: values.email,
+          amount: totalPrice * 100, // Paystack expects amount in kobo
+          metadata: {
+            name: values.name,
+            roomId: roomTypeId, // Updated to use roomTypeId
+            checkIn: values.dateRange.from,
+            checkOut: values.dateRange.to,
+          },
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        // Redirect to Paystack checkout
+        window.location.href = data.authorization_url
+      } else {
+        throw new Error(data.message || 'Something went wrong')
+      }
+    } catch (error) {
+      console.error('Payment initialization failed:', error)
+      toast({
+        title: 'Error',
+        description: 'Failed to initialize payment. Please try again.',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  async function extendBooking() {
+    if (!currentBookingId || !dateRange.to) return
+
+    setIsLoading(true)
+
+    try {
+      const response = await fetch('/api/extend-booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          bookingId: currentBookingId,
+          newCheckOut: dateRange.to,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        toast({
+          title: 'Success',
+          description: 'Your booking has been extended successfully.',
+        })
+        setIsExtending(false)
+        setCurrentBookingId(null)
+      } else {
+        throw new Error(data.message || 'Something went wrong')
+      }
+    } catch (error) {
+      console.error('Booking extension failed:', error)
+      toast({
+        title: 'Error',
+        description: 'Failed to extend booking. Please try again.',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -171,9 +252,21 @@ export function BookingForm({ roomId, price, title }: { roomId: string; price: n
                 </p>
               </div>
             )}
-            <Button type="submit" className="w-full" size="lg">
-              Book Now
-            </Button>
+            {isExtending ? (
+              <Button type="button" className="w-full" size="lg" onClick={extendBooking} disabled={isLoading}>
+                {isLoading ? 'Processing...' : 'Extend Booking'}
+              </Button>
+            ) : (
+              <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+                {isLoading ? 'Processing...' : 'Book Now'}
+              </Button>
+            )}
+
+            {!isExtending && (
+              <Button type="button" variant="outline" className="w-full" onClick={() => setIsExtending(true)}>
+                Extend Existing Booking
+              </Button>
+            )}
           </form>
         </Form>
       </CardContent>

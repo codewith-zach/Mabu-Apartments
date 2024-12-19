@@ -24,38 +24,37 @@ model RoomType {
   rooms       Room[]
 }
 
-
 model Room {
-  id          String     @id @default(cuid())
-  roomNumber  String
-  roomTypeId  String
-  roomType    RoomType   @relation(fields: [roomTypeId], references: [id])
-  bookings    Booking[]
+  id           String         @id @default(cuid())
+  roomType     RoomType       @relation(fields: [roomTypeId], references: [id])
+  roomTypeId   String
+  roomNumber   String         @unique
+  bookings     Booking[]
   availability Availability[]
 }
 
 model Booking {
-  id           String   @id @default(cuid())
-  roomId       String
-  room         Room     @relation(fields: [roomId], references: [id])
-  guestName    String
-  guestEmail   String
-  checkIn      DateTime
-  checkOut     DateTime
-  totalPrice   Float
-  paymentStatus String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id               String   @id @default(cuid())
+  roomId           String
+  room             Room     @relation(fields: [roomId], references: [id])
+  guestName        String
+  guestEmail       String
+  checkIn          DateTime
+  checkOut         DateTime
+  totalPrice       Float
+  paymentStatus    String
+  paymentReference String?  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model Availability {
-  id        String   @id @default(cuid())
-  roomId    String
-  room      Room     @relation(fields: [roomId], references: [id])
-  date      DateTime
+  id          String   @id @default(cuid())
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id])
+  date        DateTime
   isAvailable Boolean
 
   @@unique([roomId, date])
 }
-
 

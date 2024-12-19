@@ -37,33 +37,54 @@ async function main() {
 
   for (const roomType of roomTypes) {
     const { roomCount, ...roomTypeData } = roomType
-    const createdRoomType = await prisma.roomType.create({
-      data: roomTypeData,
+    
+    // Try to find existing room type
+    let createdRoomType = await prisma.roomType.findUnique({
+      where: { name: roomTypeData.name },
     })
 
+    if (!createdRoomType) {
+      // If room type doesn't exist, create it
+      createdRoomType = await prisma.roomType.create({
+        data: roomTypeData,
+      })
+      console.log(`Created new room type: ${createdRoomType.name}`)
+    } else {
+      // If room type exists, update it
+      createdRoomType = await prisma.roomType.update({
+        where: { id: createdRoomType.id },
+        data: roomTypeData,
+      })
+      console.log(`Updated existing room type: ${createdRoomType.name}`)
+    }
+
     // Create rooms for each room type
-    for (let i = 1; i <= roomCount; i++) {
+    const existingRoomsCount = await prisma.room.count({
+      where: { roomTypeId: createdRoomType.id },
+    })
+
+    for (let i = existingRoomsCount + 1; i <= roomCount; i++) {
       const room = await prisma.room.create({
         data: {
-          roomNumber: `${roomType.name.charAt(0)}${i}`,
+          roomNumber: `${roomType.name.charAt(0)}${i}`, // e.g., S1, O1, T1
           roomTypeId: createdRoomType.id,
         },
       })
+      console.log(`Created new room: ${room.roomNumber}`)
 
       // Create availability for the next 365 days
       const today = new Date()
       const nextYear = addDays(today, 365)
       const dates = eachDayOfInterval({ start: today, end: nextYear })
 
-      for (const date of dates) {
-        await prisma.availability.create({
-          data: {
-            roomId: room.id,
-            date: date,
-            isAvailable: true,
-          },
-        })
-      }
+      await prisma.availability.createMany({
+        data: dates.map(date => ({
+          roomId: room.id,
+          date: date,
+          isAvailable: true,
+        })),
+      })
+      console.log(`Created availability for room: ${room.roomNumber}`)
     }
   }
 }

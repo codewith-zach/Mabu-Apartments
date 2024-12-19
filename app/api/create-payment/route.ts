@@ -13,6 +13,8 @@ export async function POST(req: Request) {
       email: email,
       amount: amount,
       metadata: metadata,
+      callback_url: `${process.env.NEXT_PUBLIC_APP_URL}/payment-success`,
+      channels: ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer'],
     })
 
     const options = {

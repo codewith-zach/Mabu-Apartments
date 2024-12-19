@@ -46,8 +46,6 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
   })
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
-  const [isExtending, setIsExtending] = useState(false)
-  const [currentBookingId, setCurrentBookingId] = useState<string | null>(null)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -74,6 +72,41 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
     const totalPrice = calculateTotalPrice()
 
     try {
+      console.log('Submitting booking request with values:', {
+        roomTypeId,
+        checkIn: values.dateRange.from,
+        checkOut: values.dateRange.to,
+        name: values.name,
+        email: values.email,
+        totalPrice
+      })
+
+      const availabilityResponse = await fetch('/api/check-availability', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          roomTypeId,
+          checkIn: values.dateRange.from.toISOString(),
+          checkOut: values.dateRange.to.toISOString(),
+        }),
+      })
+
+      const availabilityData = await availabilityResponse.json()
+      console.log('Availability response:', availabilityData)
+
+      if (!availabilityData.available) {
+        toast({
+          title: 'Room Not Available',
+          description: 'Sorry, the room is not available for the selected dates.',
+          variant: 'destructive',
+        })
+        setIsLoading(false)
+        return
+      }
+
+      console.log('Room available, initializing payment...')
       const response = await fetch('/api/create-payment', {
         method: 'POST',
         headers: {
@@ -84,67 +117,29 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
           amount: totalPrice * 100, // Paystack expects amount in kobo
           metadata: {
             name: values.name,
-            roomId: roomTypeId, // Updated to use roomTypeId
-            checkIn: values.dateRange.from,
-            checkOut: values.dateRange.to,
+            roomId: availabilityData.roomId,
+            checkIn: values.dateRange.from.toISOString(),
+            checkOut: values.dateRange.to.toISOString(),
+            roomTitle: title,
           },
         }),
       })
 
       const data = await response.json()
+      console.log('Payment initialization response:', data)
 
       if (response.ok) {
-        // Redirect to Paystack checkout
+        console.log('Payment initialization successful, redirecting to:', data.authorization_url)
         window.location.href = data.authorization_url
       } else {
+        console.error('Payment initialization failed:', data)
         throw new Error(data.message || 'Something went wrong')
       }
     } catch (error) {
-      console.error('Payment initialization failed:', error)
+      console.error('Error in booking process:', error)
       toast({
         title: 'Error',
-        description: 'Failed to initialize payment. Please try again.',
-        variant: 'destructive',
-      })
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  async function extendBooking() {
-    if (!currentBookingId || !dateRange.to) return
-
-    setIsLoading(true)
-
-    try {
-      const response = await fetch('/api/extend-booking', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          bookingId: currentBookingId,
-          newCheckOut: dateRange.to,
-        }),
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        toast({
-          title: 'Success',
-          description: 'Your booking has been extended successfully.',
-        })
-        setIsExtending(false)
-        setCurrentBookingId(null)
-      } else {
-        throw new Error(data.message || 'Something went wrong')
-      }
-    } catch (error) {
-      console.error('Booking extension failed:', error)
-      toast({
-        title: 'Error',
-        description: 'Failed to extend booking. Please try again.',
+        description: 'An error occurred during the booking process. Please try again.',
         variant: 'destructive',
       })
     } finally {
@@ -252,21 +247,9 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
                 </p>
               </div>
             )}
-            {isExtending ? (
-              <Button type="button" className="w-full" size="lg" onClick={extendBooking} disabled={isLoading}>
-                {isLoading ? 'Processing...' : 'Extend Booking'}
-              </Button>
-            ) : (
-              <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
-                {isLoading ? 'Processing...' : 'Book Now'}
-              </Button>
-            )}
-
-            {!isExtending && (
-              <Button type="button" variant="outline" className="w-full" onClick={() => setIsExtending(true)}>
-                Extend Existing Booking
-              </Button>
-            )}
+            <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+              {isLoading ? 'Processing...' : 'Book Now'}
+            </Button>
           </form>
         </Form>
       </CardContent>

@@ -15,6 +15,7 @@ type RoomType = {
   price: number
   capacity: number
   imageUrl: string
+  slug: string // Added slug property
 }
 
 export default function RoomList({ roomTypes }: { roomTypes: RoomType[] }) {
@@ -101,7 +102,7 @@ export default function RoomList({ roomTypes }: { roomTypes: RoomType[] }) {
             </CardContent>
             <CardFooter>
               <Button asChild className="w-full">
-                <Link href={`/rooms/${room.id}`}>View Details</Link>
+                <Link href={`/rooms/${room.slug}`}>View Details</Link>
               </Button>
             </CardFooter>
           </Card>

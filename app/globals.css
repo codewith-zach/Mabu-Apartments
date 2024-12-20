@@ -2,15 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* body {
-  font-family: Arial, Helvetica, sans-serif;
-} */
 body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 100; /* Use weight 100 for "Thin" */
 }
-
 
 @layer base {
   :root {
@@ -74,6 +69,46 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Ensure the carousel scrolls seamlessly */
+.testimonial-carousel {
+  display: flex;
+  width: 300%; /* Adjust based on the number of items */
+  animation: scrollTestimonial 30s linear infinite; /* Adjust duration as needed */
+}
+
+@keyframes scrollTestimonial {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-66.66%); /* Adjust based on the number of items */
+  }
+}
+
+/* Pause animation on hover */
+.testimonial-carousel:hover {
+  animation-play-state: paused;
+}
+
+/* Carousel Item Styling */
+.testimonial-carousel > * {
+  flex: 0 0 33.33%; /* Show 1 item on mobile */
+  padding: 0 0.5rem;
+}
+
+/* Adjust for larger screens */
+@media (min-width: 640px) {
+  .testimonial-carousel > * {
+    flex: 0 0 16.66%; /* Show 2 items on tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  .testimonial-carousel > * {
+    flex: 0 0 11.11%; /* Show 3 items on desktop */
   }
 }
 

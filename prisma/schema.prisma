@@ -12,3 +12,49 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model RoomType {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String
+  price       Float
+  capacity    Int
+  imageUrl    String
+  rooms       Room[]
+}
+
+model Room {
+  id           String         @id @default(cuid())
+  roomType     RoomType       @relation(fields: [roomTypeId], references: [id])
+  roomTypeId   String
+  roomNumber   String         @unique
+  bookings     Booking[]
+  availability Availability[]
+}
+
+model Booking {
+  id               String   @id @default(cuid())
+  roomId           String
+  room             Room     @relation(fields: [roomId], references: [id])
+  guestName        String
+  guestEmail       String
+  checkIn          DateTime
+  checkOut         DateTime
+  totalPrice       Float
+  paymentStatus    String
+  paymentReference String?  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Availability {
+  id          String   @id @default(cuid())
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id])
+  date        DateTime
+  isAvailable Boolean
+
+  @@unique([roomId, date])
+}
+

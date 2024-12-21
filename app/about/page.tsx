@@ -2,8 +2,8 @@
 
 import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Dancing_Script } from 'next/font/google'
-import { Star } from 'lucide-react'
+import { Dancing_Script, Bokor as Bookmark } from 'next/font/google'
+import { BookmarkIcon } from 'lucide-react' // Import Bookmark from lucide-react
 
 const dancingScript = Dancing_Script({ subsets: ['latin'] })
 
@@ -54,7 +54,7 @@ export default function AboutPage() {
       </div>
 
       {/* Get to Know Us Section */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-16 md:px-20">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
@@ -75,7 +75,7 @@ export default function AboutPage() {
             </div>
           </div>
           
-          <div className="space-y-6 lg:max-w-xl">
+          <div className="space-y-6 lg:max-w-xl ">
             <p className="text-primary uppercase tracking-wider">MABU APARTMENTS</p>
             <h2 className="text-4xl font-bold">Get to Know Us</h2>
             
@@ -98,97 +98,81 @@ export default function AboutPage() {
         </div>
 
         {/* Location Section */}
-        <div ref={sectionRef} className="mt-32">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div ref={sectionRef} className="mt-32 md:px-20">
+          <div className="grid gap-16 items-start">
             {/* Text Content */}
             <div className="space-y-8">
               <div>
-                <p className="text-primary uppercase tracking-wider">MABU APARTMENTS</p>
-                <h2 className="text-4xl font-bold mt-2">Location</h2>
-                <p className="mt-4 text-lg">
+                <p className="text-primary uppercase tracking-wider ">MABU APARTMENTS</p>
+                <h2 className="text-4xl font-bold mt-2 ">Location</h2>
+                <p className="mt-4 text-lg ">
                   Despite its central location, the surrounding area offers a peaceful retreat, making it ideal for both relaxation and exploration. Whether you're here for business or leisure, our location ensures you're always connected to the best Abuja has to offer.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold mb-6">Landmarks</h3>
+  <h3 className="text-2xl font-bold mb-6 ">Landmarks</h3>
 
-                <div className="space-y-8">
-                  <div>
-                    <div className="flex items-start gap-2">
-                      <Star className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                      <div>
-                        <h4 className="text-xl font-semibold">Nnamdi Azikiwe International Airport</h4>
-                        <p className="mt-2 text-gray-600">
-                          Conveniently situated just 40 minutes from Nnamdi Azikiwe International Airport, our property offers quick and hassle-free access for travelers.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+  <div className="space-y-16 px-4 ">
+    <div className="flex flex-col md:flex-col lg:flex-row items-center gap-6">
+      <div className="flex-1 w-full">
+        <div className="flex items-center gap-2 mb-2">
+          <BookmarkIcon className="w-6 h-6 text-primary flex-shrink-0" />
+          <h4 className="text-xl font-semibold">Nnamdi Azikiwe International Airport</h4>
+        </div>
+        <p className="text-gray-600">
+          Conveniently situated just 40 minutes from Nnamdi Azikiwe International Airport, our property offers quick and hassle-free access for travelers.
+        </p>
+      </div>
+      <Image
+        src="/images/mabuapartmentsfront.jpg"
+        alt="Nnamdi Azikiwe International Airport"
+        width={500}
+        height={100}
+        className="rounded-lg flex-shrink-0 w-full md:w-auto"
+      />
+    </div>
 
-                  <div>
-                    <div className="flex items-start gap-2">
-                      <Star className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                      <div>
-                        <h4 className="text-xl font-semibold">Shehu Musa Yar'Adua Center</h4>
-                        <p className="mt-2 text-gray-600">
-                          Our property is conveniently located just 8 minutes from the Shehu Musa Yar'Adua Center, making it an ideal choice for visitors attending events or exploring the center's rich history.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+    <div className="flex flex-col md:flex-col lg:flex-row-reverse items-center gap-6">
+      <div className="flex-1 w-full">
+        <div className="flex items-center gap-2 mb-2">
+          <BookmarkIcon className="w-6 h-6 text-primary flex-shrink-0" />
+          <h4 className="text-xl font-semibold">Shehu Musa Yar'Adua Center</h4>
+        </div>
+        <p className="text-gray-600">
+          Our property is conveniently located just 8 minutes from the Shehu Musa Yar'Adua Center, making it an ideal choice for visitors attending events or exploring the center's rich history.
+        </p>
+      </div>
+      <Image
+        src="/images/mabuapartmentsfront.jpg"
+        alt="Shehu Musa Yar'Adua Center"
+        width={500}
+        height={100}
+        className="rounded-lg flex-shrink-0 w-full md:w-auto"
+      />
+    </div>
 
-                  <div>
-                    <div className="flex items-start gap-2">
-                      <Star className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                      <div>
-                        <h4 className="text-xl font-semibold">Abuja National Mosque</h4>
-                        <p className="mt-2 text-gray-600">
-                          Located just 7 minutes from the iconic Abuja National Mosque, our property offers easy access to one of the city's most significant landmarks.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div className="flex flex-col md:flex-col lg:flex-row items-center gap-6">
+      <div className="flex-1 w-full">
+        <div className="flex items-center gap-2 mb-2">
+          <BookmarkIcon className="w-6 h-6 text-primary flex-shrink-0" />
+          <h4 className="text-xl font-semibold">Abuja National Mosque</h4>
+        </div>
+        <p className="text-gray-600">
+          Located just 7 minutes from the iconic Abuja National Mosque, our property offers easy access to one of the city's most significant landmarks.
+        </p>
+      </div>
+      <Image
+        src="/images/mabuapartmentsfront.jpg"
+        alt="Abuja National Mosque"
+        width={500}
+        height={100}
+        className="rounded-lg flex-shrink-0 w-full md:w-auto"
+      />
+    </div>
+  </div>
+</div>
 
-            {/* Scrolling Images */}
-            <div
-              className="lg:sticky lg:top-32 space-y-8"
-              style={{ height: 'calc(100vh - 8rem)', overflow: 'hidden' }}
-            >
-              <div
-                className="space-y-8 transition-transform duration-300 ease-out"
-                style={{
-                  transform: `translateY(${scrollProgress * -100}%)`,
-                }}
-              >
-                <div className="relative h-[calc(100%/3)]">
-                  <Image
-                    src="/images/rooms/room3.jpg"
-                    alt="Nnamdi Azikiwe International Airport"
-                    fill
-                    className="rounded-lg object-cover"
-                  />
-                </div>
-                <div className="relative h-[calc(100%/3)]">
-                  <Image
-                    src="/images/rooms/room3.jpg"
-                    alt="Shehu Musa Yar'Adua Center"
-                    fill
-                    className="rounded-lg object-cover"
-                  />
-                </div>
-                <div className="relative h-[calc(100%/3)]">
-                  <Image
-                    src="/images/rooms/room3.jpg"
-                    alt="Abuja National Mosque"
-                    fill
-                    className="rounded-lg object-cover"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -196,3 +180,4 @@ export default function AboutPage() {
     </div>
   )
 }
+

@@ -122,7 +122,7 @@ export default function Home() {
               Discover luxury and comfort in the heart of Abuja
             </p> */}
             <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
-              Book Now
+            <Link href="/rooms">Book Now</Link>
             </Button>
           </div>
         </div>
@@ -251,6 +251,88 @@ export default function Home() {
               <CarouselPrevious className="absolute -left-4 sm:-left-12 top-1/2 transform -translate-y-1/2 h-8 w-8 sm:h-12 sm:w-12 border-none bg-white/90 hover:bg-white shadow-lg" />
               <CarouselNext className="absolute -right-4 sm:-right-12 top-1/2 transform -translate-y-1/2 h-8 w-8 sm:h-12 sm:w-12 border-none bg-white/90 hover:bg-white shadow-lg" />
             </Carousel>
+            <div className="mt-8 text-center">
+              <Button asChild className="bg-[#978667] hover:bg-[#4B514C] text-white">
+                <Link href="/rooms">View All Rooms</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="relative w-full  overflow-hidden mt-12  bg-[#faf9f6] flex items-end">
+              <div className="flex whitespace-nowrap animate-marquee">
+                <div className="flex shrink-0">
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">RELAX</span>
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">ENJOY</span>
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">LUXURY</span>
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">HOLIDAY</span>
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">TRAVEL</span>
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">EXPERIENCE</span>
+                </div>
+                <div className="flex shrink-0">
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">RELAX</span>
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">ENJOY</span>
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">LUXURY</span>
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">HOLIDAY</span>
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">TRAVEL</span>
+                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">EXPERIENCE</span>
+                </div>
+              </div>
+            </div>
+      </section>
+
+      {/* Discover Sections */}
+      <section className="py-12 md:py-24 bg-white">
+        <div className="container px-4 md:px-6">
+          {/* Mabu Location */}
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-16">
+            <div className="relative aspect-[1000/625] rounded-lg overflow-hidden">
+              <Image
+                src="/images/mabuapartmentsfront.jpg"
+                alt="Mabu Apartments Location"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="space-y-4">
+              <p className="text-sm uppercase tracking-wider text-[#978667]">
+                MABU APARTMENTS
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Discover Our Location
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                Nestled in the heart of Abuja, our Airbnb offers the perfect balance of convenience and comfort, surrounded by vibrant attractions and local charm. Discover more about what makes our space uniquely welcoming.
+              </p>
+              <Button variant="outline" className="mt-4">
+                Read more
+              </Button>
+            </div>
+          </div>
+
+          {/* Rayuwa Bakery */}
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="space-y-4 order-2 md:order-1">
+              <p className="text-sm uppercase tracking-wider text-[#978667]">
+                RAYUWA BAKERY
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold">
+                A Taste of Freshness Awaits
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                Situated in our vibrant and welcoming neighborhood, Rayuwa Bakery is your go-to destination for freshly baked bread, delightful pastries, and refreshing juices. Discover the passion behind every bite.
+              </p>
+              <Button variant="outline" className="mt-4">
+                Read more
+              </Button>
+            </div>
+            <div className="relative aspect-[1000/625] rounded-lg overflow-hidden order-1 md:order-2">
+              <Image
+                src="/images/mabuapartmentsfront.jpg"
+                alt="Rayuwa Bakery"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>

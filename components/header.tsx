@@ -220,7 +220,7 @@ export function Header() {
               className="w-full bg-[#978667] hover:bg-[#4B514C] text-white font-semibold"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Book Now
+              <Link href="/rooms">Book Now</Link>
             </Button>
           </div>
         </div>

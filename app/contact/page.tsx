@@ -10,12 +10,13 @@ import * as z from 'zod'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { ContactHero } from '@/components/contact-hero'
+import { ContactInfo } from '@/components/contact-info'
+import { MapPin } from 'lucide-react'
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -47,7 +48,6 @@ export default function ContactPage() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
-    // Here you would typically send the form data to your backend
     console.log(values)
     setTimeout(() => {
       setIsSubmitting(false)
@@ -57,95 +57,132 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 pt-24">
-      <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
+    <main className="min-h-screen bg-gray-50">
+      <ContactHero />
+      
+      <div className="container mx-auto px-4 py-16 bg-[#faf9f6]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-3 gap-12">
+            {/* Contact Form */}
+            <div className="lg:col-span-2">
+              <h2 className="text-3xl font-serif mb-8">Get in Touch</h2>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <div className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input 
+                              placeholder="Name" 
+                              className="h-12 border-gray-200" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input 
+                              type="email" 
+                              placeholder="Email" 
+                              className="h-12 border-gray-200" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="subject"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input 
+                              placeholder="Subject" 
+                              className="h-12 border-gray-200" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="message"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Textarea 
+                              placeholder="Message" 
+                              className="min-h-[150px] border-gray-200" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="h-12 px-8 rounded-full bg-[#D4B254] hover:bg-[#C4A244] text-white"
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Submit'}
+                  </Button>
+                </form>
+              </Form>
+            </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Your name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="Your email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="subject"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Subject</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Subject of your message" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Message</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Your message" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </Button>
-            </form>
-          </Form>
-        </div>
-
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">Our Location</h2>
-          <div className="mb-4">
-            <p className="mb-2"><strong>Address:</strong> 5, Awande Close, Behind LG Show Room, Off Aminu Kano Crescent, Wuse II Abuja, Nigeria</p>
-            <p className="mb-2"><strong>Phone:</strong> +234 907 512 0963</p>
-            <p className="mb-2"><strong>Email:</strong> info@mabuapartments.com</p>
-          </div>
-          <div className="aspect-w-16 aspect-h-9">
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.0730918829946!2d7.449722115427616!3d9.072901193488901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0ba1305b2a6d%3A0x1c5ea49d6d3f0f5b!2sWuse%202%2C%20Abuja%2C%20Federal%20Capital%20Territory!5e0!3m2!1sen!2sng!4v1651234567890!5m2!1sen!2sng" 
-              width="600" 
-              height="450" 
-              style={{border:0}} 
-              allowFullScreen={true} 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full h-full"
-            ></iframe>
+            {/* Contact Information */}
+            <div className="lg:col-span-1">
+              <ContactInfo />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Map Section */}
+      <div className="relative h-[600px] w-full mt-16">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.0730918829946!2d7.449722115427616!3d9.072901193488901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0ba1305b2a6d%3A0x1c5ea49d6d3f0f5b!2sMabu%20Apartments!5e0!3m2!1sen!2sng!4v1651234567890!5m2!1sen!2sng" 
+          width="100%" 
+          height="100%" 
+          style={{border:0}} 
+          allowFullScreen={true} 
+          loading="lazy" 
+          referrerPolicy="no-referrer-when-downgrade"
+          className="w-full h-full"
+        ></iframe>
+        <a 
+          href="https://maps.app.goo.gl/EMtMGABHBM22Mdsa7" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 hover:bg-opacity-10 transition-all duration-300"
+          aria-label="Open directions to Mabu Apartments in Google Maps"
+        >
+          <div className="bg-white p-4 rounded-full shadow-lg">
+            <MapPin className="w-8 h-8 text-[#D4B254]" />
+          </div>
+        </a>
+      </div>
+    </main>
   )
 }
 

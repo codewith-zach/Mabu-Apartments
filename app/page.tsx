@@ -11,12 +11,20 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import Autoplay from 'embla-carousel-autoplay'
+import { motion } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 
 const dancingScript = Dancing_Script({ subsets: ['latin'] })
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(true)
+  const [fadeIn, setFadeIn] = useState(false)
+  const [carouselFadeIn, setCarouselFadeIn] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const smallImageRef = useRef<HTMLDivElement>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const locationImageRef = useRef<HTMLDivElement>(null)
+  const bakeryImageRef = useRef<HTMLDivElement>(null)
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -29,47 +37,23 @@ export default function Home() {
     }
   }
 
-  const apartments = [
-    {
-      title: "Studio Apartment",
-      description: "Cozy and efficient space for solo travelers or couples",
-      price: "From ₦50,000/night",
-      image: "/placeholder.svg?width=400&height=300",
-      link: "/rooms/studio"
-    },
-    {
-      title: "One Bedroom Apartment",
-      description: "Spacious and comfortable for small families or groups",
-      price: "From ₦75,000/night",
-      image: "/placeholder.svg?width=400&height=300",
-      link: "/rooms/one-bedroom"
-    },
-    {
-      title: "Two Bedroom Apartment",
-      description: "Luxurious space for larger groups or extended stays",
-      price: "From ₦100,000/night",
-      image: "/placeholder.svg?width=400&height=300",
-      link: "/rooms/two-bedroom"
-    }
-  ]
-
   const rooms = [
     {
       title: "Studio Apartment",
       price: "FROM ₦150/NIGHT",
-      description: "Cozy and efficient space for solo travelers or couples",
+      // description: "Cozy and efficient space for solo travelers or couples",
       image: "/images/rooms/room3.jpg"
     },
     {
       title: "One Bedroom Apartment",
       price: "FROM ₦240/NIGHT",
-      description: "Spacious and comfortable for small families or groups",
+      // description: "Spacious and comfortable for small families or groups",
       image: "/images/rooms/room1.jpg"
     },
     {
       title: "Two Bedroom Apartment",
       price: "FROM ₦300/NIGHT",
-      description: "Luxurious space for larger groups or extended stays",
+      // description: "Luxurious space for larger groups or extended stays",
       image: "/images/rooms/room2.jpg"
     }
   ]
@@ -98,6 +82,110 @@ export default function Home() {
     }
   ]
 
+  useEffect(() => {
+    setFadeIn(true)
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('opacity-0', 'translate-y-full');
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.5, rootMargin: "0px 0px -200px 0px" }
+    );
+
+    if (smallImageRef.current) {
+      observer.observe(smallImageRef.current);
+    }
+
+    return () => {
+      if (smallImageRef.current) {
+        observer.unobserve(smallImageRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setCarouselFadeIn(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (carouselRef.current) {
+      observer.observe(carouselRef.current);
+    }
+
+    return () => {
+      if (carouselRef.current) {
+        observer.unobserve(carouselRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('translate-y-full', 'opacity-0');
+          entry.target.classList.add('translate-y-0', 'opacity-100');
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" }
+    );
+
+    if (smallImageRef.current) {
+      observer.observe(smallImageRef.current);
+    }
+
+    return () => {
+      if (smallImageRef.current) {
+        observer.unobserve(smallImageRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('scale-95', 'opacity-0');
+          entry.target.classList.add('scale-100', 'opacity-100');
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    [locationImageRef.current, bakeryImageRef.current].forEach(ref => {
+      if (ref) {
+        observer.observe(ref);
+      }
+    });
+
+    return () => {
+      [locationImageRef.current, bakeryImageRef.current].forEach(ref => {
+        if (ref) {
+          observer.unobserve(ref);
+        }
+      });
+    };
+  }, []);
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+
   return (
     <div>
       {/* Hero Section */}
@@ -114,15 +202,15 @@ export default function Home() {
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-center">
-          <div className="max-w-3xl px-4">
+          <div className={`max-w-3xl px-4 transition-opacity duration-1000 ease-in ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
+          <p className="text-sm uppercase tracking-wider text-[#EBD7B2] mb-3">
+                Mabu apartments
+              </p>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-4">
               MORE THAN A STAY, IT'S AN EXPERIENCE.
             </h1>
-            {/* <p className="text-base sm:text-lg md:text-xl text-white mb-8">
-              Discover luxury and comfort in the heart of Abuja
-            </p> */}
             <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
-            <Link href="/rooms">Book Now</Link>
+              <Link href="/rooms">Book Now</Link>
             </Button>
           </div>
         </div>
@@ -138,17 +226,16 @@ export default function Home() {
 
       {/* Welcome Section */}
       <section className="py-12 md:py-24 lg:py-32 bg-white relative overflow-hidden">
-        {/* Background wave pattern */}
         <div 
-          className="absolute inset-0 opacity-5"
+          className="absolute top-0 right-0 bottom-0 w-1/2 opacity-100"
           style={{
-            backgroundImage: "url('/images/wave-pattern.svg')",
+            backgroundImage: "url('/images/pattern_2.png')",
             backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundPosition: "center right",
           }}
         />
 
-        <div className="container px-4 md:px-6 mx-auto">
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
           <div className="flex flex-col-reverse lg:flex-row gap-8 md:gap-12 items-center">
             <div className="w-full lg:w-1/2 order-2 lg:order-1">
               <p className="text-sm uppercase tracking-wider text-[#978667] mb-3">
@@ -169,7 +256,6 @@ export default function Home() {
             </div>
 
             <div className="w-full lg:w-1/2 relative order-1 lg:order-2">
-              {/* Main (back) image with wave pattern */}
               <div className="relative rounded-2xl overflow-hidden w-3/4 mx-auto">
                 <Image
                   src="/images/mabuapartmentsfront.jpg"
@@ -180,12 +266,14 @@ export default function Home() {
                 />
               </div>
 
-              {/* Smaller (front) image with white border */}
-              <div className="absolute left-0 top-1/2 -translate-y-1/3 -translate-x-1 w-1/3 z-10">
+              <div 
+                ref={smallImageRef}
+                className="absolute left-0 top-1/3 -translate-x-1/4 w-1/3 z-10 transition-all duration-1000 ease-out opacity-0 translate-y-full"
+              >
                 <div className="bg-white p-1 rounded-2xl shadow-xl">
                   <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
                     <Image
-                      src="/images/mabuapartmentsfront.jpg"
+                      src="/images/rooms/room1.jpg"
                       alt="Mabu Apartments Detail"
                       fill
                       className="object-cover rounded-xl"
@@ -198,15 +286,73 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CTA Section */}
+      <div ref={ref}>
+      <motion.section
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="relative bg-primary text-white py-12 sm:py-16 md:py-20 lg:py-32 xl:py-40 overflow-hidden"
+      >
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/video/mabuvid.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="absolute inset-0 bg-black bg-opacity-60"
+        />
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="container px-4 md:px-6 text-center relative z-10"
+        >
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="text-base sm:text-lg uppercase tracking-wider text-[#EBD7B2] mb-5"
+          >
+            mabu apartments
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8"
+          >
+            Ready to Experience Mabu Apartments?
+          </motion.h2>
+        </motion.div>
+      </motion.section>
+      </div>
+
+
       {/* Featured Rooms */}
-      <section className="bg-[#faf9f6] py-12 md:py-16 lg:py-32 overflow-hidden">
-        <div className="container px-4 md:px-6">
+      <section className="bg-[#faf9f6] flex flex-col">
+        <div className="container px-4 md:px-6 flex-grow flex flex-col py-12 md:py-16 lg:py-24">
           <div className="text-center mb-8 sm:mb-12">
-            <p className="text-primary uppercase tracking-wider mb-2">LUXURY EXPERIENCE</p>
+          <p className="text-sm uppercase tracking-wider text-[#978667] mb-3">
+                luxury experience
+              </p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">Rooms & Suites</h2>
           </div>
 
-          <div className="relative w-full max-w-full mx-auto px-4 sm:px-0">
+          <div 
+            ref={carouselRef}
+            className={`relative w-full max-w-full mx-auto px-4 sm:px-0 transition-all duration-1000 ease-out flex-grow flex flex-col ${
+              carouselFadeIn ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+            }`}
+          >
             <Carousel
               opts={{
                 align: 'center',
@@ -219,17 +365,17 @@ export default function Home() {
                   delay: 4000,
                 }),
               ]}
-              className="w-full"
+              className="w-full flex-grow"
             >
-              <CarouselContent className="-ml-2 md:-ml-4">
+              <CarouselContent className="-ml-2 md:-ml-4 h-full">
                 {rooms.map((room, index) => (
                   <CarouselItem 
                     key={index} 
-                    className="pl-2 md:pl-4 basis-full sm:basis-1/2"
+                    className="pl-2 md:pl-4 basis-full sm:basis-1/2 h-full"
                   >
-                    <Link href={`/rooms/${room.title.toLowerCase().replace(/ /g, '-')}`} className="block">
-                      <div className="relative transition-all duration-300 group">
-                        <div className="relative aspect-[16/9] rounded-xl overflow-hidden">
+                    <Link href={`/rooms/${room.title.toLowerCase().replace(/ /g, '-')}`} className="block h-full">
+                      <div className="relative transition-all duration-300 group h-full">
+                        <div className="relative aspect-[16/9] rounded-xl overflow-hidden h-full">
                           <Image
                             src={room.image}
                             alt={room.title}
@@ -258,26 +404,26 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="relative w-full  overflow-hidden mt-12  bg-[#faf9f6] flex items-end">
-              <div className="flex whitespace-nowrap animate-marquee">
-                <div className="flex shrink-0">
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">RELAX</span>
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">ENJOY</span>
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">LUXURY</span>
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">HOLIDAY</span>
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">TRAVEL</span>
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">EXPERIENCE</span>
-                </div>
-                <div className="flex shrink-0">
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">RELAX</span>
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">ENJOY</span>
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">LUXURY</span>
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">HOLIDAY</span>
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">TRAVEL</span>
-                  <span className="mx-4 text-[8rem] font-extrabold text-gray-100">EXPERIENCE</span>
-                </div>
-              </div>
+        <div className="w-full overflow-hidden bg-[#faf9f6] marquee-container">
+          <div className="flex whitespace-nowrap animate-marquee">
+            <div className="flex shrink-0">
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">RELAX</span>
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">ENJOY</span>
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">LUXURY</span>
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">HOLIDAY</span>
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">TRAVEL</span>
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">EXPERIENCE</span>
             </div>
+            <div className="flex shrink-0">
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">RELAX</span>
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">ENJOY</span>
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">LUXURY</span>
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">HOLIDAY</span>
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">TRAVEL</span>
+              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">EXPERIENCE</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Discover Sections */}
@@ -285,7 +431,10 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           {/* Mabu Location */}
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-16">
-            <div className="relative aspect-[1000/625] rounded-lg overflow-hidden">
+            <div 
+              ref={locationImageRef}
+              className="relative aspect-[1000/625] rounded-lg overflow-hidden transform transition-all duration-1000 ease-out scale-95 opacity-0"
+            >
               <Image
                 src="/images/mabuapartmentsfront.jpg"
                 alt="Mabu Apartments Location"
@@ -303,7 +452,8 @@ export default function Home() {
               <p className="text-gray-600 leading-relaxed">
                 Nestled in the heart of Abuja, our Airbnb offers the perfect balance of convenience and comfort, surrounded by vibrant attractions and local charm. Discover more about what makes our space uniquely welcoming.
               </p>
-              <Button variant="outline" className="mt-4">
+              {/* <Button variant="outline" className="mt-4"> */}
+              <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
                 Read more
               </Button>
             </div>
@@ -321,11 +471,15 @@ export default function Home() {
               <p className="text-gray-600 leading-relaxed">
                 Situated in our vibrant and welcoming neighborhood, Rayuwa Bakery is your go-to destination for freshly baked bread, delightful pastries, and refreshing juices. Discover the passion behind every bite.
               </p>
-              <Button variant="outline" className="mt-4">
+              {/* <Button variant="outline" className="mt-4"> */}
+              <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
                 Read more
               </Button>
             </div>
-            <div className="relative aspect-[1000/625] rounded-lg overflow-hidden order-1 md:order-2">
+            <div 
+              ref={bakeryImageRef}
+              className="relative aspect-[1000/625] rounded-lg overflow-hidden transform transition-all duration-1000 ease-out scale-95 opacity-0 order-1 md:order-2"
+            >
               <Image
                 src="/images/mabuapartmentsfront.jpg"
                 alt="Rayuwa Bakery"
@@ -338,7 +492,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-12 md:py-16 lg:py-24 relative overflow-hidden">
+      <section className="py-12 md:py-16 lg:py-24 relative overflow-hidden testimonial-section">
         {/* Background image */}
         <div 
           className="absolute inset-0 bg-fixed bg-cover bg-center z-0"
@@ -352,13 +506,16 @@ export default function Home() {
         <div className="absolute inset-0 bg-black opacity-50 z-10" />
 
         <div className="container px-4 md:px-6 relative z-20">
+        <p className="text-sm text-center uppercase tracking-wider text-[#EBD7B2] mb-3">
+                testimonials
+              </p>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 sm:mb-8 md:mb-12 text-center text-white">What Our Guests Say</h2>
 
           {/* Carousel Wrapper */}
           <div className="relative w-full overflow-hidden">
             <div className="testimonial-carousel">
               {[...testimonials, ...testimonials, ...testimonials].map((testimonial, index) => (
-                <div key={index} className="w-full sm:w-1/2 lg:w-1/3 px-2 sm:px-4">
+                <div key={index} className="w-full sm:w-1/2 lg:w-1/3 px-4">
                   <Card className="bg-gray-800 text-white border-0 h-full">
                     <CardHeader>
                       <div className="flex items-center space-x-4">
@@ -380,16 +537,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-primary text-white py-8 sm:py-12 md:py-16 lg:py-24">
-        <div className="container px-4 md:px-6 text-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">Ready to Experience Mabu Apartments?</h2>
-          <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8">Book your stay now and enjoy unparalleled comfort and luxury.</p>
-          <Button size="lg" variant="secondary" asChild>
-            <Link href="/rooms">Book Your Stay</Link>
-          </Button>
-        </div>
-      </section>
+      
     </div>
   )
 }

@@ -63,21 +63,21 @@ export default function Home() {
       id: 1,
       name: "Roberta",
       date: "12 Oct",
-      image: "/images/roberta.jpg",
+      image: "/images/avatar.jpg",
       quote: "Mea ad postea meliore fuisset. Timeam repudiare id eum, ex paulo dictas elaboraret sed, mel cu unum nostrud."
     },
     {
       id: 2,
       name: "John",
       date: "15 Oct",
-      image: "/images/john.jpg",
+      image: "/images/avatar.jpg",
       quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     {
       id: 3,
       name: "Sarah",
       date: "18 Oct",
-      image: "/images/sarah.jpg",
+      image: "/images/avatar.jpg",
       quote: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     }
   ]

@@ -108,6 +108,7 @@ export default function RoomList({ roomTypes }: { roomTypes: RoomType[] }) {
           </Card>
         ))}
       </div>
+      
     </>
   )
 }

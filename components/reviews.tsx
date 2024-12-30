@@ -4,6 +4,17 @@ import { useState, useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 
+// Add this CSS utility after the imports
+const scrollbarHideStyles = `
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;            /* Chrome, Safari and Opera */
+  }
+`
+
 type Review = {
   id: number
   name: string
@@ -37,16 +48,16 @@ export function Reviews({ roomId }: { roomId: string }) {
   }, [inView])
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 ">
       <h2 className="text-2xl font-semibold mb-4">Guest Reviews</h2>
-      <div className="space-y-4 max-h-96 overflow-y-auto pr-4 shadow-inner">
+      <div className="space-y-4 max-h-96 overflow-y-auto pr-4 shadow-inner scrollbar-hide">
         {reviews.map(review => (
-          <Card key={review.id} className="shadow-md transition-shadow hover:shadow-lg">
-            <CardHeader>
+          <Card key={review.id} className="shadow-md transition-shadow hover:shadow-lg mb-4 last:mb-0">
+            <CardHeader className='bg-[#faf9f6]'>
               <CardTitle>{review.name}</CardTitle>
               <CardDescription>Rating: {review.rating}/5 - {review.date}</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className='bg-[#faf9f6]'>
               <p>{review.comment}</p>
             </CardContent>
           </Card>
@@ -56,4 +67,9 @@ export function Reviews({ roomId }: { roomId: string }) {
     </div>
   )
 }
+
+// Add this style tag after the Reviews component declaration
+const styleTag = document.createElement('style')
+styleTag.textContent = scrollbarHideStyles
+document.head.appendChild(styleTag)
 

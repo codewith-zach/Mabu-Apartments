@@ -1,6 +1,6 @@
 'use client'
 
-import { Car, Wifi, Sparkles, ShieldCheck, Zap, Wind, Utensils, ShowerHeadIcon as Shower } from 'lucide-react'
+import { Car, Wifi, Sparkles, ShieldCheck, Zap, Fan, Utensils, ShowerHeadIcon as Shower } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
@@ -55,7 +55,7 @@ export function MainFacilities() {
     { icon: <Sparkles className="w-8 h-8" />, title: "House Keeping", description: "Experience a spotless and welcoming environment with our professional housekeeping services." },
     { icon: <ShieldCheck className="w-8 h-8" />, title: "Security", description: "Your safety is our priority. Our property is equipped with 24/7 security measures, including surveillance systems and trained personnel." },
     { icon: <Zap className="w-8 h-8" />, title: "24 hours Power", description: "Enjoy uninterrupted comfort with our reliable 24-hour power supply, ensuring all your needs are met without any disruptions." },
-    { icon: <Wind className="w-8 h-8" />, title: "Air Conditioning", description: "Stay cool and comfortable with our fully air-conditioned rooms and spaces, providing the perfect retreat no matter the weather." },
+    { icon: <Fan className="w-8 h-8" />, title: "Air Conditioning", description: "Stay cool and comfortable with our fully air-conditioned rooms and spaces, providing the perfect retreat no matter the weather." },
     { icon: <Utensils className="w-8 h-8" />, title: "Kitchen", description: "Our fully equipped kitchen is designed for your convenience, featuring modern appliances and all the essentials you need." },
     { icon: <Shower className="w-8 h-8" />, title: "Private Bathroom", description: "Enjoy the privacy and comfort of your own en-suite bathroom, complete with modern fixtures, fresh towels, and complimentary toiletries." },
   ]

@@ -39,9 +39,9 @@ export function Reviews({ roomId }: { roomId: string }) {
   return (
     <div className="mt-8">
       <h2 className="text-2xl font-semibold mb-4">Guest Reviews</h2>
-      <div className="space-y-4 max-h-96 overflow-y-auto">
+      <div className="space-y-4 max-h-96 overflow-y-auto pr-4 shadow-inner">
         {reviews.map(review => (
-          <Card key={review.id}>
+          <Card key={review.id} className="shadow-md transition-shadow hover:shadow-lg">
             <CardHeader>
               <CardTitle>{review.name}</CardTitle>
               <CardDescription>Rating: {review.rating}/5 - {review.date}</CardDescription>

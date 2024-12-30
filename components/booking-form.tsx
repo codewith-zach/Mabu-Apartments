@@ -26,6 +26,11 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { useToast } from '@/hooks/use-toast'
 
+interface DateRange {
+  from: Date | undefined
+  to: Date | undefined
+}
+
 const formSchema = z.object({
   name: z.string().min(2, {
     message: 'Name must be at least 2 characters.',
@@ -40,7 +45,7 @@ const formSchema = z.object({
 })
 
 export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; price: number; title: string }) {
-  const [dateRange, setDateRange] = useState<{ from: Date; to: Date | undefined }>({
+  const [dateRange, setDateRange] = useState<DateRange>({
     from: new Date(),
     to: undefined,
   })
@@ -54,7 +59,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
       email: '',
       dateRange: {
         from: new Date(),
-        to: new Date(),
+        to: undefined,
       },
     },
   })
@@ -68,10 +73,20 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true)
-    const totalPrice = calculateTotalPrice()
-
+    setIsLoading(true);
+    
     try {
+      if (!values.dateRange.from || !values.dateRange.to) {
+        toast({
+          title: "Invalid Date Range",
+          description: "Please select both check-in and check-out dates.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const totalPrice = calculateTotalPrice();
+
       console.log('Submitting booking request with values:', {
         roomTypeId,
         checkIn: values.dateRange.from,
@@ -99,11 +114,12 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
       if (!availabilityData.available) {
         toast({
           title: 'Room Not Available',
-          description: 'Sorry, the room is not available for the selected dates.',
+          description: 'Sorry, the room is not available for the selected dates. Please choose different dates.',
           variant: 'destructive',
         })
+        console.log('Toast displayed for unavailable room')
         setIsLoading(false)
-        return
+        return;
       }
 
       console.log('Room available, initializing payment...')
@@ -197,21 +213,24 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
                           variant={"outline"}
                           className={cn(
                             "w-full justify-start text-left font-normal",
-                            !dateRange && "text-muted-foreground"
+                            !field.value?.from && "text-muted-foreground"
                           )}
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {dateRange?.from ? (
-                            dateRange.to ? (
+                          {field.value?.from ? (
+                            field.value.to ? (
                               <>
-                                {format(dateRange.from, "LLL dd, y")} -{" "}
-                                {format(dateRange.to, "LLL dd, y")}
+                                {format(field.value.from, "LLL dd, y")} -{" "}
+                                {format(field.value.to, "LLL dd, y")}
                               </>
                             ) : (
-                              format(dateRange.from, "LLL dd, y")
+                              <>
+                                {format(field.value.from, "LLL dd, y")}
+                                <span className="text-muted-foreground"> - Select end date</span>
+                              </>
                             )
                           ) : (
-                            <span>Pick a date</span>
+                            <span>Pick a date range</span>
                           )}
                         </Button>
                       </FormControl>
@@ -220,12 +239,22 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
                       <Calendar
                         initialFocus
                         mode="range"
-                        defaultMonth={dateRange?.from}
-                        selected={dateRange}
+                        defaultMonth={field.value?.from}
+                        selected={{
+                          from: field.value?.from,
+                          to: field.value?.to,
+                        }}
                         onSelect={(range) => {
-                          if (range?.from) {
-                            setDateRange({ from: range.from, to: range.to })
-                            field.onChange(range)
+                          field.onChange(range);
+                          setDateRange({
+                            from: range?.from,
+                            to: range?.to
+                          });
+                          // Only close if we have both dates
+                          if (range?.from && range?.to) {
+                            const closeEvent = new Event('keydown');
+                            (closeEvent as any).key = 'Escape';
+                            document.dispatchEvent(closeEvent);
                           }
                         }}
                         numberOfMonths={2}

@@ -40,19 +40,19 @@ export default function Home() {
   const rooms = [
     {
       title: "Studio Apartment",
-      price: "FROM ₦150/NIGHT",
+      price: "FROM 80,000/NIGHT",
       // description: "Cozy and efficient space for solo travelers or couples",
       image: "/images/rooms/room3.jpg"
     },
     {
       title: "One Bedroom Apartment",
-      price: "FROM ₦240/NIGHT",
+      price: "FROM ₦120,000/NIGHT",
       // description: "Spacious and comfortable for small families or groups",
       image: "/images/rooms/room1.jpg"
     },
     {
       title: "Two Bedroom Apartment",
-      price: "FROM ₦300/NIGHT",
+      price: "FROM ₦180,000/NIGHT",
       // description: "Luxurious space for larger groups or extended stays",
       image: "/images/rooms/room2.jpg"
     }
@@ -63,21 +63,21 @@ export default function Home() {
       id: 1,
       name: "Roberta",
       date: "12 Oct",
-      image: "/images/roberta.jpg",
+      image: "/images/avatar.jpg",
       quote: "Mea ad postea meliore fuisset. Timeam repudiare id eum, ex paulo dictas elaboraret sed, mel cu unum nostrud."
     },
     {
       id: 2,
       name: "John",
       date: "15 Oct",
-      image: "/images/john.jpg",
+      image: "/images/avatar.jpg",
       quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     {
       id: 3,
       name: "Sarah",
       date: "18 Oct",
-      image: "/images/sarah.jpg",
+      image: "/images/avatar.jpg",
       quote: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     }
   ]
@@ -386,7 +386,7 @@ export default function Home() {
                           <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">
                             <p className="text-xs sm:text-sm font-medium mb-1 sm:mb-2">{room.price}</p>
                             <h3 className="text-lg sm:text-2xl font-semibold mb-1 sm:mb-2">{room.title}</h3>
-                            <p className="text-xs sm:text-sm text-white/80">{room.description}</p>
+                            {/* <p className="text-xs sm:text-sm text-white/80">{room.description}</p> */}
                           </div>
                         </div>
                       </div>

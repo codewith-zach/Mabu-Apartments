@@ -35,7 +35,7 @@ export default async function RoomPage({ params }: PageProps) {
     <>
       <Hero title={roomType.name} />
       <RoomDescription />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 bg-[#faf9f6]">
         <div className="mx-auto max-w-5xl">
         <RoomCarousel images={images} />
         </div>

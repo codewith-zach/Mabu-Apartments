@@ -17,9 +17,6 @@ interface HeroProps {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/50 z-10" />
         {/* Background number watermark */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-10">
-          <span className="text-[400px] font-bold text-white">16000</span>
-        </div>
         
         {/* Content */}
         <div className="relative z-10 space-y-6">

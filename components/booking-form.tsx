@@ -148,7 +148,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
   }
 
   return (
-    <Card className="w-full">
+    <Card className="w-full mt-10">
       <CardContent className="p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

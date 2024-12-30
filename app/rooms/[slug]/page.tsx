@@ -41,10 +41,10 @@ export default async function RoomPage({ params }: PageProps) {
         </div>
         <div className="grid lg:grid-cols-3 gap-8 mt-16">
           <div className="lg:col-span-2">
-            <div className="mt-8">
+            {/* <div className="mt-8">
               <h2 className="text-2xl font-bold mb-4">About this space</h2>
               <p className="text-gray-600 text-lg">{roomType.description}</p>
-            </div>
+            </div> */}
             <Reviews roomId={roomType.id} />
           </div>
           <div className="lg:col-span-1">

@@ -6,7 +6,7 @@ export function ContactInfo() {
       <div className="space-y-8">
         <div className="group">
           <div className="flex items-start space-x-4">
-            <MapPin className="w-6 h-6 text-[#D4B254] flex-shrink-0 transition-colors duration-300 group-hover:text-[#C4A244]" />
+            <MapPin className="w-6 h-6 text-[#978667] flex-shrink-0 transition-colors duration-300 group-hover:text-[#C4A244]" />
             <div>
               <h3 className="text-xl font-serif mb-2">Address</h3>
               <p className="text-gray-600">
@@ -20,7 +20,7 @@ export function ContactInfo() {
 
         <div className="group">
           <div className="flex items-start space-x-4">
-            <Mail className="w-6 h-6 text-[#D4B254] flex-shrink-0 transition-colors duration-300 group-hover:text-[#C4A244]" />
+            <Mail className="w-6 h-6 text-[#978667] flex-shrink-0 transition-colors duration-300 group-hover:text-[#C4A244]" />
             <div>
               <h3 className="text-xl font-serif mb-2">Email address</h3>
               <p className="text-gray-600">
@@ -35,7 +35,7 @@ export function ContactInfo() {
 
         <div className="group">
           <div className="flex items-start space-x-4">
-            <Phone className="w-6 h-6 text-[#D4B254] flex-shrink-0 transition-colors duration-300 group-hover:text-[#C4A244]" />
+            <Phone className="w-6 h-6 text-[#978667] flex-shrink-0 transition-colors duration-300 group-hover:text-[#C4A244]" />
             <div>
               <h3 className="text-xl font-serif mb-2">Telephone</h3>
               <p className="text-gray-600">

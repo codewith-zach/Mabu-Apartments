@@ -454,7 +454,7 @@ export default function Home() {
               </p>
               {/* <Button variant="outline" className="mt-4"> */}
               <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
-                Read more
+              <Link href="/about">Read More</Link>
               </Button>
             </div>
           </div>
@@ -473,7 +473,7 @@ export default function Home() {
               </p>
               {/* <Button variant="outline" className="mt-4"> */}
               <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
-                Read more
+              <Link href="/bakery">Read More</Link>
               </Button>
             </div>
             <div 

@@ -110,7 +110,7 @@ export function Reviews({ roomId }: { roomId: string }) {
         {reviews.length < 20 && <div ref={ref} className="h-10" />}
       </div>
       <div className="mt-8 flex justify-center">
-        <Button onClick={handleLeaveReview} className="bg-primary text-primary-foreground hover:bg-primary/90">
+        <Button onClick={handleLeaveReview} className="bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
           Leave a Review
         </Button>
       </div>

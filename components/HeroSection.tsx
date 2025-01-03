@@ -16,7 +16,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-lg mb-4"
+          className="text-sm uppercase tracking-wider text-[#EBD7B2] mb-3"
         >
           MABU APARTMENTS
         </motion.p>

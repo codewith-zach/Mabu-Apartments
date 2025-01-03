@@ -70,7 +70,7 @@ export function MainFacilities() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-primary uppercase tracking-wider">MABU APARTMENTS</p>
+          <p className="text-sm uppercase tracking-wider text-[#978667] mb-3">MABU APARTMENTS</p>
           <h2 className="text-4xl font-bold mt-2">Main Facilities</h2>
         </motion.div>
 

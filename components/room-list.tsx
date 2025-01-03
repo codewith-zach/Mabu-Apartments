@@ -125,7 +125,7 @@ export default function RoomList({ roomTypes }: { roomTypes: RoomType[] }) {
                         <span>Capacity: {room.capacity} people</span>
                       </div>
                     </div>
-                    <Button asChild className="w-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-200">
+                    <Button asChild className="w-full bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
                       <Link href={`/rooms/${room.slug}`}>View Details</Link>
                     </Button>
                   </CardContent>

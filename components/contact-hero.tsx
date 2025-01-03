@@ -21,9 +21,9 @@ export function ContactHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-[#EBD7B2] tracking-[0.2em] uppercase mb-4"
+          className="text-sm uppercase tracking-wider text-[#EBD7B2] mb-3"  
         >
-          Luxury Hotel Experience
+          Mabu apartments
         </motion.span>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}

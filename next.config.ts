@@ -2,7 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['example.com'], // Add your allowed image domains here
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        pathname: '/**', // Adjust as needed to match the specific paths for your images
+      },
+    ],
   },
 };
 

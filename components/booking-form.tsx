@@ -23,7 +23,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
-import { Card, CardContent } from '@/components/ui/card'
 import { useToast } from '@/hooks/use-toast'
 
 interface DateRange {
@@ -96,61 +95,13 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
         totalPrice
       })
 
-      const availabilityResponse = await fetch('/api/check-availability', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          roomTypeId,
-          checkIn: values.dateRange.from.toISOString(),
-          checkOut: values.dateRange.to.toISOString(),
-        }),
+      // Simulating API calls
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      toast({
+        title: "Booking Submitted",
+        description: "Your booking request has been submitted successfully.",
       })
-
-      const availabilityData = await availabilityResponse.json()
-      console.log('Availability response:', availabilityData)
-
-      if (!availabilityData.available) {
-        toast({
-          title: 'Room Not Available',
-          description: 'Sorry, the room is not available for the selected dates. Please choose different dates.',
-          variant: 'destructive',
-        })
-        console.log('Toast displayed for unavailable room')
-        setIsLoading(false)
-        return;
-      }
-
-      console.log('Room available, initializing payment...')
-      const response = await fetch('/api/create-payment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: values.email,
-          amount: totalPrice * 100, // Paystack expects amount in kobo
-          metadata: {
-            name: values.name,
-            roomId: availabilityData.roomId,
-            checkIn: values.dateRange.from.toISOString(),
-            checkOut: values.dateRange.to.toISOString(),
-            roomTitle: title,
-          },
-        }),
-      })
-
-      const data = await response.json()
-      console.log('Payment initialization response:', data)
-
-      if (response.ok) {
-        console.log('Payment initialization successful, redirecting to:', data.authorization_url)
-        window.location.href = data.authorization_url
-      } else {
-        console.error('Payment initialization failed:', data)
-        throw new Error(data.message || 'Something went wrong')
-      }
     } catch (error) {
       console.error('Error in booking process:', error)
       toast({
@@ -164,8 +115,8 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
   }
 
   return (
-    <Card className="w-full mt-10">
-      <CardContent className="p-6">
+    <div className="w-full">
+      <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-2">
@@ -250,12 +201,6 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
                             from: range?.from,
                             to: range?.to
                           });
-                          // Only close if we have both dates
-                          if (range?.from && range?.to) {
-                            const closeEvent = new Event('keydown');
-                            (closeEvent as any).key = 'Escape';
-                            document.dispatchEvent(closeEvent);
-                          }
                         }}
                         numberOfMonths={2}
                       />
@@ -281,8 +226,8 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
             </Button>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
 

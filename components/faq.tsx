@@ -24,6 +24,10 @@ const faqs: FAQItem[] = [
   {
     question: "What's the Wi-Fi policy?",
     answer: "We provide complimentary high-speed Wi-Fi access to all our guests throughout their stay. Login details are provided upon check-in."
+  },
+  {
+    question: "What are the check-in and check-out times at Mabu Apartments?",
+    answer: "Check-in at Mabu Apartments is possible from 12:00, check-out is until 12:00."
   }
 ]
 

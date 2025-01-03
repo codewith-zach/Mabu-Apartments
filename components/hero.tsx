@@ -10,7 +10,7 @@ export default function Hero() {
         objectFit="cover"
         priority
       />
-      <div className="absolute inset-0 bg-black bg-opacity-50" />
+      <div className=" absolute inset-0 bg-black bg-opacity-50" />
       <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white">
       <p className="text-sm uppercase tracking-wider text-[#EBD7B2] mb-3">
                 Mabu apartments

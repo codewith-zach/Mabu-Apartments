@@ -67,7 +67,7 @@ export function Header() {
           isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
-        <header className={`${headerBackgroundClass} transition-colors duration-300`}>
+        <header className={`${headerBackgroundClass} transition-colors duration-300`} style={{ backgroundColor: isAtTop && !isMobileMenuOpen ? 'transparent' : '#faf9f6' }}>
           <div className="container flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
               <span
@@ -111,14 +111,16 @@ export function Header() {
         className={`fixed inset-0 bg-black/60 transition-opacity duration-300 ${
           isMobileMenuOpen ? 'opacity-100 z-[60]' : 'opacity-0 pointer-events-none z-0'
         }`}
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
       {/* Mobile Menu Panel - Fixed position independent of header visibility */}
       <div
-        className={`fixed top-0 right-0 h-full w-[300px] bg-white flex flex-col transition-transform duration-300 transform z-[70] ${
+        className={`fixed top-0 right-0 h-full w-[300px] flex flex-col transition-transform duration-300 transform z-[70] ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
+        style={{ backgroundColor: '#faf9f6' }}
       >
         {/* Top section with brand and close icon */}
         <div className="relative flex-shrink-0 px-6 py-6 border-b border-gray-200">

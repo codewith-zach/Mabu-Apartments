@@ -31,6 +31,7 @@ model Room {
   roomNumber   String         @unique
   bookings     Booking[]
   availability Availability[]
+  reviews      Review[]
 }
 
 model Booking {
@@ -56,5 +57,15 @@ model Availability {
   isAvailable Boolean
 
   @@unique([roomId, date])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id])
+  name      String
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
 }
 

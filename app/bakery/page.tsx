@@ -98,7 +98,7 @@ export default function BakeryPage() {
             ${slides[currentSlide].alignment.includes('pl-20') ? 'sm:pl-20' : ''}
             ${slides[currentSlide].alignment.includes('pr-20') ? 'sm:pr-20' : ''}
           `}>
-            <p className="tracking-[0.2em] text-sm mb-6 opacity-0 animate-fade-in-up">BAKERY EXPERIENCE</p>
+            <p className="tracking-[0.2em] text-sm uppercase tracking-wider text-[#EBD7B2] mb-3 opacity-0 animate-fade-in-up">rayuwa bakery</p>
             <h1 className="text-4xl md:text-6xl font-bold mb-8 tracking-wider whitespace-pre-line opacity-0 animate-fade-in-up animation-delay-300">
               {slides[currentSlide].heading}
             </h1>
@@ -196,7 +196,7 @@ export default function BakeryPage() {
 <section className="py-24 px-4 md:px-6 lg:px-8 bg-[#faf9f6]">
   <div className="max-w-7xl mx-auto">
     <div className="text-center mb-16">
-      <p className="text-sm uppercase tracking-wider text-gray-500">MABU APARTMENTS</p>
+      <p className="text-sm uppercase tracking-wider text-[#978667] mb-3">rayuwa bakery</p>
       <h2 className="text-4xl font-bold mt-2 text-gray-900">Bakery Menu</h2>
       
       <div className="flex justify-center gap-8 mt-8 border-b">
@@ -244,7 +244,7 @@ export default function BakeryPage() {
       </h3>
       <div className="absolute top-8 right-8">
         <p className="text-[#E5B17D] text-2xl font-light">
-          {activeTab === 'starters' ? 'Fresh\nBaked' : 'Freshly\nSqueezed'}
+          {/* {activeTab === 'starters' ? 'Fresh\nBaked' : 'Freshly\nSqueezed'} */}
         </p>
       </div>
       </div>

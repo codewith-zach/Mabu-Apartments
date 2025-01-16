@@ -1,9 +1,12 @@
+
 import { notFound } from 'next/navigation'
 import { PrismaClient } from '@prisma/client'
 import { RoomCarousel } from '@/components/room-carousel'
 import { Amenities } from '@/components/amenities'
 import { Reviews } from '@/components/reviews'
 import { BookingForm } from '@/components/booking-form'
+import { Hero } from '@/components/apartment-hero'
+import { RoomDescription } from '@/components/room-description'
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -22,48 +25,35 @@ export default async function RoomPage({ params }: PageProps) {
     notFound()
   }
 
-  // For this example, we'll use placeholder images
+  // Sample images for the carousel
   const images = [
     '/images/rooms/room1.jpg',
     '/images/rooms/room2.jpg',
-    '/images/rooms/room3.jpg'
-  ]
-
-  // Placeholder amenities
-  const amenities = [
-    'King Size Bed',
-    'Balcony',
-    'Disable Access',
-    'Welcome Bottle',
-    'Air Dryer',
-    'Safety Box',
-    '32 Inch TV',
-    'Pet Allowed',
-    'Wifi / Netflix access',
-    'Air Condition',
-    'Laundry Service'
+    '/images/rooms/room3.jpg',
   ]
 
   return (
-    <div className="container mx-auto px-4 py-8 pt-24">
-      <h1 className="text-4xl font-bold mb-8">{roomType.name}</h1>
-      <div className="grid lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2">
-          <RoomCarousel images={images} />
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold mb-4">About this space</h2>
-            <p className="text-gray-600 text-lg">{roomType.description}</p>
+    <>
+      <Hero title={roomType.name} />
+      <RoomDescription />
+      <div className="w-full bg-[#faf9f6] py-8">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-5xl mb-8">
+            <RoomCarousel images={images} />
           </div>
-          <Amenities amenities={amenities} />
-          <Reviews roomId={roomType.id} />
-        </div>
-        <div className="lg:col-span-1">
-          <div className="sticky top-24">
-            <BookingForm roomTypeId={roomType.id} price={roomType.price} title={roomType.name} />
+          <div className="grid lg:grid-cols-5 gap-8">
+            <div className="lg:col-span-3">
+              <Reviews roomId={roomType.id} />
+            </div>
+            <div className="lg:col-span-2 lg:mt-[7.5rem]">
+              <div className="sticky top-24">
+                <BookingForm roomTypeId={roomType.id} price={roomType.price} title={roomType.name} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

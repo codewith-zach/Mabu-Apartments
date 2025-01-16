@@ -40,19 +40,19 @@ export default function Home() {
   const rooms = [
     {
       title: "Studio Apartment",
-      price: "FROM ₦150/NIGHT",
+      price: "FROM 80,000/NIGHT",
       // description: "Cozy and efficient space for solo travelers or couples",
       image: "/images/rooms/room3.jpg"
     },
     {
       title: "One Bedroom Apartment",
-      price: "FROM ₦240/NIGHT",
+      price: "FROM ₦120,000/NIGHT",
       // description: "Spacious and comfortable for small families or groups",
       image: "/images/rooms/room1.jpg"
     },
     {
       title: "Two Bedroom Apartment",
-      price: "FROM ₦300/NIGHT",
+      price: "FROM ₦180,000/NIGHT",
       // description: "Luxurious space for larger groups or extended stays",
       image: "/images/rooms/room2.jpg"
     }
@@ -386,7 +386,7 @@ export default function Home() {
                           <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">
                             <p className="text-xs sm:text-sm font-medium mb-1 sm:mb-2">{room.price}</p>
                             <h3 className="text-lg sm:text-2xl font-semibold mb-1 sm:mb-2">{room.title}</h3>
-                            <p className="text-xs sm:text-sm text-white/80">{room.description}</p>
+                            {/* <p className="text-xs sm:text-sm text-white/80">{room.description}</p> */}
                           </div>
                         </div>
                       </div>
@@ -454,7 +454,7 @@ export default function Home() {
               </p>
               {/* <Button variant="outline" className="mt-4"> */}
               <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
-                Read more
+              <Link href="/about">Read More</Link>
               </Button>
             </div>
           </div>
@@ -473,7 +473,7 @@ export default function Home() {
               </p>
               {/* <Button variant="outline" className="mt-4"> */}
               <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
-                Read more
+              <Link href="/bakery">Read More</Link>
               </Button>
             </div>
             <div 

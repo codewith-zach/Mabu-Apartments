@@ -22,17 +22,17 @@ export default function CarouselWithScale() {
   const rooms = [
     {
       title: 'Studio Apartment',
-      price: 'FROM ₦150/NIGHT',
+      price: 'FROM ₦85,000/NIGHT',
       image: '/images/rooms/room3.jpg',
     },
     {
       title: 'One Bedroom Apartment',
-      price: 'FROM ₦240/NIGHT',
+      price: 'FROM ₦120,000/NIGHT',
       image: '/images/rooms/room1.jpg',
     },
     {
       title: 'Two Bedroom Apartment',
-      price: 'FROM ₦300/NIGHT',
+      price: 'FROM ₦180,000/NIGHT',
       image: '/images/rooms/room2.jpg',
     },
   ]

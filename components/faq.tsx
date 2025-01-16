@@ -24,6 +24,10 @@ const faqs: FAQItem[] = [
   {
     question: "What's the Wi-Fi policy?",
     answer: "We provide complimentary high-speed Wi-Fi access to all our guests throughout their stay. Login details are provided upon check-in."
+  },
+  {
+    question: "What are the check-in and check-out times at Mabu Apartments?",
+    answer: "Check-in at Mabu Apartments is possible from 12:00, check-out is until 12:00."
   }
 ]
 
@@ -35,11 +39,11 @@ export function FAQ() {
       <div className="container mx-auto px-4 md:px-10">
         <div className="grid lg:grid-cols-[1fr,2fr] gap-12 xl:gap-24">
           <div className="lg:max-w-sm">
-            <p className="text-primary uppercase tracking-wider">MABU APARTMENTS FAQ</p>
+            <p className="text-sm uppercase tracking-wider text-[#978667] mb-3">MABU APARTMENTS FAQ</p>
             <h2 className="text-4xl font-bold mt-2 mb-6">Frequently Asked Questions</h2>
             <p className="text-lg mb-12">Can't find your question in the list? We're here to help.</p>
         
-            <a href="/contact" className="text-primary hover:text-primary/80 inline-flex items-center">
+            <a href="/contact" className="text-sm uppercase tracking-wider text-[#978667] mb-3">
               Contact Us →
             </a>
           </div>

@@ -38,14 +38,14 @@ const formSchema = z.object({
     message: 'Please enter a valid email address.',
   }),
   dateRange: z.object({
-    from: z.date().optional(),
-    to: z.date().optional(),
+    from: z.date(),
+    to: z.date(),
   }),
 })
 
 export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; price: number; title: string }) {
   const [dateRange, setDateRange] = useState<DateRange>({
-    from: undefined,
+    from: new Date(),
     to: undefined,
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -59,7 +59,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
       name: '',
       email: '',
       dateRange: {
-        from: undefined,
+        from: new Date(),
         to: undefined,
       },
     },
@@ -155,52 +155,24 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
         return;
       }
 
-      const availabilityResponse = await fetch('/api/check-availability', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          roomTypeId,
-          checkIn: values.dateRange.from.toISOString(),
-          checkOut: values.dateRange.to.toISOString(),
-        }),
+      console.log('Submitting booking request with values:', {
+        roomTypeId,
+        checkIn: values.dateRange.from,
+        checkOut: values.dateRange.to,
+        name: values.name,
+        email: values.email,
+        totalPrice
       })
 
-      const availabilityData = await availabilityResponse.json()
+      // Simulating API calls
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      if (!availabilityData.available) {
-        toast({
-          title: 'Room Not Available',
-          description: 'Sorry, the room is not available for the selected dates. Please choose different dates.',
-          variant: 'destructive',
-        })
-        setIsLoading(false)
-        return;
-      }
-
-      const paymentResponse = await fetch('/api/create-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: values.email,
-          amount: totalPrice * 100, 
-          metadata: {
-            name: values.name,
-            roomId: availabilityData.roomId,
-            checkIn: values.dateRange.from.toISOString(),
-            checkOut: values.dateRange.to.toISOString(),
-            roomTitle: title,
-          },
-        }),
+      toast({
+        title: "Booking Submitted",
+        description: "Your booking request has been submitted successfully.",
       })
-
-      const paymentData = await paymentResponse.json()
-
-      if (paymentResponse.ok) {
-        window.location.href = paymentData.authorization_url
-      } else {
-        throw new Error(paymentData.message || 'Payment initialization failed')
-      }
     } catch (error) {
+      console.error('Error in booking process:', error)
       toast({
         title: 'Error',
         description: 'An error occurred during the booking process. Please try again.',
@@ -212,7 +184,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto relative">
+    <div className="w-full">
       <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -254,7 +226,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Date Range</FormLabel>
-                  <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                  <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -340,11 +312,11 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
                 </FormItem>
               )}
             />
-            {totalPrice > 0 && (
+            {dateRange.from && dateRange.to && (
               <div className="space-y-2 pt-4">
                 <div className="flex justify-between text-lg">
                   <span>Total Price:</span>
-                  <span className="font-bold">₦{totalPrice.toLocaleString()}</span>
+                  <span className="font-bold">₦{calculateTotalPrice().toLocaleString()}</span>
                 </div>
                 <p className="text-sm text-gray-500">
                   {nights > 0 &&
@@ -353,12 +325,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
                 </p>
               </div>
             )}
-            <Button 
-              type="submit" 
-              className="w-full bg-[#978667] hover:bg-[#4B514C] text-white font-semibold" 
-              size="lg" 
-              disabled={isLoading || !dateRange.from || !dateRange.to}
-            >
+            <Button type="submit" className="w-full bg-[#978667] hover:bg-[#4B514C] text-white font-semibold" size="lg" disabled={isLoading}>
               {isLoading ? 'Processing...' : 'Book Now'}
             </Button>
           </form>

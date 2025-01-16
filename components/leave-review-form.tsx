@@ -6,19 +6,52 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
+import { useToast } from "@/hooks/use-toast"
 
 interface LeaveReviewFormProps {
   onClose: () => void
+  roomId: string
 }
 
-export function LeaveReviewForm({ onClose }: LeaveReviewFormProps) {
+export function LeaveReviewForm({ onClose, roomId }: LeaveReviewFormProps) {
+  const [name, setName] = useState('')
   const [rating, setRating] = useState(5)
+  const [comment, setComment] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
-    // Here you would typically send the review data to your backend
-    console.log('Review submitted')
-    onClose()
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ roomId, name, rating, comment }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to submit review')
+      }
+
+      toast({
+        title: "Review submitted",
+        description: "Thank you for your feedback!",
+      })
+      onClose()
+    } catch (error) {
+      console.error('Error submitting review:', error)
+      toast({
+        title: "Error",
+        description: "Failed to submit review. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -31,7 +64,13 @@ export function LeaveReviewForm({ onClose }: LeaveReviewFormProps) {
           <CardContent className="space-y-4">
             <div>
               <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Your name" required />
+              <Input 
+                id="name" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name" 
+                required 
+              />
             </div>
             <div>
               <Label htmlFor="rating">Rating</Label>
@@ -47,12 +86,20 @@ export function LeaveReviewForm({ onClose }: LeaveReviewFormProps) {
             </div>
             <div>
               <Label htmlFor="comment">Comment</Label>
-              <Textarea id="comment" placeholder="Your review" required />
+              <Textarea 
+                id="comment" 
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Your review" 
+                required 
+              />
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
-            <Button type="submit">Submit Review</Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Submitting...' : 'Submit Review'}
+            </Button>
           </CardFooter>
         </form>
       </Card>

@@ -1,5 +1,7 @@
+'use client'
 
-import { notFound } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
 import { PrismaClient } from '@prisma/client'
 import { RoomCarousel } from '@/components/room-carousel'
 import { Amenities } from '@/components/amenities'
@@ -7,23 +9,41 @@ import { Reviews } from '@/components/reviews'
 import { BookingForm } from '@/components/booking-form'
 import { Hero } from '@/components/apartment-hero'
 import { RoomDescription } from '@/components/room-description'
-
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
+import { LoadingSpinner } from '@/components/loading-spinner'
 
 const prisma = new PrismaClient()
 
-export default async function RoomPage({ params }: PageProps) {
-  const { slug } = await params
-  
-  const roomType = await prisma.roomType.findUnique({
-    where: { slug },
-  })
+export default function RoomPage() {
+  const [roomType, setRoomType] = useState<any>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const params = useParams()
+  const { slug } = params
 
-  if (!roomType) {
-    notFound()
+  useEffect(() => {
+    const fetchRoomType = async () => {
+      try {
+        const response = await fetch(`/api/rooms/${slug}`)
+        const data = await response.json()
+        setRoomType(data)
+      } catch (error) {
+        console.error('Error fetching room type:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchRoomType()
+  }, [slug])
+
+  if (isLoading) {
+    return <LoadingSpinner />
   }
+
+  if (!roomType || roomType.rooms.length === 0) {
+    return <div>Room not found</div>
+  }
+
+  const roomId = roomType.rooms[0].id
 
   // Sample images for the carousel
   const images = [
@@ -43,7 +63,7 @@ export default async function RoomPage({ params }: PageProps) {
           </div>
           <div className="grid lg:grid-cols-5 gap-8">
             <div className="lg:col-span-3">
-              <Reviews roomId={roomType.id} />
+              <Reviews roomId={roomId} />
             </div>
             <div className="lg:col-span-2 lg:mt-[7.5rem]">
               <div className="sticky top-24">

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
+import { sendBookingConfirmationEmail } from '@/utils/email';
 
 const prisma = new PrismaClient()
 
@@ -22,9 +23,26 @@ export async function POST(req: Request) {
         paymentStatus: 'paid',
         paymentReference,
       },
+      include: {
+        room: {
+          include: {
+            roomType: true
+          }
+        }
+      }
     })
 
     console.log('Booking created:', booking)
+
+    // Send booking confirmation email
+    await sendBookingConfirmationEmail(guestEmail, {
+      roomType: booking.room.roomType.name,
+      checkIn: booking.checkIn,
+      checkOut: booking.checkOut,
+      totalPrice: booking.totalPrice,
+    });
+
+    console.log('Booking confirmation email sent');
 
     // Update room availability
     await updateRoomAvailability(roomId, new Date(checkIn), new Date(checkOut), false)

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
 import { Button } from "@/components/ui/button"
@@ -8,11 +8,11 @@ import { LeaveReviewForm } from './leave-review-form'
 import { Star } from 'lucide-react'
 
 type Review = {
-  id: number
+  id: string
   name: string
   rating: number
   comment: string
-  date: string
+  createdAt: string
 }
 
 const globalStyles = `
@@ -27,10 +27,9 @@ const globalStyles = `
 
 export function Reviews({ roomId }: { roomId: string }) {
   const [reviews, setReviews] = useState<Review[]>([])
-  const [visibleReviews, setVisibleReviews] = useState<Review[]>([])
   const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(true)
   const [ref, inView] = useInView()
-  const reviewsContainerRef = useRef<HTMLDivElement>(null)
   const [showReviewForm, setShowReviewForm] = useState(false)
 
   useEffect(() => {
@@ -46,45 +45,53 @@ export function Reviews({ roomId }: { roomId: string }) {
   }, [])
 
   const fetchReviews = async () => {
-    const newReviews: Review[] = Array.from({ length: 3 }, (_, i) => ({
-      id: reviews.length + i + 1,
-      name: `Guest ${reviews.length + i + 1}`,
-      rating: Math.floor(Math.random() * 2) + 4,
-      comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
-      date: new Date().toLocaleDateString(),
-    }))
-    setReviews(prevReviews => [...prevReviews, ...newReviews])
-    setPage(prevPage => prevPage + 1)
+    try {
+      const response = await fetch(`/api/reviews?roomId=${roomId}&page=${page}&limit=5`)
+      const data = await response.json()
+      setReviews(prevReviews => {
+        const newReviews = [...prevReviews, ...data.reviews]
+        const uniqueReviews = Array.from(new Set(newReviews.map(r => r.id)))
+          .map(id => newReviews.find(r => r.id === id))
+        return uniqueReviews
+      })
+      setHasMore(data.hasMore)
+      setPage(prevPage => prevPage + 1)
+    } catch (error) {
+      console.error('Error fetching reviews:', error)
+    }
   }
 
   useEffect(() => {
-    if (reviews.length === 0) {
-      fetchReviews()
-    }
+    fetchReviews()
   }, [])
 
   useEffect(() => {
-    if (inView && reviews.length < 20) {
+    if (inView && hasMore) {
       fetchReviews()
     }
-  }, [inView, reviews.length])
-
-  useEffect(() => {
-    setVisibleReviews(reviews.slice(0, page * 3))
-  }, [reviews, page])
+  }, [inView, hasMore])
 
   const handleLeaveReview = () => {
     setShowReviewForm(true)
   }
 
+  const handleCloseReviewForm = () => {
+    setShowReviewForm(false)
+    // Refresh reviews after submitting a new one
+    setReviews([])
+    setPage(1)
+    setHasMore(true)
+    fetchReviews()
+  }
+
   return (
-    <div ref={reviewsContainerRef} className="pt-8 mt-20 max-w-3xl px-4 sm:px-6 lg:px-8 bg-[#faf9f6]">
+    <div className="pt-8 mt-20 max-w-3xl px-4 sm:px-6 lg:px-8 bg-[#faf9f6]">
       <h2 className="text-3xl font-semibold mb-6 ml-4">Guest Reviews</h2>
       <div 
         className="space-y-6 max-h-[calc(100vh-250px)] overflow-y-auto pr-4 scrollbar-hide"
         style={{ scrollBehavior: 'smooth' }}
       >
-        {visibleReviews.map(review => (
+        {reviews.map(review => (
           <Card key={review.id} className="shadow-md hover:shadow-lg transition-shadow rounded-lg overflow-hidden ml-4 bg-[#F5F2ED]">
             <CardHeader className="bg-gray-50 bg-[#F5F2ED]">
               <div className="flex justify-between items-center">
@@ -100,21 +107,24 @@ export function Reviews({ roomId }: { roomId: string }) {
                   ))}
                 </div>
               </div>
-              <CardDescription className="text-sm mt-1 bg-[#F5F2ED]">{review.date}</CardDescription>
+              <CardDescription className="text-sm mt-1 bg-[#F5F2ED]">
+                {new Date(review.createdAt).toLocaleDateString()}
+              </CardDescription>
             </CardHeader>
             <CardContent className="py-6 ">
               <p className="text-gray-700 text-lg leading-relaxed">{review.comment}</p>
             </CardContent>
           </Card>
         ))}
-        {reviews.length < 20 && <div ref={ref} className="h-10" />}
+        {hasMore && <div ref={ref} className="h-10" />}
       </div>
       <div className="mt-8 flex justify-center">
         <Button onClick={handleLeaveReview} className="bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
           Leave a Review
         </Button>
       </div>
-      {showReviewForm && <LeaveReviewForm onClose={() => setShowReviewForm(false)} />}
+      {showReviewForm && <LeaveReviewForm onClose={handleCloseReviewForm} roomId={roomId} />}
     </div>
   )
 }
+

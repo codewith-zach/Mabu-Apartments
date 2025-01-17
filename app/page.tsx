@@ -301,7 +301,7 @@ export default function Home() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/video/mabuvid.mp4" type="video/mp4" />
+          <source src="/video/mabuvid2.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <motion.div
@@ -436,7 +436,7 @@ export default function Home() {
               className="relative aspect-[1000/625] rounded-lg overflow-hidden transform transition-all duration-1000 ease-out scale-95 opacity-0"
             >
               <Image
-                src="/images/mabuapartmentsfront.jpg"
+                src="/images/map.jpg"
                 alt="Mabu Apartments Location"
                 fill
                 className="object-cover"
@@ -481,7 +481,7 @@ export default function Home() {
               className="relative aspect-[1000/625] rounded-lg overflow-hidden transform transition-all duration-1000 ease-out scale-95 opacity-0 order-1 md:order-2"
             >
               <Image
-                src="/images/mabuapartmentsfront.jpg"
+                src="/images/bakery/bread4.jpg"
                 alt="Rayuwa Bakery"
                 fill
                 className="object-cover"

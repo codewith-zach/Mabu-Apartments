@@ -12,7 +12,7 @@ export function GetToKnowUs() {
       <div className="relative w-full max-w-sm mx-auto lg:mx-0 lg:max-w-md xl:max-w-lg px-4 sm:px-0 flex-shrink-0">
         <div className="relative aspect-[4/5] rounded-lg overflow-hidden bg-gray-200">
           <Image 
-            src="/images/mabuapartmentsfront.jpg"
+            src="/images/rooms/room1.jpg"
             alt="Mabu Apartments Main View"
             fill
             className="object-cover"
@@ -26,7 +26,7 @@ export function GetToKnowUs() {
           className="absolute top-1/4 -right-4 sm:-right-12 w-1/2 lg:w-3/5 aspect-[3/4] rounded-lg overflow-hidden border-4 border-white shadow-xl bg-gray-200 lg:-right-16"
         >
           <Image 
-            src="/images/mabuapartmentsfront.jpg"
+            src="/images/mabufront.jpg"
             alt="Mabu Apartments Detail View"
             fill
             className="object-cover"

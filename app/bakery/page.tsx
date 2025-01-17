@@ -17,23 +17,23 @@ export default function BakeryPage() {
   const [isPaused, setIsPaused] = useState(false)
   const [activeTab, setActiveTab] = useState('starters')
   const tabBackgrounds = {
-    starters: '/images/starters-background.jpg',
-    juice: '/images/juice-background.jpg'
+    starters: '/images/bakery/bread4.jpg',
+    juice: '/images/bakery/juice1.jpg'
   }
 
   const slides = [
     {
-      image: '/images/mabuapartmentsfront.jpg',
-      heading: 'A TRULY TASTE\nEXPERIENCE',
+      image: '/images/bakery/bread3.jpg',
+      heading: 'WHERE CRAVINGS\nBEGIN',
       alignment: 'text-left pl-20',
     },
     {
-      image: '/images/mabuapartmentsfront.jpg',
-      heading: 'ARTISAN\nBAKERY',
+      image: '/images/bakery/bread2.jpg',
+      heading: 'BITE INTO\nHAPPINESS',
       alignment: 'text-center',
     },
     {
-      image: '/images/mabuapartmentsfront.jpg',
+      image: '/images/bakery/bread.jpg',
       heading: 'FRESH\nDAILY',
       alignment: 'text-right pr-20',
     },
@@ -318,73 +318,73 @@ export default function BakeryPage() {
             name: "Water Pine Blast 500ml",
             description: "Watermelon, Pineapple",
             price: "N2000",
-            image: "/images/water-pine-blast.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Sunshine L'emu 500ml",
             description: "Sun, Milk",
             price: "N2000",
-            image: "/images/sunshine-lemu.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Pineapple Gin 500ml",
             description: "Pineapple, Gin",
             price: "N2000",
-            image: "/images/pineapple-gin.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Strawberry Pine 500ml",
             description: "Strawberry, Pineapple",
             price: "N2500",
-            image: "/images/strawberry-pine.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Orange Ginger 500ml",
             description: "Orange, Ginger",
             price: "N2000",
-            image: "/images/orange-ginger.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Classic Veggie 500ml",
             description: "Veggies",
             price: "N2500",
-            image: "/images/classic-veggie.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Mango pine 500ml",
             description: "Mango, Pineapples",
             price: "N2500",
-            image: "/images/mango-pine.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Fruta mista 500ml",
             description: "Fruit, Misters",
             price: "N2500",
-            image: "/images/fruta-mista.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Melon Boost 500ml",
             description: "Watermelon, Boost",
             price: "N2000",
-            image: "/images/melon-boost.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Carrot Glow 500ml",
             description: "Carrots, Glow",
             price: "N2500",
-            image: "/images/carrot-glow.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Green Glow 500ml",
             description: "Green, Glow",
             price: "N2500",
-            image: "/images/green-glow.jpg"
+            image: "/images/juice.jpg"
           },
           {
             name: "Tiger Nut 500ml",
             description: "Tigernut, Milk",
             price: "N2000",
-            image: "/images/tiger-nut.jpg"
+            image: "/images/juice.jpg"
           }
         ].map((item, index) => (
           <div key={index} className="flex items-center gap-4">

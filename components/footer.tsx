@@ -29,7 +29,7 @@ export function Footer() {
               </p>
             </div>
             <div className="flex space-x-4 mt-8">
-              <Link href="#" className="text-zinc-300 hover:text-white transition-colors">
+              <Link href="https://www.instagram.com/mabuapartments?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-zinc-300 hover:text-white transition-colors">
                 <Instagram className="h-5 w-5" />
               </Link>
               <Link href="#" className="text-zinc-300 hover:text-white transition-colors">
@@ -44,7 +44,7 @@ export function Footer() {
               <Link href="#" className="text-zinc-300 hover:text-white transition-colors">
                 <Facebook className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-zinc-300 hover:text-white transition-colors">
+              <Link href="https://x.com/MabuApartments" className="text-zinc-300 hover:text-white transition-colors">
                 <svg
                   viewBox="0 0 24 24"
                   fill="currentColor"

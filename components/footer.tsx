@@ -2,9 +2,11 @@ import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Instagram, Facebook, ArrowRight } from 'lucide-react'
+import { Instagram, Facebook, ArrowRight } from 'lucide-react'
 
 export function Footer() {
   return (
+    <footer className="bg-gradient-to-b from-zinc-900 via-zinc-800 to-zinc-900 text-white">
     <footer className="bg-gradient-to-b from-zinc-900 via-zinc-800 to-zinc-900 text-white">
       <div className="container py-12 md:py-16 px-4 md:px-6">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">

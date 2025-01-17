@@ -155,22 +155,51 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
         return;
       }
 
-      console.log('Submitting booking request with values:', {
-        roomTypeId,
-        checkIn: values.dateRange.from,
-        checkOut: values.dateRange.to,
-        name: values.name,
-        email: values.email,
-        totalPrice
+      const availabilityResponse = await fetch('/api/check-availability', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          roomTypeId,
+          checkIn: values.dateRange.from.toISOString(),
+          checkOut: values.dateRange.to.toISOString(),
+        }),
       })
 
-      // Simulating API calls
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const availabilityData = await availabilityResponse.json()
 
-      toast({
-        title: "Booking Submitted",
-        description: "Your booking request has been submitted successfully.",
+      if (!availabilityData.available) {
+        toast({
+          title: 'Room Not Available',
+          description: 'Sorry, the room is not available for the selected dates. Please choose different dates.',
+          variant: 'destructive',
+        })
+        setIsLoading(false)
+        return;
+      }
+
+      const paymentResponse = await fetch('/api/create-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: values.email,
+          amount: totalPrice * 100, 
+          metadata: {
+            name: values.name,
+            roomId: availabilityData.roomId,
+            checkIn: values.dateRange.from.toISOString(),
+            checkOut: values.dateRange.to.toISOString(),
+            roomTitle: title,
+          },
+        }),
       })
+
+      const paymentData = await paymentResponse.json()
+
+      if (paymentResponse.ok) {
+        window.location.href = paymentData.authorization_url
+      } else {
+        throw new Error(paymentData.message || 'Payment initialization failed')
+      }
     } catch (error) {
       console.error('Error in booking process:', error)
       toast({

@@ -15,9 +15,9 @@ const SLIDE_DURATION = 5000 // 5 seconds per slide
 export default function BakeryPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const [activeTab, setActiveTab] = useState('starters')
+  const [activeTab, setActiveTab] = useState('pastries')
   const tabBackgrounds = {
-    starters: '/images/bakery/bread4.jpg',
+    pastries: '/images/bakery/bread4.jpg',
     juice: '/images/bakery/juice1.jpg'
   }
 
@@ -201,14 +201,14 @@ export default function BakeryPage() {
       
       <div className="flex justify-center gap-8 mt-8 border-b">
         <button 
-          onClick={() => setActiveTab('starters')}
+          onClick={() => setActiveTab('pastries')}
           className={`px-4 py-2 text-sm uppercase tracking-wider ${
-            activeTab === 'starters' 
+            activeTab === 'pastries' 
               ? 'text-gray-900 border-b-2 border-gray-900' 
               : 'text-gray-500 hover:text-gray-900'
           }`}
         >
-          STARTERS
+          pastries
         </button>
         <button 
           onClick={() => setActiveTab('juice')}
@@ -234,60 +234,60 @@ export default function BakeryPage() {
       <div className="absolute inset-0 bg-black/60" />
       <div className="relative z-10">
       <p className="text-sm uppercase tracking-wider text-white/80">
-        {activeTab === 'starters' ? 'FRESH, WARM, AND DELICIOUS' : 'FRESH, PURE, AND REFRESHING'}
+        {activeTab === 'pastries' ? 'FRESH, WARM, AND DELICIOUS' : 'FRESH, PURE, AND REFRESHING'}
       </p>
       <h3 className="text-3xl md:text-4xl font-bold text-white mt-2 mb-4">
-        {activeTab === 'starters' 
+        {activeTab === 'pastries' 
           ? 'Start your day with our freshly baked goods'
           : 'Quench your thirst with our freshly pressed juices'
         }
       </h3>
       <div className="absolute top-8 right-8">
         <p className="text-[#E5B17D] text-2xl font-light">
-          {/* {activeTab === 'starters' ? 'Fresh\nBaked' : 'Freshly\nSqueezed'} */}
+          {/* {activeTab === 'pastries' ? 'Fresh\nBaked' : 'Freshly\nSqueezed'} */}
         </p>
       </div>
       </div>
     </div>
 
-    {activeTab === 'starters' ? (
+    {activeTab === 'pastries' ? (
       <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
         {[
           {
             name: "Croissant",
             description: "Buttery, Flaky Pastry",
             price: "N1500",
-            image: "/images/croissant.jpg"
+            image: "/images/bakery/starters.jpg"
           },
           {
             name: "Pain au Chocolat",
             description: "Chocolate-filled Pastry",
             price: "N1800",
-            image: "/images/pain-au-chocolat.jpg"
+            image: "/images/bakery/starters.jpg"
           },
           {
             name: "Baguette",
             description: "Traditional French Bread",
             price: "N1200",
-            image: "/images/baguette.jpg"
+            image: "/images/bakery/starters.jpg"
           },
           {
             name: "Cinnamon Roll",
             description: "Sweet, Spiced Pastry",
             price: "N1600",
-            image: "/images/cinnamon-roll.jpg"
+            image: "/images/bakery/starters.jpg"
           },
           {
             name: "Sourdough Bread",
             description: "Artisanal Fermented Bread",
             price: "N2000",
-            image: "/images/sourdough-bread.jpg"
+            image: "/images/bakery/starters.jpg"
           },
           {
             name: "Cheese Danish",
             description: "Sweet Cheese Pastry",
             price: "N1700",
-            image: "/images/cheese-danish.jpg"
+            image: "/images/bakery/starters.jpg"
           }
         ].map((item, index) => (
           <div key={index} className="flex items-center gap-4">

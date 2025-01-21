@@ -1,14 +1,11 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Cake, Coffee, Clock, Phone } from 'lucide-react'
-import { Dancing_Script, Bokor as Bookmark } from 'next/font/google'
+import { useState, useEffect } from "react"
+import Image from "next/image"
+import { Phone } from "lucide-react"
+import { Dancing_Script } from "next/font/google"
 
-const dancingScript = Dancing_Script({ subsets: ['latin'] })
+const dancingScript = Dancing_Script({ subsets: ["latin"] })
 
 const SLIDE_DURATION = 5000 // 5 seconds per slide
 
@@ -23,6 +20,9 @@ export default function BakeryPage() {
 
   const slides = [
     {
+      image: "/images/mabuapartmentsfront.jpg",
+      heading: "A TRULY TASTE EXPERIENCE",
+      alignment: "text-left pl-20",
       image: '/images/bakery/bread3.jpg',
       heading: 'WHERE CRAVINGS\nBEGIN',
       alignment: 'text-left pl-20',
@@ -48,7 +48,7 @@ export default function BakeryPage() {
     }, SLIDE_DURATION)
 
     return () => clearInterval(timer)
-  }, [isPaused])
+  }, [isPaused, slides.length])
 
   const handleDotClick = (index: number) => {
     setCurrentSlide(index)
@@ -58,13 +58,13 @@ export default function BakeryPage() {
   }
 
   useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = animationStyles;
-    document.head.appendChild(style);
+    const style = document.createElement("style")
+    style.textContent = animationStyles
+    document.head.appendChild(style)
     return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
+      document.head.removeChild(style)
+    }
+  }, [])
 
   return (
     <>
@@ -74,11 +74,11 @@ export default function BakeryPage() {
           <div
             key={index}
             className={`absolute inset-0 transition-opacity duration-1000 ${
-              currentSlide === index ? 'opacity-100 ' : 'opacity-0 '
+              currentSlide === index ? "opacity-100 " : "opacity-0 "
             }`}
           >
             <Image
-              src={slide.image}
+              src={slide.image || "/placeholder.svg"}
               alt={`Bakery slide ${index + 1}`}
               fill
               className="object-cover transform transition-transform duration-[2000ms] ease-in-out"
@@ -91,14 +91,18 @@ export default function BakeryPage() {
 
         {/* Content */}
         <div className="relative z-10 flex flex-col min-h-screen text-white px-4">
-          <div className={`flex flex-col flex-1 justify-center transition-all duration-500
-            ${slides[currentSlide].alignment.includes('text-left') ? 'sm:text-left text-center' : ''}
-            ${slides[currentSlide].alignment.includes('text-right') ? 'sm:text-right text-center' : ''}
-            ${slides[currentSlide].alignment.includes('text-center') ? 'text-center' : ''}
-            ${slides[currentSlide].alignment.includes('pl-20') ? 'sm:pl-20' : ''}
-            ${slides[currentSlide].alignment.includes('pr-20') ? 'sm:pr-20' : ''}
-          `}>
-            <p className="tracking-[0.2em] text-sm uppercase tracking-wider text-[#EBD7B2] mb-3 opacity-0 animate-fade-in-up">rayuwa bakery</p>
+          <div
+            className={`flex flex-col flex-1 justify-center transition-all duration-500
+            ${slides[currentSlide].alignment.includes("text-left") ? "sm:text-left text-center" : ""}
+            ${slides[currentSlide].alignment.includes("text-right") ? "sm:text-right text-center" : ""}
+            ${slides[currentSlide].alignment.includes("text-center") ? "text-center" : ""}
+            ${slides[currentSlide].alignment.includes("pl-20") ? "sm:pl-20" : ""}
+            ${slides[currentSlide].alignment.includes("pr-20") ? "sm:pr-20" : ""}
+          `}
+          >
+            <p className="text-sm uppercase tracking-wider text-[#EBD7B2] mb-3 opacity-0 animate-fade-in-up">
+              rayuwa bakery
+            </p>
             <h1 className="text-4xl md:text-6xl font-bold mb-8 tracking-wider whitespace-pre-line opacity-0 animate-fade-in-up animation-delay-300">
               {slides[currentSlide].heading}
             </h1>
@@ -106,7 +110,7 @@ export default function BakeryPage() {
         </div>
 
         {/* Navigation dots */}
-        <div 
+        <div
           className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-20"
           role="navigation"
           aria-label="Slideshow navigation"
@@ -117,80 +121,77 @@ export default function BakeryPage() {
               type="button"
               onClick={() => handleDotClick(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer hover:scale-125
-                ${currentSlide === index 
-                  ? 'bg-white ring-2 ring-white ring-offset-2 ring-offset-black/50' 
-                  : 'bg-white/50 hover:bg-white'
+                ${
+                  currentSlide === index
+                    ? "bg-white ring-2 ring-white ring-offset-2 ring-offset-black/50"
+                    : "bg-white/50 hover:bg-white"
                 }`}
               aria-label={`Go to slide ${index + 1}`}
-              aria-current={currentSlide === index ? 'true' : 'false'}
+              aria-current={currentSlide === index ? "true" : "false"}
             />
           ))}
         </div>
-
-    
       </section>
 
       {/* About Section */}
-<section className="py-24 px-4 md:px-6 lg:px-8 bg-[#faf9f6]">
-  <div className="max-w-7xl mx-auto">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <div className="space-y-8">
-        <div>
-          <h2 className="text-[#978667] uppercase tracking-wider text-sm mb-4">RAYUWA BAKERY</h2>
-          <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Your daily dose of delicious.</h3>
+      <section className="py-24 px-4 md:px-6 lg:px-8 bg-[#faf9f6]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-[#978667] uppercase tracking-wider text-sm mb-4">RAYUWA BAKERY</h2>
+                <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Your daily dose of delicious.</h3>
+              </div>
+
+              <div className="space-y-6 text-gray-600">
+                <p className="text-lg">
+                  Discover a delectable assortment of baked goods that will melt in your mouth. From fresh bread to
+                  warm, buttery pastries, every bite is a celebration of flavor and craftsmanship.
+                </p>
+                <p className="text-lg">
+                  Pair your treats with our refreshing selection of freshly pressed juices, perfect for a healthy and
+                  energizing start to your day.
+                </p>
+              </div>
+
+              <p className={`${dancingScript.className} text-2xl text-[#978667] italic`}>Life is sweeter with Rayuwa</p>
+            </div>
+
+            <div className="bg-[#faf9f6] rounded-lg space-y-3 shadow-lg p-4 mt-[100px] transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl hover:bg-[#f5f4f1]">
+              <div className="flex items-center space-x-6">
+                <div className="space-y-2 flex-1">
+                  <div className="flex items-center">
+                    <span className="text-lg font-medium text-gray-900">Bread</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-lg font-medium text-gray-900">Pastries</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-lg font-medium text-gray-900">Fresh Juice</span>
+                  </div>
+                </div>
+                <div className="flex flex-col justify-center space-y-2">
+                  <span className="text-gray-600">Opens 7.30am</span>
+                  <span className="text-gray-600">Until 7.30pm</span>
+                </div>
+              </div>
+
+              <hr className="border-t border-gray-200 my-4" />
+
+              <div className="pt-1">
+                <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">TO ORDER</p>
+                <a
+                  href="tel:+123456789"
+                  className="text-xl font-medium text-[#978667] hover:text-[#4B514C] transition-colors flex items-center gap-1"
+                >
+                  <Phone className="h-5 w-5" />
+                  +123456789
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div className="space-y-6 text-gray-600">
-          <p className="text-lg">
-            Discover a delectable assortment of baked goods that will melt in your mouth. 
-            From fresh bread to warm, buttery pastries, every bite is a celebration of flavor and craftsmanship.
-          </p>
-          <p className="text-lg">
-            Pair your treats with our refreshing selection of freshly pressed juices, 
-            perfect for a healthy and energizing start to your day.
-          </p>
-        </div>
-
-        <p className={`${dancingScript.className} text-2xl text-[#978667] italic`}>Life is sweeter with Rayuwa</p>
-      </div>
-
-      <div className="bg-[#faf9f6] rounded-lg space-y-3 shadow-lg p-4 mt-[100px] transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl hover:bg-[#f5f4f1]">
-  <div className="flex items-center space-x-6">
-    <div className="space-y-2 flex-1">
-      <div className="flex items-center">
-        <span className="text-lg font-medium text-gray-900">Bread</span>
-      </div>
-      <div className="flex items-center">
-        <span className="text-lg font-medium text-gray-900">Pastries</span>
-      </div>
-      <div className="flex items-center">
-        <span className="text-lg font-medium text-gray-900">Fresh Juice</span>
-      </div>
-    </div>
-    <div className="flex flex-col justify-center space-y-2">
-      <span className="text-gray-600">Opens 7.30am</span>
-      <span className="text-gray-600">Until 7.30pm</span>
-    </div>
-  </div>
-
-  <hr className="border-t border-gray-200 my-4" />
-
-  <div className="pt-1">
-    <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">TO ORDER</p>
-    <a 
-      href="tel:+123456789" 
-      className="text-xl font-medium text-[#978667] hover:text-[#4B514C] transition-colors flex items-center gap-1"
-    >
-      <Phone className="h-5 w-5" />
-      +123456789
-    </a>
-  </div>
-</div>
-
-
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Menu Section */}
 <section className="py-24 px-4 md:px-6 lg:px-8 bg-[#faf9f6]">
@@ -416,23 +417,23 @@ export default function BakeryPage() {
 }
 
 const animationStyles = `
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  .animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out forwards;
-  }
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
 
-  .animation-delay-300 {
-    animation-delay: 300ms;
-  }
-`;
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+`
 

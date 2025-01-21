@@ -20,9 +20,6 @@ export default function BakeryPage() {
 
   const slides = [
     {
-      image: "/images/mabuapartmentsfront.jpg",
-      heading: "A TRULY TASTE EXPERIENCE",
-      alignment: "text-left pl-20",
       image: '/images/bakery/bread3.jpg',
       heading: 'WHERE CRAVINGS\nBEGIN',
       alignment: 'text-left pl-20',

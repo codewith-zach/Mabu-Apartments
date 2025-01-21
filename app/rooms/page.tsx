@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client'
-import RoomList from '@/components/room-list'
-import Hero from '@/components/hero'
+import { PrismaClient } from "@prisma/client"
+import RoomList from "@/components/room-list"
+import Hero from "@/components/hero"
 
 const prisma = new PrismaClient()
 
@@ -9,7 +9,7 @@ export default async function RoomsPage() {
 
   return (
     <div className="min-h-screen">
-      <Hero />
+      <Hero title="Rooms & Suites" />
       <div className="container mx-auto px-4 py-16 bg-[#faf9f6]">
         {/* <h2 className="text-3xl font-bold mb-8">Our Rooms</h2> */}
         <RoomList roomTypes={roomTypes} />

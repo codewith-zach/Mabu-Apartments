@@ -21,15 +21,13 @@ export function RoomDescription() {
               mabu apartments
             </p>
             <h2 className="text-3xl font-bold mb-8">
-              A deeply space that invites you to truly Switch Off.
+            Luxury Meets Comfort in Every Corner.
             </h2>
             <div className="space-y-4 text-neutral-600">
               <p className="text-base mb-8 leading-relaxed text-gray-600">
-                The dark wood panelling and furnishings, deluxe red-draped four-poster bed, and magnificent black stone bathroom evoke the charm of a secluded Sierra Nevada getaway. The intimate scale and finish give the room a distinctly personal feel.
-              </p>
+              Our rooms are thoughtfully designed to blend comfort and elegance, offering a perfect retreat for every guest. Each space features modern amenities, cozy furnishings, and stylish décor to create a relaxing and welcoming atmosphere.              </p>
               <p className="text-base mb-8 leading-relaxed text-gray-600">
-                The dark wood panelling and furnishings, deluxe red-draped four-poster bed, and magnificent black stone bathroom evoke the charm.
-              </p>
+              Whether you're visiting for business or leisure, our rooms provide the ideal balance of luxury and convenience, ensuring a restful and memorable stay.              </p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-6">

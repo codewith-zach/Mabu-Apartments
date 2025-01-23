@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect } from "react"
 import { HeroSection } from "@/components/HeroSection"
 import { GetToKnowUs } from "@/components/GetToKnowUs"
 import { LocationSection } from "@/components/LocationSection"
@@ -14,8 +14,7 @@ export default function AboutPage() {
     const handleScroll = () => {
       if (sectionRef.current) {
         const sectionRect = sectionRef.current.getBoundingClientRect()
-        const viewportHeight = window.innerHeight
-        const sectionHeight = sectionRect.height
+        // Removed unused variables
       }
     }
 

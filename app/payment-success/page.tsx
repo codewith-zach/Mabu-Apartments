@@ -58,7 +58,19 @@ export default function PaymentSuccessPage() {
       })
   }, [searchParams])
 
-  const createBooking = async (paymentData: any) => {
+  const createBooking = async (paymentData: {
+    metadata: {
+      roomId: string
+      name: string
+      checkIn: string
+      checkOut: string
+    }
+    customer: {
+      email: string
+    }
+    amount: number
+    reference: string
+  }) => {
     const response = await fetch("/api/create-booking", {
       method: "POST",
       headers: {
@@ -90,8 +102,8 @@ export default function PaymentSuccessPage() {
               {/* Add note about email */}
               <br />
               <span className="text-sm">
-                A confirmation email will be sent to your email address shortly. If you don't receive it, please check
-                your spam folder or contact support.
+                A confirmation email will be sent to your email address shortly. If you don&apos;t receive it, please
+                check your spam folder or contact support.
               </span>
             </p>
             <p className="text-sm text-gray-500 mb-4">Reference: {reference}</p>

@@ -2,19 +2,24 @@
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-import { PrismaClient } from '@prisma/client'
 import { RoomCarousel } from '@/components/room-carousel'
-import { Amenities } from '@/components/amenities'
 import { Reviews } from '@/components/reviews'
 import { BookingForm } from '@/components/booking-form'
 import { Hero } from '@/components/apartment-hero'
 import { RoomDescription } from '@/components/room-description'
 import { LoadingSpinner } from '@/components/loading-spinner'
 
-const prisma = new PrismaClient()
+
+// Define the structure of the room type
+interface Room {
+  id: string
+  name: string
+  price: number
+  rooms: { id: string }[]
+}
 
 export default function RoomPage() {
-  const [roomType, setRoomType] = useState<any>(null)
+  const [roomType, setRoomType] = useState<Room | null>(null) // Use the defined type
   const [isLoading, setIsLoading] = useState(true)
   const params = useParams()
   const { slug } = params
@@ -76,4 +81,3 @@ export default function RoomPage() {
     </>
   )
 }
-

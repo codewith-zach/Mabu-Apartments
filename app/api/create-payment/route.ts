@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import https from 'https'
 
-export async function POST(req: Request) {
+export async function POST(req: Request): Promise<Response> {
   try {
     const { email, amount, metadata } = await req.json()
 
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       },
     }
 
-    return new Promise((resolve, reject) => {
+    return await new Promise<Response>((resolve) => {
       const reqPaystack = https.request(options, (res) => {
         let data = ''
 
@@ -42,12 +42,12 @@ export async function POST(req: Request) {
             resolve(NextResponse.json(response.data))
           } else {
             console.error('Paystack error:', response.message)
-            reject(NextResponse.json({ message: response.message }, { status: 400 }))
+            resolve(NextResponse.json({ message: response.message }, { status: 400 }))
           }
         })
       }).on('error', (error) => {
         console.error('Request error:', error)
-        reject(NextResponse.json({ message: 'An error occurred' }, { status: 500 }))
+        resolve(NextResponse.json({ message: 'An error occurred' }, { status: 500 }))
       })
 
       reqPaystack.write(params)
@@ -58,4 +58,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: 'An unexpected error occurred' }, { status: 500 })
   }
 }
-

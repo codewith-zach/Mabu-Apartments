@@ -17,7 +17,6 @@ interface RatingDisplayProps {
 
 export function RatingDisplay({ 
   overallRating = 4.93,
-  totalReviews = 536,
   categories = [
     { name: 'Cleanliness', score: 4.9, icon: <SprayCanIcon className="w-5 h-5" /> },
     { name: 'Accuracy', score: 5.0, icon: <CheckIcon className="w-5 h-5" /> },

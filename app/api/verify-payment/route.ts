@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import https from 'https'
 
-export async function GET(req: Request) {
+export async function GET(req: Request): Promise<Response> {
   try {
     const url = new URL(req.url)
     const reference = url.searchParams.get('reference')
@@ -21,7 +21,7 @@ export async function GET(req: Request) {
       },
     }
 
-    return new Promise((resolve, reject) => {
+    return await new Promise<Response>((resolve) => {
       const reqPaystack = https.request(options, (res) => {
         let data = ''
 
@@ -34,26 +34,42 @@ export async function GET(req: Request) {
             const response = JSON.parse(data)
             console.log('Paystack response:', response)
             if (response.status && response.data.status === 'success') {
-              resolve(NextResponse.json({
-                status: 'success',
-                reference: response.data.reference,
-                amount: response.data.amount,
-                paidAt: response.data.paid_at,
-                metadata: response.data.metadata,
-                customer: response.data.customer
-              }))
+              resolve(
+                NextResponse.json({
+                  status: 'success',
+                  reference: response.data.reference,
+                  amount: response.data.amount,
+                  paidAt: response.data.paid_at,
+                  metadata: response.data.metadata,
+                  customer: response.data.customer,
+                })
+              )
             } else {
               console.error('Paystack error:', response.message)
-              resolve(NextResponse.json({ status: 'error', message: response.message }, { status: 400 }))
+              resolve(
+                NextResponse.json({ status: 'error', message: response.message }, { status: 400 })
+              )
             }
           } catch (error) {
             console.error('Error parsing Paystack response:', error)
-            reject(NextResponse.json({ status: 'error', message: 'Error processing payment verification' }, { status: 500 }))
+            resolve(
+              NextResponse.json(
+                { status: 'error', message: 'Error processing payment verification' },
+                { status: 500 }
+              )
+            )
           }
         })
-      }).on('error', (error) => {
+      })
+
+      reqPaystack.on('error', (error) => {
         console.error('Request error:', error)
-        reject(NextResponse.json({ status: 'error', message: 'An error occurred while verifying the transaction' }, { status: 500 }))
+        resolve(
+          NextResponse.json(
+            { status: 'error', message: 'An error occurred while verifying the transaction' },
+            { status: 500 }
+          )
+        )
       })
 
       reqPaystack.end()
@@ -63,4 +79,3 @@ export async function GET(req: Request) {
     return NextResponse.json({ status: 'error', message: 'An unexpected error occurred' }, { status: 500 })
   }
 }
-

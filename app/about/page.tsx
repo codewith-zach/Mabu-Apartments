@@ -1,15 +1,14 @@
-'use client'
+"use client"
 
-import { useRef, useEffect, useState } from 'react'
-import { HeroSection } from '@/components/HeroSection'
-import { GetToKnowUs } from '@/components/GetToKnowUs'
-import { LocationSection } from '@/components/LocationSection'
-import { MainFacilities } from '@/components/MainFacilities'
-import { FAQ } from '@/components/faq'
+import { useRef, useEffect, useState } from "react"
+import { HeroSection } from "@/components/HeroSection"
+import { GetToKnowUs } from "@/components/GetToKnowUs"
+import { LocationSection } from "@/components/LocationSection"
+import { MainFacilities } from "@/components/MainFacilities"
+import { FAQ } from "@/components/faq"
 
 export default function AboutPage() {
   const sectionRef = useRef<HTMLDivElement>(null)
-  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,23 +16,11 @@ export default function AboutPage() {
         const sectionRect = sectionRef.current.getBoundingClientRect()
         const viewportHeight = window.innerHeight
         const sectionHeight = sectionRect.height
-
-        // Calculate scroll progress within the section
-        const sectionTop = sectionRect.top
-        const progress = Math.min(
-          1,
-          Math.max(
-            0,
-            (viewportHeight - sectionTop) / (viewportHeight + sectionHeight)
-          )
-        )
-
-        setScrollProgress(progress)
       }
     }
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   return (

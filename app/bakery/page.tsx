@@ -12,27 +12,27 @@ const SLIDE_DURATION = 5000 // 5 seconds per slide
 export default function BakeryPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const [activeTab, setActiveTab] = useState('pastries')
+  const [activeTab, setActiveTab] = useState("pastries")
   const tabBackgrounds = {
-    pastries: '/images/bakery/bread4.jpg',
-    juice: '/images/bakery/juice1.jpg'
+    pastries: "/images/bakery/bread4.jpg",
+    juice: "/images/bakery/juice1.jpg",
   }
 
   const slides = [
     {
-      image: '/images/bakery/bread3.jpg',
-      heading: 'WHERE CRAVINGS\nBEGIN',
-      alignment: 'text-left pl-20',
+      image: "/images/bakery/bread3.jpg",
+      heading: "WHERE CRAVINGS\nBEGIN",
+      alignment: "text-left pl-20",
     },
     {
-      image: '/images/bakery/bread2.jpg',
-      heading: 'BITE INTO\nHAPPINESS',
-      alignment: 'text-center',
+      image: "/images/bakery/bread2.jpg",
+      heading: "BITE INTO\nHAPPINESS",
+      alignment: "text-center",
     },
     {
-      image: '/images/bakery/bread.jpg',
-      heading: 'FRESH\nDAILY',
-      alignment: 'text-right pr-20',
+      image: "/images/bakery/bread.jpg",
+      heading: "FRESH\nDAILY",
+      alignment: "text-right pr-20",
     },
   ]
 
@@ -131,8 +131,16 @@ export default function BakeryPage() {
       </section>
 
       {/* About Section */}
-      <section className="py-24 px-4 md:px-6 lg:px-8 bg-[#faf9f6]">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-24 px-4 md:px-6 lg:px-8 bg-[#faf9f6] relative">
+        <div
+          className="absolute inset-0 opacity-50"
+          style={{
+            backgroundImage: "url('/images/pattern_2.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div>
@@ -191,224 +199,223 @@ export default function BakeryPage() {
       </section>
 
       {/* Menu Section */}
-<section className="py-24 px-4 md:px-6 lg:px-8 bg-[#faf9f6]">
-  <div className="max-w-7xl mx-auto">
-    <div className="text-center mb-16">
-      <p className="text-sm uppercase tracking-wider text-[#978667] mb-3">rayuwa bakery</p>
-      <h2 className="text-4xl font-bold mt-2 text-gray-900">Bakery Menu</h2>
-      
-      <div className="flex justify-center gap-8 mt-8 border-b">
-        <button 
-          onClick={() => setActiveTab('pastries')}
-          className={`px-4 py-2 text-sm uppercase tracking-wider ${
-            activeTab === 'pastries' 
-              ? 'text-gray-900 border-b-2 border-gray-900' 
-              : 'text-gray-500 hover:text-gray-900'
-          }`}
-        >
-          pastries
-        </button>
-        <button 
-          onClick={() => setActiveTab('juice')}
-          className={`px-4 py-2 text-sm uppercase tracking-wider ${
-            activeTab === 'juice' 
-              ? 'text-gray-900 border-b-2 border-gray-900' 
-              : 'text-gray-500 hover:text-gray-900'
-          }`}
-        >
-          JUICE BAR
-        </button>
-      </div>
-    </div>
+      <section className="py-24 px-4 md:px-6 lg:px-8 bg-[#faf9f6]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-sm uppercase tracking-wider text-[#978667] mb-3">rayuwa bakery</p>
+            <h2 className="text-4xl font-bold mt-2 text-gray-900">Bakery Menu</h2>
 
-    <div className="relative rounded-lg p-12 mb-16 overflow-hidden">
-      <Image
-        src={tabBackgrounds[activeTab as keyof typeof tabBackgrounds]}
-        alt={`${activeTab} menu background`}
-        fill
-        className="object-cover"
-        priority
-      />
-      <div className="absolute inset-0 bg-black/60" />
-      <div className="relative z-10">
-      <p className="text-sm uppercase tracking-wider text-white/80">
-        {activeTab === 'pastries' ? 'FRESH, WARM, AND DELICIOUS' : 'FRESH, PURE, AND REFRESHING'}
-      </p>
-      <h3 className="text-3xl md:text-4xl font-bold text-white mt-2 mb-4">
-        {activeTab === 'pastries' 
-          ? 'Start your day with our freshly baked goods'
-          : 'Quench your thirst with our freshly pressed juices'
-        }
-      </h3>
-      <div className="absolute top-8 right-8">
-        <p className="text-[#E5B17D] text-2xl font-light">
-          {/* {activeTab === 'pastries' ? 'Fresh\nBaked' : 'Freshly\nSqueezed'} */}
-        </p>
-      </div>
-      </div>
-    </div>
-
-    {activeTab === 'pastries' ? (
-      <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
-        {[
-          {
-            name: "Croissant",
-            description: "Buttery, Flaky Pastry",
-            price: "N1500",
-            image: "/images/bakery/starters.jpg"
-          },
-          {
-            name: "Pain au Chocolat",
-            description: "Chocolate-filled Pastry",
-            price: "N1800",
-            image: "/images/bakery/starters.jpg"
-          },
-          {
-            name: "Baguette",
-            description: "Traditional French Bread",
-            price: "N1200",
-            image: "/images/bakery/starters.jpg"
-          },
-          {
-            name: "Cinnamon Roll",
-            description: "Sweet, Spiced Pastry",
-            price: "N1600",
-            image: "/images/bakery/starters.jpg"
-          },
-          {
-            name: "Sourdough Bread",
-            description: "Artisanal Fermented Bread",
-            price: "N2000",
-            image: "/images/bakery/starters.jpg"
-          },
-          {
-            name: "Cheese Danish",
-            description: "Sweet Cheese Pastry",
-            price: "N1700",
-            image: "/images/bakery/starters.jpg"
-          }
-        ].map((item, index) => (
-          <div key={index} className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden">
-              <Image
-                src={item.image}
-                alt={item.name}
-                width={64}
-                height={64}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between gap-4">
-                <p className="text-lg font-medium text-gray-900">{item.name}</p>
-                <div className="border-b border-dotted border-gray-300 flex-1" />
-                <p className="text-gray-900">{item.price}</p>
-              </div>
-              <p className="text-gray-600 text-sm italic">{item.description}</p>
+            <div className="flex justify-center gap-8 mt-8 border-b">
+              <button
+                onClick={() => setActiveTab("pastries")}
+                className={`px-4 py-2 text-sm uppercase tracking-wider ${
+                  activeTab === "pastries"
+                    ? "text-gray-900 border-b-2 border-gray-900"
+                    : "text-gray-500 hover:text-gray-900"
+                }`}
+              >
+                pastries
+              </button>
+              <button
+                onClick={() => setActiveTab("juice")}
+                className={`px-4 py-2 text-sm uppercase tracking-wider ${
+                  activeTab === "juice"
+                    ? "text-gray-900 border-b-2 border-gray-900"
+                    : "text-gray-500 hover:text-gray-900"
+                }`}
+              >
+                JUICE BAR
+              </button>
             </div>
           </div>
-        ))}
-      </div>
-    ) : (
-      <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
-        {[
-          {
-            name: "Water Pine Blast 500ml",
-            description: "Watermelon, Pineapple",
-            price: "N2000",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Sunshine L'emu 500ml",
-            description: "Sun, Milk",
-            price: "N2000",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Pineapple Gin 500ml",
-            description: "Pineapple, Gin",
-            price: "N2000",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Strawberry Pine 500ml",
-            description: "Strawberry, Pineapple",
-            price: "N2500",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Orange Ginger 500ml",
-            description: "Orange, Ginger",
-            price: "N2000",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Classic Veggie 500ml",
-            description: "Veggies",
-            price: "N2500",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Mango pine 500ml",
-            description: "Mango, Pineapples",
-            price: "N2500",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Fruta mista 500ml",
-            description: "Fruit, Misters",
-            price: "N2500",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Melon Boost 500ml",
-            description: "Watermelon, Boost",
-            price: "N2000",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Carrot Glow 500ml",
-            description: "Carrots, Glow",
-            price: "N2500",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Green Glow 500ml",
-            description: "Green, Glow",
-            price: "N2500",
-            image: "/images/juice.jpg"
-          },
-          {
-            name: "Tiger Nut 500ml",
-            description: "Tigernut, Milk",
-            price: "N2000",
-            image: "/images/juice.jpg"
-          }
-        ].map((item, index) => (
-          <div key={index} className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden">
-              <Image
-                src={item.image}
-                alt={item.name}
-                width={64}
-                height={64}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between gap-4">
-                <p className="text-lg font-medium text-gray-900">{item.name}</p>
-                <div className="border-b border-dotted border-gray-300 flex-1" />
-                <p className="text-gray-900">{item.price}</p>
+
+          <div className="relative rounded-lg p-12 mb-16 overflow-hidden">
+            <Image
+              src={tabBackgrounds[activeTab as keyof typeof tabBackgrounds] || "/placeholder.svg"}
+              alt={`${activeTab} menu background`}
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/60" />
+            <div className="relative z-10">
+              <p className="text-sm uppercase tracking-wider text-white/80">
+                {activeTab === "pastries" ? "FRESH, WARM, AND DELICIOUS" : "FRESH, PURE, AND REFRESHING"}
+              </p>
+              <h3 className="text-3xl md:text-4xl font-bold text-white mt-2 mb-4">
+                {activeTab === "pastries"
+                  ? "Start your day with our freshly baked goods"
+                  : "Quench your thirst with our freshly pressed juices"}
+              </h3>
+              <div className="absolute top-8 right-8">
+                <p className="text-[#E5B17D] text-2xl font-light">
+                  {/* {activeTab === 'pastries' ? 'Fresh\nBaked' : 'Freshly\nSqueezed'} */}
+                </p>
               </div>
-              <p className="text-gray-600 text-sm italic">{item.description}</p>
             </div>
           </div>
-        ))}
-      </div>
-    )}
-  </div>
-</section>
+
+          {activeTab === "pastries" ? (
+            <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
+              {[
+                {
+                  name: "Croissant",
+                  description: "Buttery, Flaky Pastry",
+                  price: "N1500",
+                  image: "/images/bakery/starters.jpg",
+                },
+                {
+                  name: "Pain au Chocolat",
+                  description: "Chocolate-filled Pastry",
+                  price: "N1800",
+                  image: "/images/bakery/starters.jpg",
+                },
+                {
+                  name: "Baguette",
+                  description: "Traditional French Bread",
+                  price: "N1200",
+                  image: "/images/bakery/starters.jpg",
+                },
+                {
+                  name: "Cinnamon Roll",
+                  description: "Sweet, Spiced Pastry",
+                  price: "N1600",
+                  image: "/images/bakery/starters.jpg",
+                },
+                {
+                  name: "Sourdough Bread",
+                  description: "Artisanal Fermented Bread",
+                  price: "N2000",
+                  image: "/images/bakery/starters.jpg",
+                },
+                {
+                  name: "Cheese Danish",
+                  description: "Sweet Cheese Pastry",
+                  price: "N1700",
+                  image: "/images/bakery/starters.jpg",
+                },
+              ].map((item, index) => (
+                <div key={index} className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden">
+                    <Image
+                      src={item.image || "/placeholder.svg"}
+                      alt={item.name}
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-lg font-medium text-gray-900">{item.name}</p>
+                      <div className="border-b border-dotted border-gray-300 flex-1" />
+                      <p className="text-gray-900">{item.price}</p>
+                    </div>
+                    <p className="text-gray-600 text-sm italic">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
+              {[
+                {
+                  name: "Water Pine Blast 500ml",
+                  description: "Watermelon, Pineapple, Beetroot & Ginger",
+                  price: "N2000",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Sunshine L'emu 500ml",
+                  description: "Pineapple, Orange & Ginger",
+                  price: "N2000",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Pineapple Gin 500ml",
+                  description: "Pineapple & Ginger",
+                  price: "N2000",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Strawberry Pine 500ml",
+                  description: "Strawberry & Pineapple",
+                  price: "N2500",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Orange Ginger 500ml",
+                  description: "Orange & Ginger",
+                  price: "N2000",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Classic Veggie 500ml",
+                  description: "Carrot, Pineapple, Beetroot & Ginger",
+                  price: "N2500",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Mango pine 500ml",
+                  description: "Mango & Pineapples",
+                  price: "N2500",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Fruta mista 500ml",
+                  description: "Blend of Various Fruits",
+                  price: "N2500",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Melon Boost 500ml",
+                  description: "Watermelon, Beetroot & Ginger",
+                  price: "N2000",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Carrot Glow 500ml",
+                  description: "Carrots, Ginger",
+                  price: "N2500",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Green Glow 500ml",
+                  description: "Lettuce, Kale, Parsley, Celery, Apple, Cucumber & Ginger",
+                  price: "N2500",
+                  image: "/images/juice.jpg",
+                },
+                {
+                  name: "Tiger Nut 500ml",
+                  description: "Tigernuts",
+                  price: "N2000",
+                  image: "/images/juice.jpg",
+                },
+              ].map((item, index) => (
+                <div key={index} className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden">
+                    <Image
+                      src={item.image || "/placeholder.svg"}
+                      alt={item.name}
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-lg font-medium text-gray-900">{item.name}</p>
+                      <div className="border-b border-dotted border-gray-300 flex-1" />
+                      <p className="text-gray-900">{item.price}</p>
+                    </div>
+                    <p className="text-gray-600 text-sm italic">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
     </>
   )
 }

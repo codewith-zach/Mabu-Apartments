@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -8,17 +8,20 @@ import { Button } from '@/components/ui/button'
 export function RoomCarousel({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const prev = () => setCurrentIndex((currentIndex - 1 + images.length) % images.length)
-  const next = () => setCurrentIndex((currentIndex + 1) % images.length)
+  const prev = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
+  }, [images.length])
+
+  const next = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+  }, [images.length])
 
   // Auto-advance the carousel every 5 seconds
   useEffect(() => {
-    const timer = setInterval(() => {
-      next()
-    }, 5000)
+    const timer = setInterval(next, 5000)
 
     return () => clearInterval(timer)
-  }, [currentIndex]) // Reset the timer when currentIndex changes
+  }, [next])
 
   return (
     <div className="relative rounded-xl overflow-hidden">
@@ -66,4 +69,3 @@ export function RoomCarousel({ images }: { images: string[] }) {
     </div>
   )
 }
-

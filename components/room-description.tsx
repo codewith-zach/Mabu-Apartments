@@ -1,4 +1,4 @@
-import { Bed, Lock, Car, Tv, Zap, ShowerHeadIcon as Shower, Utensils, Wifi, Wind, Fan, Shirt } from 'lucide-react'
+import { Bed, Tv, Zap, ShowerHeadIcon as Shower, Utensils, Wifi, Fan, Shirt } from 'lucide-react'
 
 const amenities = [
   { icon: Bed, label: 'King Size Bed' },
@@ -27,7 +27,7 @@ export function RoomDescription() {
               <p className="text-base mb-8 leading-relaxed text-gray-600">
               Our rooms are thoughtfully designed to blend comfort and elegance, offering a perfect retreat for every guest. Each space features modern amenities, cozy furnishings, and stylish décor to create a relaxing and welcoming atmosphere.              </p>
               <p className="text-base mb-8 leading-relaxed text-gray-600">
-              Whether you're visiting for business or leisure, our rooms provide the ideal balance of luxury and convenience, ensuring a restful and memorable stay.              </p>
+              Whether you&apos;re visiting for business or leisure, our rooms provide the ideal balance of luxury and convenience, ensuring a restful and memorable stay.              </p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-6">

@@ -12,7 +12,7 @@ export function LocationSection() {
             <p className="text-sm uppercase tracking-wider text-[#978667] mb-3">MABU APARTMENTS</p>
             <h2 className="text-4xl font-bold mt-2">Location</h2>
             <p className="mt-4 text-lg">
-              Despite its central location, the surrounding area offers a peaceful retreat, making it ideal for both relaxation and exploration. Whether you're here for business or leisure, our location ensures you're always connected to the best Abuja has to offer.
+              Despite its central location, the surrounding area offers a peaceful retreat, making it ideal for both relaxation and exploration. Whether you&apos;re here for business or leisure, our location ensures you&apos;re always connected to the best Abuja has to offer.
             </p>
           </div>
 

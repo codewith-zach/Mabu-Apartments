@@ -13,7 +13,6 @@ export default function AboutPage() {
   useEffect(() => {
     const handleScroll = () => {
       if (sectionRef.current) {
-        const sectionRect = sectionRef.current.getBoundingClientRect()
         // Removed unused variables
       }
     }

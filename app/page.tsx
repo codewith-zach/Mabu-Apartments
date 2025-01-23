@@ -6,10 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Play, Pause } from "lucide-react"
 import Image from "next/image"
 import { Dancing_Script } from "next/font/google"
-import { ChevronLeft, ChevronRight, Phone, Calendar } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
 import Autoplay from "embla-carousel-autoplay"
 import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
@@ -208,7 +206,7 @@ export default function Home() {
           >
             <p className="text-sm uppercase tracking-wider text-[#EBD7B2] mb-3">Mabu apartments</p>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-4">
-              MORE THAN A STAY, IT'S AN EXPERIENCE.
+              MORE THAN A STAY, IT&apos;S AN EXPERIENCE.
             </h1>
             <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
               <Link href="/rooms">Book Now</Link>

@@ -1,80 +1,80 @@
-"use client"
+'use client';
 
-import { useEffect, useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { CheckCircle, XCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useEffect, useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { CheckCircle, XCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-export default function PaymentSuccessPage() {
-  const [status, setStatus] = useState<"success" | "failure" | "loading">("loading")
-  const [reference, setReference] = useState<string | null>(null)
-  const router = useRouter()
-  const searchParams = useSearchParams()
+function PaymentSuccessComponent() {
+  const [status, setStatus] = useState<'success' | 'failure' | 'loading'>('loading');
+  const [reference, setReference] = useState<string | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const ref = searchParams.get("reference")
-    setReference(ref)
+    const ref = searchParams.get('reference');
+    setReference(ref);
 
-    console.log("Payment success page loaded. Reference:", ref)
+    console.log('Payment success page loaded. Reference:', ref);
 
     if (!ref) {
-      console.error("No reference found in query parameters")
-      setStatus("failure")
-      return
+      console.error('No reference found in query parameters');
+      setStatus('failure');
+      return;
     }
 
-    console.log("Verifying payment with reference:", ref)
+    console.log('Verifying payment with reference:', ref);
 
     // Call verify-payment API
     fetch(`/api/verify-payment?reference=${ref}`)
       .then((res) => {
-        console.log("Verify payment response status:", res.status)
+        console.log('Verify payment response status:', res.status);
         if (!res.ok) {
-          throw new Error(`API returned status ${res.status}`)
+          throw new Error(`API returned status ${res.status}`);
         }
-        return res.json()
+        return res.json();
       })
       .then((data) => {
-        console.log("Full verification response:", data)
+        console.log('Full verification response:', data);
 
-        if (data.status === "success" && data.reference === ref) {
+        if (data.status === 'success' && data.reference === ref) {
           // Payment verified successfully, now create the booking
-          return createBooking(data)
+          return createBooking(data);
         } else {
-          throw new Error("Payment verification failed")
+          throw new Error('Payment verification failed');
         }
       })
       .then((bookingData) => {
-        console.log("Booking created:", bookingData)
+        console.log('Booking created:', bookingData);
         if (bookingData.success) {
-          setStatus("success")
+          setStatus('success');
         } else {
-          throw new Error(bookingData.error || "Failed to create booking")
+          throw new Error(bookingData.error || 'Failed to create booking');
         }
       })
       .catch((error) => {
-        console.error("Error in payment process:", error)
-        setStatus("failure")
-      })
-  }, [searchParams])
+        console.error('Error in payment process:', error);
+        setStatus('failure');
+      });
+  }, [searchParams]);
 
   const createBooking = async (paymentData: {
     metadata: {
-      roomId: string
-      name: string
-      checkIn: string
-      checkOut: string
-    }
+      roomId: string;
+      name: string;
+      checkIn: string;
+      checkOut: string;
+    };
     customer: {
-      email: string
-    }
-    amount: number
-    reference: string
+      email: string;
+    };
+    amount: number;
+    reference: string;
   }) => {
-    const response = await fetch("/api/create-booking", {
-      method: "POST",
+    const response = await fetch('/api/create-booking', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         roomId: paymentData.metadata.roomId,
@@ -85,21 +85,20 @@ export default function PaymentSuccessPage() {
         totalPrice: paymentData.amount / 100, // Convert from kobo to naira
         paymentReference: paymentData.reference,
       }),
-    })
+    });
 
-    return response.json()
-  }
+    return response.json();
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
-        {status === "success" ? (
+        {status === 'success' ? (
           <>
             <CheckCircle className="mx-auto h-16 w-16 text-green-500 mb-4" />
             <h1 className="text-2xl font-bold mb-2">Booking Confirmed!</h1>
             <p className="text-gray-600 mb-4">
               Thank you for your payment. Your booking has been successfully created.
-              {/* Add note about email */}
               <br />
               <span className="text-sm">
                 A confirmation email will be sent to your email address shortly. If you don&apos;t receive it, please
@@ -107,9 +106,9 @@ export default function PaymentSuccessPage() {
               </span>
             </p>
             <p className="text-sm text-gray-500 mb-4">Reference: {reference}</p>
-            <Button onClick={() => router.push("/")}>Return to Home</Button>
+            <Button onClick={() => router.push('/')}>Return to Home</Button>
           </>
-        ) : status === "failure" ? (
+        ) : status === 'failure' ? (
           <>
             <XCircle className="mx-auto h-16 w-16 text-red-500 mb-4" />
             <h1 className="text-2xl font-bold mb-2">Booking Failed</h1>
@@ -117,7 +116,7 @@ export default function PaymentSuccessPage() {
               We could not process your booking. Please contact support or try again.
             </p>
             {reference && <p className="text-sm text-gray-500 mb-4">Reference: {reference}</p>}
-            <Button onClick={() => router.push("/")}>Return to Home</Button>
+            <Button onClick={() => router.push('/')}>Return to Home</Button>
           </>
         ) : (
           <>
@@ -132,6 +131,13 @@ export default function PaymentSuccessPage() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentSuccessComponent />
+    </Suspense>
+  );
+}

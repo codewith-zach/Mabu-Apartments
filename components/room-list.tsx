@@ -22,19 +22,8 @@ export default function RoomList({ roomTypes }: { roomTypes: RoomType[] }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [sortOrder, setSortOrder] = useState('price-asc')
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const term = event.target.value.toLowerCase()
-    setSearchTerm(term)
-    filterRooms(term, sortOrder)
-  }
-
-  const handleSort = (value: string) => {
-    setSortOrder(value)
-    filterRooms(searchTerm, value)
-  }
-
   const filterRooms = (term: string, sort: string) => {
-    let filtered = roomTypes.filter(room =>
+    const filtered = roomTypes.filter(room =>
       room.name.toLowerCase().includes(term) ||
       room.description.toLowerCase().includes(term)
     )
@@ -59,7 +48,7 @@ export default function RoomList({ roomTypes }: { roomTypes: RoomType[] }) {
 
   useEffect(() => {
     filterRooms(searchTerm, sortOrder)
-  }, [])
+  }, [searchTerm, sortOrder])
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -70,29 +59,9 @@ export default function RoomList({ roomTypes }: { roomTypes: RoomType[] }) {
               mabu apartments
             </p>
             <h2 className="text-3xl font-bold mb-8">Our Rooms</h2>
-            <p className="text-base mb-8 leading-relaxed text-gray-600">Step into comfort and style with our thoughtfully designed rooms, tailored to meet your every need. Whether you're here to relax or explore, our accommodations offer the perfect retreat for a memorable stay.</p>
-            <div className="hidden lg:block">
-              {/* <h3 className="text-xl font-semibold mb-4">Room Search</h3>
-              <div className="flex flex-col gap-4 mb-8">
-                <Input
-                  type="text"
-                  placeholder="Search rooms..."
-                  value={searchTerm}
-                  onChange={handleSearch}
-                />
-                <Select onValueChange={handleSort}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="price-asc">Price: Low to High</SelectItem>
-                    <SelectItem value="price-desc">Price: High to Low</SelectItem>
-                    <SelectItem value="capacity-asc">Capacity: Low to High</SelectItem>
-                    <SelectItem value="capacity-desc">Capacity: High to Low</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div> */}
-            </div>
+            <p className="text-base mb-8 leading-relaxed text-gray-600">
+              Step into comfort and style with our thoughtfully designed rooms, tailored to meet your every need. Whether you&apos;re here to relax or explore, our accommodations offer the perfect retreat for a memorable stay.
+            </p>
           </div>
         </div>
         <div className="lg:w-3/4 p-4 lg:py-8 lg:px-12 pb-24 ">
@@ -132,29 +101,8 @@ export default function RoomList({ roomTypes }: { roomTypes: RoomType[] }) {
             ))}
           </div>
         </div>
-      </div >
+      </div>
       <MainFacilities />
-      <div className="w-full overflow-hidden  marquee-container">
-          <div className="flex whitespace-nowrap animate-marquee">
-            <div className="flex shrink-0">
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">RELAX</span>
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">ENJOY</span>
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">LUXURY</span>
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">HOLIDAY</span>
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">TRAVEL</span>
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">EXPERIENCE</span>
-            </div>
-            <div className="flex shrink-0">
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">RELAX</span>
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">ENJOY</span>
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">LUXURY</span>
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">HOLIDAY</span>
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">TRAVEL</span>
-              <span className="mx-4 text-[8rem] font-extrabold text-gray-100">EXPERIENCE</span>
-            </div>
-          </div>
-        </div>
     </div>
   )
 }
-

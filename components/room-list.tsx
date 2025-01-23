@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
@@ -18,37 +18,7 @@ type RoomType = {
 }
 
 export default function RoomList({ roomTypes }: { roomTypes: RoomType[] }) {
-  const [filteredRooms, setFilteredRooms] = useState(roomTypes)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [sortOrder, setSortOrder] = useState('price-asc')
-
-  const filterRooms = (term: string, sort: string) => {
-    const filtered = roomTypes.filter(room =>
-      room.name.toLowerCase().includes(term) ||
-      room.description.toLowerCase().includes(term)
-    )
-
-    switch (sort) {
-      case 'price-asc':
-        filtered.sort((a, b) => a.price - b.price)
-        break
-      case 'price-desc':
-        filtered.sort((a, b) => b.price - a.price)
-        break
-      case 'capacity-asc':
-        filtered.sort((a, b) => a.capacity - b.capacity)
-        break
-      case 'capacity-desc':
-        filtered.sort((a, b) => b.capacity - a.capacity)
-        break
-    }
-
-    setFilteredRooms(filtered)
-  }
-
-  useEffect(() => {
-    filterRooms(searchTerm, sortOrder)
-  }, [searchTerm, sortOrder])
+  const [filteredRooms] = useState(roomTypes) // Directly set the roomTypes as filteredRooms
 
   return (
     <div className="flex flex-col min-h-screen">

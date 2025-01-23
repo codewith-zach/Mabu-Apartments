@@ -41,7 +41,7 @@ export function FAQ() {
           <div className="lg:max-w-sm">
             <p className="text-sm uppercase tracking-wider text-[#978667] mb-3">MABU APARTMENTS FAQ</p>
             <h2 className="text-4xl font-bold mt-2 mb-6">Frequently Asked Questions</h2>
-            <p className="text-lg mb-12">Can't find your question in the list? We're here to help.</p>
+            <p className="text-lg mb-12">Can&apos;t find your question in the list? We&apos;re here to help.</p>
         
             <a href="/contact" className="text-sm uppercase tracking-wider text-[#978667] mb-3">
               Contact Us →

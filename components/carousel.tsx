@@ -1,23 +1,23 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
-import Autoplay from 'embla-carousel-autoplay'
+import Image from 'next/image'
 
 export default function CarouselWithScale() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  const handleSelect = () => {
+  const handleSelect = useCallback(() => {
     if (!emblaApi) return
     setSelectedIndex(emblaApi.selectedScrollSnap())
-  }
+  }, [emblaApi])
 
   useEffect(() => {
     if (!emblaApi) return
     emblaApi.on('select', handleSelect)
     handleSelect() // Initialize
-  }, [emblaApi])
+  }, [emblaApi, handleSelect])
 
   const rooms = [
     {
@@ -49,10 +49,11 @@ export default function CarouselWithScale() {
               } transition-transform duration-500`}
             >
               <div className="relative aspect-[16/9] rounded-xl overflow-hidden shadow-lg">
-                <img
+                <Image
                   src={room.image}
                   alt={room.title}
-                  className="w-full h-full object-cover"
+                  layout="fill"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 p-4 text-white">

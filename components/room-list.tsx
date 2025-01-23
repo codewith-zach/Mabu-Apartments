@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Card, CardContent } from '@/components/ui/card'
 import { MainFacilities } from '@/components/MainFacilities'
 

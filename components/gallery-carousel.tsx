@@ -11,7 +11,6 @@ interface GalleryCarouselProps {
 
 export function GalleryCarousel({ images }: GalleryCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
@@ -24,10 +23,8 @@ export function GalleryCarousel({ images }: GalleryCarouselProps) {
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen()
-      setIsFullscreen(true)
     } else {
       document.exitFullscreen()
-      setIsFullscreen(false)
     }
   }
 
@@ -81,4 +78,3 @@ export function GalleryCarousel({ images }: GalleryCarouselProps) {
     </div>
   )
 }
-

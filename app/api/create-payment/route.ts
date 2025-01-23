@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import https from 'https'
 
-export async function POST(req: Request) {
+export async function POST(req: Request): Promise<Response> {
   try {
     const { email, amount, metadata } = await req.json()
 
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       },
     }
 
-    return new Promise((resolve) => {
+    return await new Promise<Response>((resolve) => {
       const reqPaystack = https.request(options, (res) => {
         let data = ''
 

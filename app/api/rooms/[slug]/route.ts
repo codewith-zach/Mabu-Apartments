@@ -3,8 +3,13 @@ import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-  const { slug } = params
+export async function GET(request: NextRequest) {
+  // Extract slug from request URL params
+  const slug = request.nextUrl.pathname.split('/').pop()
+
+  if (!slug) {
+    return NextResponse.json({ error: "Slug is required" }, { status: 400 })
+  }
 
   try {
     const roomType = await prisma.roomType.findUnique({
@@ -26,4 +31,3 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
-

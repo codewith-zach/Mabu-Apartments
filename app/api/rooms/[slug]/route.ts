@@ -3,25 +3,14 @@ import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
-export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+export async function GET(req: Request, { params }: { params: { slug: string } }) {
+  const { slug } = params
 
   try {
     const roomType = await prisma.roomType.findUnique({
       where: { slug },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        description: true,
-        price: true,
-        capacity: true,
-        imageUrl: true,
-        images: true,
+      include: {
         rooms: {
-          select: {
-            id: true,
-          },
           take: 1,
         },
       },

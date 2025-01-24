@@ -75,20 +75,14 @@ async function main() {
     if (!createdRoomType) {
       // If room type doesn't exist, create it
       createdRoomType = await prisma.roomType.create({
-        data: {
-          ...roomTypeData,
-          images: roomType.images,
-        },
+        data: roomTypeData,
       })
       console.log(`Created new room type: ${createdRoomType.name}`)
     } else {
       // If room type exists, update it
       createdRoomType = await prisma.roomType.update({
         where: { id: createdRoomType.id },
-        data: {
-          ...roomTypeData,
-          images: roomType.images,
-        },
+        data: roomTypeData,
       })
       console.log(`Updated existing room type: ${createdRoomType.name}`)
     }

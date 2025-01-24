@@ -4,15 +4,19 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "seed": "ts-node prisma/seed.ts",
     "update-prices": "node scripts/update-prices.js",
-    "postinstall": "prisma generate"
+    "check-database": "node scripts/check-database.js",
+    "check-bookings": "node scripts/check-bookings.js",
+    "postinstall": "prisma generate && prisma db push"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
+    "@neondatabase/serverless": "^0.10.4",
+    "@prisma/adapter-neon": "^6.2.1",
     "@prisma/client": "^6.2.1",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-label": "^2.1.1",

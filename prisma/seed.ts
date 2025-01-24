@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client'
-import { addDays, eachDayOfInterval } from 'date-fns'
+import { PrismaClient } from "@prisma/client"
+import { addDays, eachDayOfInterval } from "date-fns"
 
 const prisma = new PrismaClient()
 
@@ -7,37 +7,66 @@ async function main() {
   // Create room types
   const roomTypes = [
     {
-      name: 'Studio Apartment',
-      slug: 'studio-apartment',
-      description: 'A cozy and efficient space for solo travelers or couples.',
-      price: 150,
+      name: "Studio Apartment",
+      slug: "studio-apartment",
+      description: "A cozy and efficient space for solo travelers or couples.",
+      price: 85000,
       capacity: 2,
-      imageUrl: '/images/rooms/room3.jpg',
+      imageUrl: "/images/rooms/room3.jpg",
+      images: [
+        "/images/rooms/room3.jpg",
+        "/images/Rooms-images/studio/studio1.jpg",
+        "/images/Rooms-images/studio/studio6.jpg",
+        "/images/Rooms-images/studio/studio9.jpg",
+        "/images/Rooms-images/studio/studio10.jpg",
+      ],
       roomCount: 5,
     },
     {
-      name: 'One Bedroom Apartment',
-      slug: 'one-bedroom-apartment',
-      description: 'Spacious and comfortable for small families or groups.',
-      price: 240,
+      name: "One Bedroom Apartment",
+      slug: "one-bedroom-apartment",
+      description: "Spacious and comfortable for small families or groups.",
+      price: 120000,
       capacity: 3,
-      imageUrl: '/images/rooms/room1.jpg',
+      imageUrl: "/images/rooms/room1.jpg",
+      images: [
+        "/images/rooms/room1.jpg",
+        "/images/Rooms-images/1bedroom/1bed3.jpg",
+        "/images/Rooms-images/1bedroom/1bed4.jpg",
+        "/images/Rooms-images/1bedroom/1bed10.jpg",
+        "/images/Rooms-images/1bedroom/1bed15.jpg",
+        "/images/Rooms-images/1bedroom/1bed18.jpg",
+        "/images/Rooms-images/1bedroom/1bed26.jpg",
+        "/images/Rooms-images/1bedroom/1bed32.jpg",
+        "/images/Rooms-images/1bedroom/1bed33.jpg",
+      ],
       roomCount: 4,
     },
     {
-      name: 'Two Bedroom Apartment',
-      slug: 'two-bedroom-apartment',
-      description: 'Luxurious space for larger groups or extended stays.',
-      price: 300,
+      name: "Two Bedroom Apartment",
+      slug: "two-bedroom-apartment",
+      description: "Luxurious space for larger groups or extended stays.",
+      price: 180000,
       capacity: 5,
-      imageUrl: '/images/rooms/room2.jpg',
+      imageUrl: "/images/rooms/room2.jpg",
+      images: [
+        "/images/rooms/room2.jpg",
+        "/images/Rooms-images/2bedroom/2bed3.jpg",
+        "/images/Rooms-images/2bedroom/2bed5.jpg",
+        "/images/Rooms-images/2bedroom/2bed8.jpg",
+        "/images/Rooms-images/2bedroom/2bed14.jpg",
+        "/images/Rooms-images/2bedroom/2bed18.jpg",
+        "/images/Rooms-images/2bedroom/2bed19.jpg",
+        "/images/Rooms-images/2bedroom/2bed21.jpg",
+        "/images/Rooms-images/2bedroom/2bed20.jpg",
+      ],
       roomCount: 3,
     },
   ]
 
   for (const roomType of roomTypes) {
     const { roomCount, ...roomTypeData } = roomType
-    
+
     // Try to find existing room type
     let createdRoomType = await prisma.roomType.findUnique({
       where: { name: roomTypeData.name },
@@ -78,7 +107,7 @@ async function main() {
       const dates = eachDayOfInterval({ start: today, end: nextYear })
 
       await prisma.availability.createMany({
-        data: dates.map(date => ({
+        data: dates.map((date) => ({
           roomId: room.id,
           date: date,
           isAvailable: true,

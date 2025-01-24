@@ -1,25 +1,29 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation'
-import { RoomCarousel } from '@/components/room-carousel'
-import { Reviews } from '@/components/reviews'
-import { BookingForm } from '@/components/booking-form'
-import { Hero } from '@/components/apartment-hero'
-import { RoomDescription } from '@/components/room-description'
-import { LoadingSpinner } from '@/components/loading-spinner'
-
+import { useState, useEffect } from "react"
+import { useParams } from "next/navigation"
+import { RoomCarousel } from "@/components/room-carousel"
+import { Reviews } from "@/components/reviews"
+import { BookingForm } from "@/components/booking-form"
+import { Hero } from "@/components/apartment-hero"
+import { RoomDescription } from "@/components/room-description"
+import { LoadingSpinner } from "@/components/loading-spinner"
 
 // Define the structure of the room type
 interface Room {
   id: string
   name: string
+  slug: string
+  description: string
   price: number
+  capacity: number
+  imageUrl: string
+  images: string[]
   rooms: { id: string }[]
 }
 
 export default function RoomPage() {
-  const [roomType, setRoomType] = useState<Room | null>(null) // Use the defined type
+  const [roomType, setRoomType] = useState<Room | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const params = useParams()
   const { slug } = params
@@ -31,7 +35,7 @@ export default function RoomPage() {
         const data = await response.json()
         setRoomType(data)
       } catch (error) {
-        console.error('Error fetching room type:', error)
+        console.error("Error fetching room type:", error)
       } finally {
         setIsLoading(false)
       }
@@ -49,18 +53,12 @@ export default function RoomPage() {
   }
 
   const roomId = roomType.rooms[0].id
-
-  // Sample images for the carousel
-  const images = [
-    '/images/rooms/room1.jpg',
-    '/images/rooms/room2.jpg',
-    '/images/rooms/room3.jpg',
-  ]
+  const images = roomType.images || [roomType.imageUrl]
 
   return (
     <>
       <Hero title={roomType.name} />
-      <RoomDescription />
+      <RoomDescription description={roomType.description} capacity={roomType.capacity} />
       <div className="w-full bg-[#faf9f6] py-8">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl mb-8">
@@ -81,3 +79,4 @@ export default function RoomPage() {
     </>
   )
 }
+

@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useState, useEffect, useCallback } from 'react'
-import Image from 'next/image'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { useState, useEffect, useCallback } from "react"
+import Image from "next/image"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export function RoomCarousel({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -29,11 +29,11 @@ export function RoomCarousel({ images }: { images: string[] }) {
         {images.map((image, index) => (
           <Image
             key={index}
-            src={image}
+            src={image || "/placeholder.svg"}
             alt={`Room view ${index + 1}`}
             fill
             className={`object-cover transition-opacity duration-500 ${
-              index === currentIndex ? 'opacity-100' : 'opacity-0'
+              index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
             priority={index === 0}
           />
@@ -60,12 +60,11 @@ export function RoomCarousel({ images }: { images: string[] }) {
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-2 h-2 rounded-full transition-colors ${
-              index === currentIndex ? 'bg-white' : 'bg-white/50'
-            }`}
+            className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? "bg-white" : "bg-white/50"}`}
           />
         ))}
       </div>
     </div>
   )
 }
+

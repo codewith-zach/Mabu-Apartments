@@ -21,6 +21,7 @@ model RoomType {
   price       Float
   capacity    Int
   imageUrl    String
+  images     String[]
   rooms       Room[]
 }
 
@@ -68,4 +69,6 @@ model Review {
   comment   String
   createdAt DateTime @default(now())
 }
+
+
 

@@ -1,52 +1,38 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { useParams } from "next/navigation"
+import { Suspense } from "react"
 import { RoomCarousel } from "@/components/room-carousel"
 import { Reviews } from "@/components/reviews"
 import { BookingForm } from "@/components/booking-form"
 import { Hero } from "@/components/apartment-hero"
 import { RoomDescription } from "@/components/room-description"
 import { LoadingSpinner } from "@/components/loading-spinner"
+import prisma from "@/lib/db"
 
-// Define the structure of the room type
-interface Room {
-  id: string
-  name: string
-  slug: string
-  description: string
-  price: number
-  capacity: number
-  imageUrl: string
-  images: string[]
-  rooms: { id: string }[]
+export async function generateStaticParams() {
+  const roomTypes = await prisma.roomType.findMany()
+  return roomTypes.map((room) => ({
+    slug: room.slug,
+  }))
 }
 
-export default function RoomPage() {
-  const [roomType, setRoomType] = useState<Room | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const params = useParams()
-  const { slug } = params
+async function getRoomType(slug: string) {
+  const roomType = await prisma.roomType.findUnique({
+    where: { slug },
+    include: {
+      rooms: {
+        take: 1,
+      },
+    },
+  })
+  return roomType
+}
 
-  useEffect(() => {
-    const fetchRoomType = async () => {
-      try {
-        const response = await fetch(`/api/rooms/${slug}`)
-        const data = await response.json()
-        setRoomType(data)
-      } catch (error) {
-        console.error("Error fetching room type:", error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
+interface PageProps {
+  params: Promise<{ slug: string }>
+}
 
-    fetchRoomType()
-  }, [slug])
-
-  if (isLoading) {
-    return <LoadingSpinner />
-  }
+export default async function RoomPage({ params }: PageProps) {
+  const { slug } = await params
+  const roomType = await getRoomType(slug)
 
   if (!roomType || roomType.rooms.length === 0) {
     return <div>Room not found</div>
@@ -56,7 +42,7 @@ export default function RoomPage() {
   const images = roomType.images || [roomType.imageUrl]
 
   return (
-    <>
+    <Suspense fallback={<LoadingSpinner />}>
       <Hero title={roomType.name} />
       <RoomDescription description={roomType.description} capacity={roomType.capacity} />
       <div className="w-full bg-[#faf9f6] py-8">
@@ -76,7 +62,7 @@ export default function RoomPage() {
           </div>
         </div>
       </div>
-    </>
+    </Suspense>
   )
 }
 

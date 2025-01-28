@@ -1,1 +1,10 @@
-{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
+{
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "html/digitalize/index"
+      }
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
+  }

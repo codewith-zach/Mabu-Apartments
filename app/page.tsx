@@ -451,7 +451,7 @@ export default function Home() {
               ref={bakeryImageRef}
               className="relative aspect-[1000/625] rounded-lg overflow-hidden transform transition-all duration-1000 ease-out scale-95 opacity-0 order-1 md:order-2"
             >
-              <Image src="/images/bakery/bread4.jpg" alt="Rayuwa Bakery" fill className="object-cover" />
+              <Image src="/images/bread4.jpg" alt="Rayuwa Bakery" fill className="object-cover" />
             </div>
           </div>
         </div>

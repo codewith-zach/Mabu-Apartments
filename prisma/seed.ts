@@ -9,11 +9,12 @@ async function main() {
     {
       name: "Studio Apartment",
       slug: "studio-apartment",
-      description: "A cozy and efficient space for solo travelers or couples.",
+      description: "A single open space combining living, sleeping, and kitchen areas, with a separate bathroom.",
       price: 85000,
       capacity: 2,
-      imageUrl: "/images/rooms/room3.jpg",
+      imageUrl: "/images/rooms/room1.jpg",
       images: [
+        "/images/rooms/room1.jpg",
         "/images/rooms/room3.jpg",
         "/images/Rooms-images/studio/studio1.jpg",
         "/images/Rooms-images/studio/studio6.jpg",
@@ -25,12 +26,12 @@ async function main() {
     {
       name: "One Bedroom Apartment",
       slug: "one-bedroom-apartment",
-      description: "Spacious and comfortable for small families or groups.",
+      description: "A compact living space with a separate bedroom, living area, kitchen, and bathroom.",
       price: 120000,
       capacity: 3,
-      imageUrl: "/images/rooms/room1.jpg",
+      imageUrl: "/images/rooms/room2.jpg",
       images: [
-        "/images/rooms/room1.jpg",
+        "/images/rooms/room2.jpg",
         "/images/Rooms-images/1bedroom/1bed3.jpg",
         "/images/Rooms-images/1bedroom/1bed4.jpg",
         "/images/Rooms-images/1bedroom/1bed10.jpg",
@@ -45,13 +46,11 @@ async function main() {
     {
       name: "Two Bedroom Apartment",
       slug: "two-bedroom-apartment",
-      description: "Luxurious space for larger groups or extended stays.",
+      description: "A larger unit with two separate bedrooms, a living area, kitchen, and bathrooms.",
       price: 180000,
       capacity: 5,
-      imageUrl: "/images/rooms/room2.jpg",
+      imageUrl: "/images/Rooms-images/2bedroom/2bed5.jpg",
       images: [
-        "/images/rooms/room2.jpg",
-        "/images/Rooms-images/2bedroom/2bed3.jpg",
         "/images/Rooms-images/2bedroom/2bed5.jpg",
         "/images/Rooms-images/2bedroom/2bed8.jpg",
         "/images/Rooms-images/2bedroom/2bed14.jpg",

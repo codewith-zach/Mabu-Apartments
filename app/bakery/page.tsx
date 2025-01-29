@@ -14,23 +14,23 @@ export default function BakeryPage() {
   const [isPaused, setIsPaused] = useState(false)
   const [activeTab, setActiveTab] = useState("pastries")
   const tabBackgrounds = {
-    pastries: "/images/bakery/bread4.jpg",
-    juice: "/images/bakery/juice1.jpg",
+    pastries: "/images/bread4.jpg",
+    juice: "/images/juicecollab.jpg",
   }
 
   const slides = [
     {
-      image: "/images/bakery/bread3.jpg",
+      image: "/images/bread3.jpg",
       heading: "WHERE CRAVINGS\nBEGIN",
       alignment: "text-left pl-20",
     },
     {
-      image: "/images/bakery/bread2.jpg",
+      image: "/images/bread2.jpg",
       heading: "BITE INTO\nHAPPINESS",
       alignment: "text-center",
     },
     {
-      image: "/images/bakery/bread.jpg",
+      image: "/images/bread.jpg",
       heading: "FRESH\nDAILY",
       alignment: "text-right pr-20",
     },
@@ -133,9 +133,9 @@ export default function BakeryPage() {
       {/* About Section */}
       <section className="py-24 px-4 md:px-6 lg:px-8 bg-[#faf9f6] relative">
         <div
-          className="absolute inset-0 opacity-50"
+          className="absolute inset-0 opacity-10"
           style={{
-            backgroundImage: "url('/images/pattern_2.png')",
+            backgroundImage: "url('/images/patternz.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -259,40 +259,34 @@ export default function BakeryPage() {
             <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
               {[
                 {
-                  name: "Croissant",
-                  description: "Buttery, Flaky Pastry",
+                  name: "Fish Pie",
+                  description: "Baked fish, creamy sauce, mashed potato topping.",
+                  price: "N850",
+                  image: "/images/fishpie.jpg",
+                },
+                {
+                  name: "Chicken Pie",
+                  description: "Chicken, veggies, and cream in pastry.",
                   price: "N1500",
-                  image: "/images/bakery/starters.jpg",
+                  image: "/images/chickenpie.jpg",
                 },
                 {
-                  name: "Pain au Chocolat",
-                  description: "Chocolate-filled Pastry",
-                  price: "N1800",
-                  image: "/images/bakery/starters.jpg",
+                  name: "Sausage Roll",
+                  description: "Sausage meat in flaky baked pastry.",
+                  price: "N700",
+                  image: "/images/sausageroll.jpg",
                 },
                 {
-                  name: "Baguette",
-                  description: "Traditional French Bread",
-                  price: "N1200",
-                  image: "/images/bakery/starters.jpg",
+                  name: "Scotch Egg",
+                  description: "Hard-boiled egg wrapped in sausage, breaded, fried.",
+                  price: "N800",
+                  image: "/images/scotchegg.jpg",
                 },
                 {
-                  name: "Cinnamon Roll",
-                  description: "Sweet, Spiced Pastry",
-                  price: "N1600",
-                  image: "/images/bakery/starters.jpg",
-                },
-                {
-                  name: "Sourdough Bread",
-                  description: "Artisanal Fermented Bread",
-                  price: "N2000",
-                  image: "/images/bakery/starters.jpg",
-                },
-                {
-                  name: "Cheese Danish",
-                  description: "Sweet Cheese Pastry",
-                  price: "N1700",
-                  image: "/images/bakery/starters.jpg",
+                  name: "Meat pie",
+                  description: "Minced meat and gravy in a pastry shell.",
+                  price: "N1500",
+                  image: "/images/meatpie.jpg",
                 },
               ].map((item, index) => (
                 <div key={index} className="flex items-center gap-4">
@@ -323,73 +317,74 @@ export default function BakeryPage() {
                   name: "Water Pine Blast 500ml",
                   description: "Watermelon, Pineapple, Beetroot & Ginger",
                   price: "N2000",
-                  image: "/images/juice.jpg",
+                  image: "/images/melonboost.jpg",
                 },
-                {
-                  name: "Sunshine L'emu 500ml",
-                  description: "Pineapple, Orange & Ginger",
-                  price: "N2000",
-                  image: "/images/juice.jpg",
-                },
+                
                 {
                   name: "Pineapple Gin 500ml",
                   description: "Pineapple & Ginger",
                   price: "N2000",
-                  image: "/images/juice.jpg",
+                  image: "/images/mangopine.jpg",
                 },
                 {
                   name: "Strawberry Pine 500ml",
                   description: "Strawberry & Pineapple",
                   price: "N2500",
-                  image: "/images/juice.jpg",
+                  image: "/images/strawberrypine.jpg",
                 },
                 {
                   name: "Orange Ginger 500ml",
                   description: "Orange & Ginger",
                   price: "N2000",
-                  image: "/images/juice.jpg",
+                  image: "/images/carrotglow.jpg",
                 },
                 {
                   name: "Classic Veggie 500ml",
                   description: "Carrot, Pineapple, Beetroot & Ginger",
                   price: "N2500",
-                  image: "/images/juice.jpg",
+                  image: "/images/carrotglow.jpg",
+                },
+                {
+                  name: "Sunshine L'emu 500ml",
+                  description: "Pineapple, Orange & Ginger",
+                  price: "N2000",
+                  image: "/images/strawberrypine.jpg",
                 },
                 {
                   name: "Mango pine 500ml",
                   description: "Mango & Pineapples",
                   price: "N2500",
-                  image: "/images/juice.jpg",
+                  image: "/images/mangopine.jpg",
                 },
                 {
                   name: "Fruta mista 500ml",
                   description: "Blend of Various Fruits",
                   price: "N2500",
-                  image: "/images/juice.jpg",
+                  image: "/images/greenglow.jpg",
                 },
                 {
                   name: "Melon Boost 500ml",
                   description: "Watermelon, Beetroot & Ginger",
                   price: "N2000",
-                  image: "/images/juice.jpg",
+                  image: "/images/melonboost.jpg",
                 },
                 {
                   name: "Carrot Glow 500ml",
                   description: "Carrots, Ginger",
                   price: "N2500",
-                  image: "/images/juice.jpg",
+                  image: "/images/carrotglow.jpg",
                 },
                 {
                   name: "Green Glow 500ml",
                   description: "Lettuce, Kale, Parsley, Celery, Apple, Cucumber & Ginger",
                   price: "N2500",
-                  image: "/images/juice.jpg",
+                  image: "/images/greenglow.jpg",
                 },
                 {
                   name: "Tiger Nut 500ml",
                   description: "Tigernuts",
                   price: "N2000",
-                  image: "/images/juice.jpg",
+                  image: "/images/melonboost.jpg",
                 },
               ].map((item, index) => (
                 <div key={index} className="flex items-center gap-4">

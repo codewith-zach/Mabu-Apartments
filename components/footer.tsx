@@ -13,8 +13,8 @@ export function Footer() {
             <div className="space-y-2 text-zinc-300">
               <p className="text-sm">5, Awande Close, Behind LG Show Room, Off Aminu Kano Crescent, Wuse II<br />Abuja, Nigeria</p>
               <p className="text-sm">
-                <Link href="mailto:info@Mabuapartments.com" className="text-[#ebd7b2] hover:text-white transition-colors">
-                  info@Mabuapartments.com
+                <Link href="mailto:hello.mabuapartment@gmail.com" className="text-[#ebd7b2] hover:text-white transition-colors">
+                  hello.mabuapartment@gmail.com
                 </Link>
               </p>
               <p className="text-sm">

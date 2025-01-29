@@ -5,7 +5,7 @@ import { useScrollAnimation } from '../hooks/use-scroll-animation'
 
 export function LocationSection() {
   return (
-    <div className="mt-32 md:px-10">
+    <div className="mt-16 md:px-10">
       <div className="grid gap-16 items-start">
         <div className="space-y-8">
           <div>

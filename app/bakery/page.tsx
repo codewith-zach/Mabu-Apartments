@@ -283,7 +283,7 @@ export default function BakeryPage() {
                   image: "/images/scotchegg.jpg",
                 },
                 {
-                  name: "Meat pie",
+                  name: "Meat Pie",
                   description: "Minced meat and gravy in a pastry shell.",
                   price: "N1500",
                   image: "/images/meatpie.jpg",

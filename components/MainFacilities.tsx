@@ -61,7 +61,7 @@ export function MainFacilities() {
   ]
 
   return (
-    <div className="mt-32 bg-[#faf9f6]">
+    <div className=" bg-[#faf9f6]">
       <div className="container mx-auto px-4 py-16 sm:py-24 md:px-10">
         <motion.div 
           ref={containerRef}

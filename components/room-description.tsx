@@ -41,7 +41,7 @@ export function RoomDescription({ description, capacity }: RoomDescriptionProps)
 }
 
 const amenities = [
-  { icon: Bed, label: "King Size Bed" },
+  { icon: Bed, label: "Queen Size Bed" },
   { icon: Tv, label: "32 Inch TV" },
   { icon: Utensils, label: "Kitchen" },
   { icon: Wifi, label: "Wifi access" },

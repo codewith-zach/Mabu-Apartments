@@ -40,7 +40,7 @@ function generateBookingEmailTemplate(bookingDetails: any) {
                 <tr>
                   <td style="padding: 0 40px;">
                     <p style="color: #666; font-size: 16px; line-height: 24px;">
-                      Dear Guest,
+                      Dear ${bookingDetails.guestName},
                     </p>
                     <p style="color: #666; font-size: 16px; line-height: 24px;">
                       Thank you for choosing Mabu Apartments. We're delighted to confirm your booking.

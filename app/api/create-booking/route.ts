@@ -41,6 +41,7 @@ export async function POST(req: Request) {
     // Try to send email but don't fail if it errors
     try {
       await sendBookingConfirmationEmail(guestEmail, {
+        guestName: guestName,
         roomType: booking.room.roomType.name,
         checkIn: booking.checkIn,
         checkOut: booking.checkOut,

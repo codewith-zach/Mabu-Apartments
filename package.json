@@ -11,6 +11,7 @@
     "update-prices": "node scripts/update-prices.js",
     "check-database": "node scripts/check-database.js",
     "check-bookings": "node scripts/check-bookings.js",
+    "clear-db": "node scripts/clear-database.js",
     "postinstall": "prisma generate && prisma db push"
   },
   "dependencies": {
@@ -32,6 +33,7 @@
     "date-fns": "^3.6.0",
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-react": "^8.5.1",
+    "enquirer": "^2.4.1",
     "express-rate-limit": "^7.5.0",
     "framer-motion": "^11.15.0",
     "lucide-react": "^0.468.0",

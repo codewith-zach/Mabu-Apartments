@@ -242,11 +242,11 @@ export default function Home() {
               <p className="text-xl mb-6 text-gray-700">Where comfort and unforgettable experiences come together.</p>
               <p className="text-base mb-8 leading-relaxed text-gray-600">
                 Our mission is to provide you with a space that feels like home, while offering the little luxuries and
-                conveniences that make your stay truly special. Whether you&apos;re here for work, leisure, or a bit of both,
+                conveniences that make your stay truly special. Whether you're here for work, leisure, or a bit of both,
                 we aim to make every moment seamless and enjoyable.
               </p>
               <p className={`${dancingScript.className} text-2xl text-[#978667] italic`}>
-                Your comfort starts here. We can&apos;t wait to host you!
+                Your comfort starts here. We can't wait to host you!
               </p>
             </div>
 

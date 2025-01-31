@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-import { addDays, eachDayOfInterval } from "date-fns"
+import { addDays, eachDayOfInterval, startOfToday } from "date-fns"
 
 const prisma = new PrismaClient()
 
@@ -21,7 +21,7 @@ async function main() {
         "/images/Rooms-images/studio/studio9.jpg",
         "/images/Rooms-images/studio/studio10.jpg",
       ],
-      roomCount: 5,
+      roomCount: 2, // Changed from 5 to 2
     },
     {
       name: "One Bedroom Apartment",
@@ -41,7 +41,7 @@ async function main() {
         "/images/Rooms-images/1bedroom/1bed32.jpg",
         "/images/Rooms-images/1bedroom/1bed33.jpg",
       ],
-      roomCount: 4,
+      roomCount: 6, // Changed from 4 to 6
     },
     {
       name: "Two Bedroom Apartment",
@@ -59,7 +59,7 @@ async function main() {
         "/images/Rooms-images/2bedroom/2bed21.jpg",
         "/images/Rooms-images/2bedroom/2bed20.jpg",
       ],
-      roomCount: 3,
+      roomCount: 1, // Changed from 3 to 1
     },
   ]
 
@@ -74,24 +74,26 @@ async function main() {
     if (!createdRoomType) {
       // If room type doesn't exist, create it
       createdRoomType = await prisma.roomType.create({
-        data: roomTypeData,
+        data: { ...roomTypeData, roomCount },
       })
       console.log(`Created new room type: ${createdRoomType.name}`)
     } else {
       // If room type exists, update it
       createdRoomType = await prisma.roomType.update({
         where: { id: createdRoomType.id },
-        data: roomTypeData,
+        data: { ...roomTypeData, roomCount },
       })
       console.log(`Updated existing room type: ${createdRoomType.name}`)
     }
 
-    // Create rooms for each room type
-    const existingRoomsCount = await prisma.room.count({
+    // Delete existing rooms for this room type
+    await prisma.room.deleteMany({
       where: { roomTypeId: createdRoomType.id },
     })
+    console.log(`Deleted existing rooms for: ${createdRoomType.name}`)
 
-    for (let i = existingRoomsCount + 1; i <= roomCount; i++) {
+    // Create new rooms for each room type
+    for (let i = 1; i <= roomCount; i++) {
       const room = await prisma.room.create({
         data: {
           roomNumber: `${roomType.name.charAt(0)}${i}`, // e.g., S1, O1, T1
@@ -100,17 +102,21 @@ async function main() {
       })
       console.log(`Created new room: ${room.roomNumber}`)
 
-      // Create availability for the next 365 days
-      const today = new Date()
+      // Create availability for the next 365 days starting from today
+      const today = startOfToday() // Use startOfToday instead of new Date()
       const nextYear = addDays(today, 365)
       const dates = eachDayOfInterval({ start: today, end: nextYear })
 
+      // Create availability records in batches
+      const availabilityRecords = dates.map((date) => ({
+        roomId: room.id,
+        date: date,
+        isAvailable: true,
+      }))
+
+      // Use createMany for better performance
       await prisma.availability.createMany({
-        data: dates.map((date) => ({
-          roomId: room.id,
-          date: date,
-          isAvailable: true,
-        })),
+        data: availabilityRecords,
       })
       console.log(`Created availability for room: ${room.roomNumber}`)
     }

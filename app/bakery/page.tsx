@@ -186,11 +186,11 @@ export default function BakeryPage() {
               <div className="pt-1">
                 <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">TO ORDER</p>
                 <a
-                  href="tel:+123456789"
+                  href="tel:+2347046644441"
                   className="text-xl font-medium text-[#978667] hover:text-[#4B514C] transition-colors flex items-center gap-1"
                 >
                   <Phone className="h-5 w-5" />
-                  +123456789
+                  +234 704 664 4441
                 </a>
               </div>
             </div>

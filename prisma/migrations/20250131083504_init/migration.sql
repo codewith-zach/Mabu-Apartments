@@ -7,6 +7,7 @@ CREATE TABLE "RoomType" (
     "price" DOUBLE PRECISION NOT NULL,
     "capacity" INTEGER NOT NULL,
     "imageUrl" TEXT NOT NULL,
+    "images" TEXT[],
 
     CONSTRAINT "RoomType_pkey" PRIMARY KEY ("id")
 );

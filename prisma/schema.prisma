@@ -18,6 +18,7 @@ model RoomType {
   imageUrl    String
   images      String[]
   rooms       Room[]
+  roomCount   Int
 }
 
 model Room {

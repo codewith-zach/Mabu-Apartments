@@ -59,27 +59,27 @@ export default function Home() {
   const testimonials = [
     {
       id: 1,
-      name: "Roberta",
-      date: "12 Oct",
+      name: "Chioma",
+      date: "12 Jan",
       image: "/images/avatar.jpg",
       quote:
-        "Mea ad postea meliore fuisset. Timeam repudiare id eum, ex paulo dictas elaboraret sed, mel cu unum nostrud.",
+        "Our apartment was everything we dreamed of charming, cozy, and right near a bakery. The staff were so kind and made our stay extra special.",
     },
     {
       id: 2,
-      name: "John",
-      date: "15 Oct",
+      name: "Emeka",
+      date: "15 Dec",
       image: "/images/avatar.jpg",
       quote:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "Clean, cozy, and perfectly located. This apartment was everything we hoped for and more.",
     },
     {
       id: 3,
-      name: "Sarah",
+      name: "Funmi",
       date: "18 Oct",
       image: "/images/avatar.jpg",
       quote:
-        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "A true gem in Abuja! The apartment was immaculate, stylish, and so comfortable. We loved being in the heart of the city but still having a peaceful place to come back to.",
     },
   ]
 
@@ -226,7 +226,7 @@ export default function Home() {
       {/* Welcome Section */}
       <section className="py-12 md:py-24 lg:py-32 bg-white relative overflow-hidden">
         <div
-          className="absolute top-0 right-0 bottom-0 w-1/2 opacity-100"
+          className="absolute inset-y-0 right-0 w-full lg:w-1/2 opacity-100"
           style={{
             backgroundImage: "url('/images/pattern_2.png')",
             backgroundSize: "cover",
@@ -242,11 +242,11 @@ export default function Home() {
               <p className="text-xl mb-6 text-gray-700">Where comfort and unforgettable experiences come together.</p>
               <p className="text-base mb-8 leading-relaxed text-gray-600">
                 Our mission is to provide you with a space that feels like home, while offering the little luxuries and
-                conveniences that make your stay truly special. Whether you&apos;re here for work, leisure, or a bit of
-                both, we aim to make every moment seamless and enjoyable.
+                conveniences that make your stay truly special. Whether you're here for work, leisure, or a bit of both,
+                we aim to make every moment seamless and enjoyable.
               </p>
               <p className={`${dancingScript.className} text-2xl text-[#978667] italic`}>
-                Your comfort starts here. We can&apos;t wait to host you!
+                Your comfort starts here. We can't wait to host you!
               </p>
             </div>
 

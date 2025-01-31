@@ -1,5 +1,8 @@
 import nodemailer from "nodemailer"
 import { format } from "date-fns"
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient()
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
@@ -133,12 +136,214 @@ function generateBookingEmailTemplate(bookingDetails: any) {
   `
 }
 
+async function generateManagerEmailTemplate(bookingDetails: any) {
+  const rooms = await prisma.room.findMany({
+    include: {
+      roomType: true,
+      bookings: {
+        where: {
+          checkOut: {
+            gte: new Date(),
+          },
+        },
+        orderBy: {
+          checkIn: "asc",
+        },
+      },
+      availability: {
+        where: {
+          AND: [
+            {
+              date: {
+                gte: new Date(),
+              },
+            },
+            {
+              isAvailable: true,
+            },
+          ],
+        },
+        orderBy: {
+          date: "asc",
+        },
+        take: 1,
+      },
+    },
+  })
+
+  const totalRooms = rooms.length
+  const bookedRooms = rooms.filter((room) => room.bookings.length > 0).length
+  const occupancyRate = (bookedRooms / totalRooms) * 100
+
+  const formattedCheckIn = format(new Date(bookingDetails.checkIn), "EEEE, MMMM do yyyy")
+  const formattedCheckOut = format(new Date(bookingDetails.checkOut), "EEEE, MMMM do yyyy")
+
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Booking Notification - Management Report</title>
+        <style>
+          .table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+          .table th, .table td { padding: 10px; border: 1px solid #ddd; }
+          .table th { background-color: #f5f5f5; }
+          .highlight { background-color: #fff3cd; }
+          .section { margin-bottom: 30px; }
+        </style>
+      </head>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;">
+        <h1 style="color: #978667; border-bottom: 2px solid #978667; padding-bottom: 10px;">New Booking Notification</h1>
+        
+        <div class="section">
+          <h2>New Booking Details</h2>
+          <table class="table">
+            <tr>
+              <th>Guest Name</th>
+              <td>${bookingDetails.guestName}</td>
+            </tr>
+            <tr>
+              <th>Guest Email</th>
+              <td>${bookingDetails.guestEmail}</td>
+            </tr>
+            <tr>
+              <th>Room Type</th>
+              <td>${bookingDetails.roomType}</td>
+            </tr>
+            <tr>
+              <th>Check-in</th>
+              <td>${formattedCheckIn}</td>
+            </tr>
+            <tr>
+              <th>Check-out</th>
+              <td>${formattedCheckOut}</td>
+            </tr>
+            <tr>
+              <th>Total Price</th>
+              <td>₦${bookingDetails.totalPrice.toLocaleString()}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>Current Occupancy Overview</h2>
+          <p>
+            <strong>Current Occupancy Rate:</strong> ${occupancyRate.toFixed(1)}%<br>
+            <strong>Booked Rooms:</strong> ${bookedRooms} out of ${totalRooms}
+          </p>
+        </div>
+
+        <div class="section">
+          <h2>Upcoming Bookings (Next 30 Days)</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Guest</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rooms
+                .map((room) =>
+                  room.bookings
+                    .filter((booking) => new Date(booking.checkIn) <= new Date(Date.now() + 30 * 24 * 60 * 60 * 1000))
+                    .map(
+                      (booking) => `
+                    <tr class="${booking.id === bookingDetails.bookingId ? "highlight" : ""}">
+                      <td>${room.roomType.name} (${room.roomNumber})</td>
+                      <td>${booking.guestName}</td>
+                      <td>${format(new Date(booking.checkIn), "MMM d, yyyy")}</td>
+                      <td>${format(new Date(booking.checkOut), "MMM d, yyyy")}</td>
+                      <td>₦${booking.totalPrice.toLocaleString()}</td>
+                    </tr>
+                  `,
+                    )
+                    .join(""),
+                )
+                .join("")}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>Available Rooms</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Room Type</th>
+                <th>Room Number</th>
+                <th>Next Available Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rooms
+                .map(
+                  (room) => `
+                <tr>
+                  <td>${room.roomType.name}</td>
+                  <td>${room.roomNumber}</td>
+                  <td>${
+                    room.bookings.some(
+                      (booking) => new Date(booking.checkIn) <= new Date() && new Date(booking.checkOut) > new Date(),
+                    )
+                      ? format(new Date(room.bookings[0].checkOut), "MMM d, yyyy")
+                      : room.availability && room.availability[0]
+                        ? format(new Date(room.availability[0].date), "MMM d, yyyy")
+                        : format(new Date(), "MMM d, yyyy")
+                  }</td>
+                </tr>
+              `,
+                )
+                .join("")}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>Monthly Revenue Overview</h2>
+          <p>
+            <strong>This Month's Revenue:</strong> ₦${(
+              rooms.reduce(
+                (total, room) =>
+                  total +
+                  room.bookings
+                    .filter((booking) => new Date(booking.checkIn).getMonth() === new Date().getMonth())
+                    .reduce((sum, booking) => sum + booking.totalPrice, 0),
+                0,
+              )
+            ).toLocaleString()}
+          </p>
+        </div>
+
+        <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center;">
+          <p>This is an automated management report from Mabu Apartments Booking System</p>
+        </footer>
+      </body>
+    </html>
+  `
+}
+
 export async function sendBookingConfirmationEmail(to: string, bookingDetails: any) {
   const mailOptions = {
     from: process.env.EMAIL_FROM,
     to: to,
     subject: "Booking Confirmation - Mabu Apartments",
     html: generateBookingEmailTemplate(bookingDetails),
+  }
+
+  await transporter.sendMail(mailOptions)
+}
+
+export async function sendManagerNotificationEmail(bookingDetails: any) {
+  const mailOptions = {
+    from: process.env.EMAIL_FROM,
+    to: "hello.mabuapartment@gmail.com",
+    subject: `New Booking Alert - ${bookingDetails.roomType}`,
+    html: await generateManagerEmailTemplate(bookingDetails),
   }
 
   await transporter.sendMail(mailOptions)

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { PrismaClient } from "@prisma/client"
-import { sendBookingConfirmationEmail } from "@/utils/email"
+import { sendBookingConfirmationEmail, sendManagerNotificationEmail } from "@/utils/email"
 
 const prisma = new PrismaClient()
 
@@ -97,6 +97,18 @@ export async function POST(req: Request) {
         totalPrice: booking.totalPrice,
       })
       console.log("Booking confirmation email sent to guest")
+
+      // Send notification to manager
+      await sendManagerNotificationEmail({
+        bookingId: booking.id,
+        guestName: guestName,
+        guestEmail: guestEmail,
+        roomType: booking.room.roomType.name,
+        checkIn: booking.checkIn,
+        checkOut: booking.checkOut,
+        totalPrice: booking.totalPrice,
+      })
+      console.log("Booking notification email sent to manager")
     } catch (emailError) {
       // Log the error but don't fail the booking
       console.error("Error sending emails:", emailError)

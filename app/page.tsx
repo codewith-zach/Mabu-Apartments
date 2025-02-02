@@ -239,8 +239,8 @@ export default function Home() {
             <div className="w-full lg:w-1/2 order-2 lg:order-1">
               <p className="text-sm uppercase tracking-wider text-[#978667] mb-3">ABOUT US</p>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight">Welcome to Mabu Apartments</h2>
-              <p className="text-xl mb-6 text-gray-700">Where comfort and unforgettable experiences come together.</p>
-              <p className="text-base mb-8 leading-relaxed text-gray-600">
+              <p className="text-xl mb-6 text-black-700">Where comfort and unforgettable experiences come together.</p>
+              <p className="text-base mb-8 leading-relaxed text-black-600">
                 Our mission is to provide you with a space that feels like home, while offering the little luxuries and
                 conveniences that make your stay truly special. Whether you&apos;re here for work, leisure, or a bit of both,
                 we aim to make every moment seamless and enjoyable.
@@ -321,6 +321,9 @@ export default function Home() {
             >
               Ready to Experience Mabu Apartments?
             </motion.h2>
+            <Button className="inline-flex bg-[#978667] hover:bg-[#4B514C] text-white font-semibold">
+              <Link href="/rooms">Book Now</Link>
+            </Button>
           </motion.div>
         </motion.section>
       </div>

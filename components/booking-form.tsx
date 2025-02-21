@@ -37,7 +37,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
     from: undefined,
     to: undefined,
   })
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
   const [unavailableDates, setUnavailableDates] = useState<Date[]>([])
   const { toast } = useToast()

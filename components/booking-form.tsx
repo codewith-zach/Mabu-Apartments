@@ -169,7 +169,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
           description: "Sorry, the room is not available for the selected dates. Please choose different dates.",
           variant: "destructive",
         })
-        setIsLoading(false)
+        // setIsLoading(false)
         return
       }
 
@@ -203,7 +203,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
         variant: "destructive",
       })
     } finally {
-      setIsLoading(false)
+      // setIsLoading(false)
     }
   }
 

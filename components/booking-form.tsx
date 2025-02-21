@@ -342,14 +342,14 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
                 </p>
               </div>
             )}
-            <Button
+            {/* <Button
               type="submit"
               className="w-full bg-[#978667] hover:bg-[#4B514C] text-white font-semibold"
               size="lg"
               disabled={isLoading || !dateRange.from || !dateRange.to}
             >
               {isLoading ? "Processing..." : "Book Now"}
-            </Button>
+            </Button> */}
           </form>
         </Form>
       </div>

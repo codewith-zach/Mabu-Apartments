@@ -139,7 +139,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
   }, [dateRange])
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true)
+    // setIsLoading(true)
 
     try {
       if (!values.dateRange.from || !values.dateRange.to) {

@@ -207,6 +207,12 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
     }
   }
 
+  const handleWhatsAppBooking = () => {
+    const message = encodeURIComponent(`I would like to make a booking for ${title}`)
+    const whatsappUrl = `https://wa.me/2349075120963?text=${message}`
+    window.open(whatsappUrl, "_blank")
+  }
+
   return (
     <div className="w-full max-w-3xl mx-auto relative">
       <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
@@ -342,14 +348,14 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
                 </p>
               </div>
             )}
-            {/* <Button
-              type="submit"
+            <Button
+              type="button"
               className="w-full bg-[#978667] hover:bg-[#4B514C] text-white font-semibold"
               size="lg"
-              disabled={isLoading || !dateRange.from || !dateRange.to}
+              onClick={handleWhatsAppBooking}
             >
-              {isLoading ? "Processing..." : "Book Now"}
-            </Button> */}
+              Book Now via WhatsApp
+            </Button>
           </form>
         </Form>
       </div>

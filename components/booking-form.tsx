@@ -209,7 +209,7 @@ export function BookingForm({ roomTypeId, price, title }: { roomTypeId: string; 
 
   const handleWhatsAppBooking = () => {
     const message = encodeURIComponent(`I would like to make a booking for ${title}`)
-    const whatsappUrl = `https://wa.me/2349075120963?text=${message}`
+    const whatsappUrl = `https://wa.me/2348103992400?text=${message}`
     window.open(whatsappUrl, "_blank")
   }
 
